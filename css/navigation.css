@@ -1,0 +1,179 @@
+/*header styles */
+header {
+    height: 80px;
+    background-color: #052F60;
+    z-index: 100;
+  }
+  header h1 span {
+    color: #DFAC2C;
+  }
+  header nav.desktop {
+    font-size: 0.8em;
+  }
+  header nav.desktop ul {
+    margin-top: 30px;
+  }
+  header nav.desktop ul li {
+    margin-left: -30px;
+  }
+  header nav.desktop ul li a {
+    padding: 12px 24px;
+    color: white;
+    border-radius: 3px;
+  }
+  header nav.desktop ul li a:hover {
+    background-color: #DFAC2C;
+    -webkit-transition: 0.8s;
+    transition: 0.8s;
+  }
+  header nav.desktop ul li#search div {
+    margin-top: -13px;
+  }
+  header nav.desktop ul li#search div input[type='text'] {
+    margin-top: -20px;
+    height: 30px;
+    width: 120px;
+    padding-right: 33px;
+    padding-left: 7px;
+    border-radius: 10px;
+    border: none;
+  }
+  header nav.desktop ul li#search div input[type='submit'] {
+    height: 26px;
+    border-radius: 10px;
+    margin-left: -35px;
+    width: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: #fafafa;
+  }
+  header nav.desktop ul li#search div img {
+    height: 26px;
+    padding-top: 11px;
+    margin-left: -21px;
+    cursor: pointer;
+  }
+  header nav.mobile {
+    display: none;
+    font-size: 1.7em;
+  }
+  header nav.mobile h1 a {
+    color: #052F60 !important;
+  }
+  header nav.mobile .menu-button {
+    position: absolute;
+    top: 0.9em;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  header nav.mobile .menu-button:hover > span {
+    background-color: #DFAC2C;
+  }
+  header nav.mobile .menu-button span {
+    width: 30px;
+    height: 4px;
+    background-color: #fafafa;
+    margin: 6px 0;
+    display: block;
+  }
+  header nav.mobile ul {
+    left: -100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding: 0% 0% 0% 0%;
+    background: #EEEEEE;
+    position: fixed;
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+    margin: 0px;
+  }
+  header nav.mobile ul .menu-button-close {
+    color: #052F60;
+    cursor: pointer;
+    position: absolute;
+    right: 1em;
+    top: 10px;
+  }
+  header nav.mobile ul .menu-button-close:hover {
+    color: #DFAC2C;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+  }
+  header nav.mobile ul li {
+    margin-bottom: 0.8em;
+  }
+  header nav.mobile ul li:first-of-type {
+    margin: 0px;
+  }
+  header nav.mobile ul li:hover a {
+    color: #DFAC2C;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+  header nav.mobile ul li.active a {
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  header nav.mobile ul li a {
+    color: #052F60;
+  }
+  header nav.mobile ul li#search div {
+    margin-top: -5px;
+  }
+  header nav.mobile ul li#search div input[type='text'] {
+    margin-top: -20px;
+    height: 30px;
+    width: 50%;
+    padding: 15px 15% 15px 10px;
+    border-radius: 10px;
+    border: none;
+  }
+  header nav.mobile ul li#search div input[type='submit'] {
+    height: 26px;
+    border-radius: 10px;
+    margin-left: -39px;
+    width: 10px;
+    cursor: pointer;
+    padding: 0px 15px 0px 15px;
+    border: none;
+    background-color: #fafafa;
+  }
+  header nav.mobile ul li#search div img {
+    height: 26px;
+    padding-top: 12px;
+    margin-left: -20px;
+    cursor: pointer;
+  }
+  
+  @media (min-width: 600px) and (max-width: 900px) {
+    header {
+      height: 120px;
+    }
+    header nav.desktop ul {
+      margin-top: 5px;
+      padding-bottom: 10px;
+    }
+  }
+  @media (min-width: 0px) and (max-width: 599px) {
+    header {
+      display: block;
+      position: relative;
+    }
+    header .grid-container {
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: reverse;
+          -ms-flex-direction: row-reverse;
+              flex-direction: row-reverse;
+    }
+    header nav.desktop {
+      display: none;
+    }
+    header nav.mobile {
+      display: block;
+    }
+  }
+  

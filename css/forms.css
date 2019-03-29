@@ -1,0 +1,422 @@
+.container
+{
+    width: 450px;
+    margin: 30px auto;
+}
+  
+  .loginBox
+{
+    position:absolute;
+    top:55%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:350px;
+    transition:.5s;
+    background:transparent;
+    box-shadow: 0 10px 20px rgba(0,0,0,.5);
+    border-radius:5px;
+
+}
+.glass
+{
+    width:100%;
+    height:100%;
+    padding:40px;
+    box-sizing:border-box;
+    background:rgba(255,255,255,.1);
+    border-radius: 5px;
+    transition: .5s
+}
+
+.user
+{
+    margin:0 auto;
+    display:block;
+    margin-bottom: 20px;
+    padding:0 0 20px;
+    color:#262626;
+    text-align:center;
+}
+.loginBox input
+{
+   width:100%;
+   margin-bottom: 20px;
+}
+.loginBox input[type="text"],
+.loginBox input[type="password"],
+.loginBox input[type="email"],
+.loginBox input[type="date"]
+{
+   border:none;
+   border-bottom:2px solid #3F51B5;
+   outline:none;
+   height:40px;
+   color:#262626;
+   background:transparent;
+   font-size:16px;
+   padding-left: 20px;
+
+}
+.loginBox h3
+{
+    text-align: center;
+    font-size:1.5rem;
+    text-transform:uppercase;
+    background:#FFAF30;
+    width:100%;
+    padding:10px;
+    color:white;
+}
+h3>span
+{
+     color:#fff;
+}
+
+::placeholder
+{
+   color:rgba(0,0,0,.5);
+}
+.inputBox
+{
+   position:relative;
+}
+.inputBox span
+{
+   position:absolute;
+   top:10px;
+   color:#262626;
+}
+.loginBox input[type="submit"]
+{
+   border:none;
+   outline:none;
+   height:40px;
+   font-size:16px;
+   background:#FFAF30;
+   color:#fff;
+   border-radius:20px;
+   cursor:pointer;
+}
+.loginBox a
+{
+   color:#262626;
+   font-size:14px;
+   font-weight:bold;
+   text-decoration:none;
+   text-align: center;
+   display:block;
+}
+#view-users form input[type=submit],
+#cash-transactions1 form input[type=submit],
+#view-accounts input[type=submit]
+{
+    padding:15px;
+    border:none;
+    font-size:18px;
+    font-family:sans-serif;
+    background:orange;
+    color:white;
+    border-radius: 0 5px 5px 0;
+    cursor:pointer;
+    position: absolute;
+}
+ button
+{
+      display: inline-block;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid transparent;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      border-radius: 0.25rem;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      cursor:pointer;
+}
+.btn-green
+{
+      color: #fff;
+      background-color: #28a745;
+      border-color: #28a745;
+}
+.btn-red
+{
+      color: #fff;
+      background-color: #dc3545;
+      border-color: #dc3545;
+}
+.btn-blue 
+{
+      color: #fff;
+      background-color: #3F51B5;
+      border-color: #3F51B5;
+}
+.btn-orange
+{
+      color: #fff;
+      background-color: #FFAF30;
+      border-color: #FFAF30;
+}
+#view-users input[type=date]
+{
+        width: 50%;
+        padding:15px;
+        border:none;
+        font-size:14px;
+        font-family:sans-serif;
+        border-radius:5px 0 0 5px;
+        background:transparent;
+        box-shadow: 0 10px 20px rgba(0,0,0,.5);
+        margin-left:15px;
+}
+#view-users input[type=submit],
+#cash-transactions1 input[type=submit],
+#view-accounts input[type=submit]
+{
+     
+        border:none;
+        font-size:18px;
+        font-family:sans-serif;
+        background:orange;
+        color:white;
+        border-radius: 0 5px 5px 0;
+        cursor:pointer;
+        position: absolute;
+}
+select
+{
+            border:none;
+           border-bottom:2px solid #3F51B5;
+           outline:none;
+           height:40px;
+           color:#262626;
+           background:transparent;
+           font-size:16px;
+           padding-left: 20px;
+           width:100%;
+           margin-bottom: 20px;
+}
+      
+
+@media screen and (min-width: 800px)
+ {
+       .loginBox
+       {
+        position:absolute;
+        top:55%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        width:350px;
+        transition:.5s;
+        background:transparent;
+        box-shadow: 0 10px 20px rgba(0,0,0,.5);
+        border-radius:5px;
+       }
+       .glass
+       {
+        width:100%;
+        height:100%;
+        padding:40px;
+        box-sizing:border-box;
+        background:rgba(255,255,255,.1);
+        border-radius: 5px;
+        transition: .5s
+       }
+       .user
+       {
+        margin:0 auto;
+        display:block;
+        margin-bottom: 20px;
+        padding:0 0 20px;
+        color:#262626;
+        text-align:center;
+       }
+       .loginBox input
+       {
+       width:100%;
+       margin-bottom: 20px;
+       }
+       .loginBox input[type="text"],
+       .loginBox input[type="password"],
+       .loginBox input[type="email"],
+       .loginBox input[type="date"]
+       {
+       border:none;
+       border-bottom:2px solid #3F51B5;
+       outline:none;
+       height:40px;
+       color:#262626;
+       background:transparent;
+       font-size:16px;
+       padding-left: 20px;
+       }
+       .loginBox h3
+       {
+        text-align: center;
+        font-size:1.5rem;
+        text-transform:uppercase;
+        background:#FFAF30;
+        width:100%;
+        padding:10px;
+        color:white;
+       }
+       h3>span
+       {
+         color:#fff;
+       }
+       ::placeholder
+       {
+           color:rgba(0,0,0,.5);
+       }
+       .inputBox
+       {
+       position:relative;
+       }
+       .inputBox span
+       {
+          position:absolute;
+          top:10px;
+          color:#262626;
+       }
+       .loginBox input[type="submit"]
+       {
+          border:none;
+          outline:none;
+          height:40px;
+          font-size:16px;
+          background:#FFAF30;
+          color:#fff;
+          border-radius:20px;
+          cursor:pointer;
+          margin-top:20px;
+       }
+       .loginBox a
+       {
+          color:#262626;
+          font-size:14px;
+          font-weight:bold;
+          text-decoration:none;
+          text-align: center;
+          display:block;
+       }
+       #view-users input[type=date]
+       {
+         margin-top:10px;
+         width: 30%;
+         padding:15px;
+         border:none;
+         font-size:14px;
+         font-family:sans-serif;
+         border-radius:5px 0 0 5px;
+         background:transparent;
+         box-shadow: 0 10px 20px rgba(0,0,0,.5);
+         margin-left:400px;
+       }
+       #view-users input[type=text],
+       #cash-transactions1 input[type=text],
+       #view-accounts input[type=text]
+       {
+         margin-top:10px;
+         width: 30%;
+         padding:15px;
+         border:none;
+         font-size:18px;
+         font-family:sans-serif;
+         border-radius:5px 0 0 5px;
+         background:transparent;
+         box-shadow: 0 10px 20px rgba(0,0,0,.5);
+         margin-left:400px;
+       }
+       input[type=submit]
+       {
+         margin-top:10px;
+       } 
+       #cash-transactions1 .creditInput input[type=text],
+       #cash-transactions1 .debitInput input[type=text]
+       {
+         width:100%;
+       }
+       button
+       {
+          display: inline-block;
+          font-weight: 400;
+          text-align: center;
+          white-space: nowrap;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          border: 1px solid transparent;
+          padding: 0.375rem 0.75rem;
+          font-size: 1rem;
+          line-height: 1.5;
+          border-radius: 0.25rem;
+          transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+          cursor:pointer;
+       }
+       .btn-green
+       {
+          color: #fff;
+          background-color: #28a745;
+          border-color: #28a745;
+       }
+       .btn-red 
+       {
+         color: #fff;
+         background-color: #dc3545;
+         border-color: #dc3545;
+       }
+       .btn-blue
+       {
+          color: #fff;
+          background-color: #3F51B5;
+          border-color: #3F51B5;
+       }
+       .btn-orange
+       {
+        color: #fff;
+        background-color: #FFAF30;
+        border-color: #FFAF30;
+       }
+       
+ }
+
+ @media only screen and (min-width:240px) and (max-width:799px)
+{
+   #view-users input[type=text],
+   #cash-transactions1 input[type=text],
+   #view-accounts input[type=text]
+   {
+     width: 70%;
+     padding:15px;
+     border:none;
+     font-size:18px;
+     font-family:sans-serif;
+     border-radius:5px 0 0 5px;
+     background:transparent;
+     box-shadow: 0 10px 20px rgba(0,0,0,.5);
+     margin-left:30px;
+     text-align:center;
+   }
+   #view-users input[type=submit],
+   #cash-transactions1 input[type=submit],
+   #view-accounts input[type=submit]
+   {
+     padding:15px;
+     border:none;
+     font-size:18px;
+     font-family:sans-serif;
+     background:orange;
+     color:white;
+     border-radius: 0 5px 5px 0;
+     cursor:pointer;
+     position: absolute;
+   }
+}
