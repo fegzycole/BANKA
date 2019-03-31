@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel='stylesheet' href='./css/body.css'>
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/table.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/forms.css">
+    <link rel="stylesheet" href="./css/modal.css">
+    <title>Banka Administrator</title>
+</head>
+<body>
+    
+    <!-- header and navigation start here -->
+    <header>
+        <h1 class = 'logo'>Ba<span>N</span>ka</h1>
+        <input type = 'checkbox' id="nav-toggle" class="nav-toggle">
+        <nav>
+            <ul id='menu'>
+                <li><a id = 'add_staff'>ADD STAFF</a></li>
+                <li><a id = 'view_users'>view users</a></li>
+                <li><a id = 'view_accounts'>view accounts</a></li>
+                <li><a href='./staffpage.html'>Logout</a></li>
+            </ul>
+        </nav>
+        <label for="nav-toggle" class="nav-toggle-label">
+            <span></span>
+        </label>
+    </header>
+    <section class='content'>
+        <div id="actions-center">
+         <div id="add-staff">
+            <div class="loginBox">
+                <div class="glass">
+                     <h3 class="user">Ba<span>N</span>ka</h3>
+                      <form>
+                          <div class="inputBox">
+                              <input type="text" name="" placeholder="Staff Name">
+                          </div>
+                          <div class="inputBox">
+                              <input type="email" name="" placeholder="Email">
+                          </div>
+                          <div class="inputBox">
+                                 <input type="password" name="" placeholder="Password">
+                             </div>
+                                <div class="inputBox">
+                                    <select>
+                                        <option selected disabled>Administrator?</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select>
+                                </div>
+                             <div class="inputBox">
+                                     <input type="submit" name="" value="Register">                               
+                                 </div>
+                      </form>
+                </div>
+            </div>
+        </div>
+          
+        <div id="view-users">
+            <form>
+                <input type="text" name="search" id="" placeholder="Enter Name">
+                <input type="submit" name="submit" value="Search">
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Actions</th>
+                     </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Iyara Ferguson</td>
+                        <td>fergusoniyara@gmail.com</td>
+                        <td>fegzycole</td>
+                        <td>
+                                <button class='btn btn-green' id='activate'>Activate</button>
+                                <button class='btn btn-orange'id='deactivate'>Deactivate</button>
+                       </td>
+                    </tr>
+                    <tr>
+                        <td>Iyara Charity</td>
+                        <td>iyaracharity@gmail.com</td>
+                        <td>charity1211@</td>
+                        <td>
+                            <button class='btn-green'>Activate</button>
+                            <button class='btn-orange'>Deactivate</button>
+                       </td>
+                    </tr>
+                    <tr>
+                        <td>Prosper Nnadi</td>
+                        <td>pnnadi@gmail.com</td>
+                        <td>drproyce1211</td>
+                        <td>
+                               <button class='btn-green'>Activate</button>
+                               <button class='btn-orange'>Deactivate</button>
+                       </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="activateModal" class='modal'>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                               <span class="closeBtn" id = 'activateBtn'>&times;</span>
+                               <h2>Activate Account?</h2>
+                        </div>
+                        <div class="modal-body">
+                           <div class="modal-form">
+                            <form>
+                               <button class="btn btn-green">Yes</button>
+                               <button class="btn btn-red">No</button>
+                            </form>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                            <h1>&copy; Iyara Ferguson</h1>
+                        </div>
+                    </div>
+                </div>
+                <div id="deactivateModal" class='modal'>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                   <span class="closeBtn" id = 'deactivateBtn'>&times;</span>
+                                   <h2>Dectivate Account?</h2>
+                            </div>
+                            <div class="modal-body">
+                               <div class="modal-form">
+                                <form>
+                                   <button class="btn btn-green">Yes</button>
+                                   <button class="btn btn-yellow">No</button>
+                                </form>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                                <h1>&copy; Iyara Ferguson</h1>
+                            </div>
+                        </div>
+                    </div>
+         </div>
+         <div id="view-accounts">
+            <form>
+                <input type="text" name="search" id="" placeholder="Enter Account Number">
+                <input type="submit" name="submit" value="Search">
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Account Number</th>
+                        <th>Current Balance</th>
+                        <th>Actions</th>
+                     </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Iyara Ferguson</td>
+                        <td>2059725105</td>
+                        <td>100000000000</td>
+                        <td>
+                                <button class='btn btn-red'   id='delete'>Delete</button>
+                                <button class='btn btn-blue'  id='view'>View</button>
+                       </td>
+                    </tr>
+                    <tr>
+                        <td>Iyara Charity</td>
+                        <td>3044399129</td>
+                        <td>1000000000000</td>
+                        <td>
+                            <button class='btn-red'>Delete</button>
+                            <button class='btn-blue'>View</button>
+                       </td>
+                    </tr>
+                    <tr>
+                        <td>Prosper Nnadi</td>
+                        <td>2059725105</td>
+                        <td>2000000000</td>
+                        <td>
+                               <button class='btn-red'>Delete</button>
+                               <button class='btn-blue'>View</button>
+                       </td>
+                    </tr>
+                </tbody>
+            </table>
+                    <div id="deleteModal" class='modal'>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                       <span class="closeBtn" id = 'deleteBtn'>&times;</span>
+                                       <h2>Delete Account?</h2>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="modal-form">
+                                    <form>
+                                       <button class="btn btn-green">Yes</button>
+                                       <button class="btn btn-yellow">No</button>
+                                    </form>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <h1>&copy; Iyara Ferguson</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="viewModal" class='modal'>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                       <span class="closeBtn" id = 'viewBtn'>&times;</span>
+                                       <h2>Account Information</h2>                                         
+                                </div>
+                                <div class="modal-body">
+                                    <p>Name: Iyara Ferguson</p>
+                                    <p>Account Number: 2059725105</p>
+                                    <p>Current Balance: 200000000000</p>
+                                    <p>Account Active?  Yes</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <h1>&copy; Iyara Ferguson</h1>
+                                </div>
+                            </div>
+                        </div>
+         </div>
+    </div>
+    </section>
+    <footer>
+           <p>&copy; Iyara Ferguson For Andela Bootcamp</p>      
+    </footer>
+    </section>
+    <script src="./js/admin.js"></script>
+</body>
+</html>
