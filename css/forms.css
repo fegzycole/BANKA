@@ -7,7 +7,7 @@
   .loginBox
 {
     position:absolute;
-    top:55%;
+    top:65%;
     left:50%;
     transform:translate(-50%,-50%);
     width:350px;
@@ -37,10 +37,11 @@
     color:#262626;
     text-align:center;
 }
-.loginBox input
+.loginBox input,
+.loginBox button
 {
-   width:100%;
-   margin-bottom: 20px;
+width:100%;
+margin-bottom: 20px;
 }
 .loginBox input[type="text"],
 .loginBox input[type="password"],
@@ -86,7 +87,8 @@ h3>span
    top:10px;
    color:#262626;
 }
-.loginBox input[type="submit"]
+.loginBox input[type="submit"],
+.loginBox button
 {
    border:none;
    outline:none;
@@ -96,6 +98,7 @@ h3>span
    color:#fff;
    border-radius:20px;
    cursor:pointer;
+   margin-top:20px;
 }
 .loginBox a
 {
@@ -105,6 +108,12 @@ h3>span
    text-decoration:none;
    text-align: center;
    display:block;
+}
+#userTextError,
+#userPasswordError{
+   display:none;
+   border:none;
+   color:red;
 }
 #view-users form input[type=submit],
 #cash-transactions1 form input[type=submit],
@@ -237,7 +246,8 @@ select
         color:#262626;
         text-align:center;
        }
-       .loginBox input
+       .loginBox input,
+       .loginBox button
        {
        width:100%;
        margin-bottom: 20px;
@@ -284,7 +294,8 @@ select
           top:10px;
           color:#262626;
        }
-       .loginBox input[type="submit"]
+       .loginBox input[type="submit"],
+       .loginBox button
        {
           border:none;
           outline:none;
