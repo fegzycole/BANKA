@@ -1,0 +1,166 @@
+.table
+{
+    width: 100%;
+    max-width: 100%;
+    margin-top:15%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-collapse: collapse;
+    font-family:arial;
+    padding:100px;
+}
+.table th
+{
+    color:white;
+}
+.table th,
+.table td 
+{
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #FFAF30;
+    text-align:center;
+}
+.table td{
+  color:white;
+}
+.table thead th
+{
+    vertical-align: bottom;
+    border-bottom: 2px solid #FFAF30;
+    background: #3F51B5;
+}  
+.table tbody + tbody 
+{
+    border-top: 2px solid #FFAF30;
+} 
+.table .table 
+{
+    background-color: #fff;
+}
+.tableHeader{
+  display:none;
+}
+
+
+@media screen and (min-width: 800px)
+{
+   .table 
+    {
+    width: 80%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    margin-top:20%;
+    margin-left: 10%;
+    background-color: transparent;
+    border-collapse: collapse;
+    font-family:arial;
+    border-bottom: 2px solid #FFAF30;
+    border-left: 2px solid #FFAF30;
+    border-right: 2px solid #FFAF30;
+    }
+   .table th
+    {
+    color:white;
+    }
+   .table th,
+   .table td 
+    {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #FFAF30;
+    text-align:center;
+    }
+   .table thead th 
+    {
+    vertical-align: bottom;
+    border-bottom: 2px solid #FFAF30;
+    background: #3F51B5;
+    }
+   .table tbody + tbody 
+    {
+    border-top: 2px solid #FFAF30;
+    }
+   .table .table 
+    {
+       background-color: #fff;
+    }
+    .tableHeader{
+      display:none;
+   }
+}
+
+
+
+
+@media only screen and (min-width:768px) and (max-width:1024px)
+{
+    .table{
+      margin-left: 10%;
+      margin-top:30%;
+      width:80%;
+      font-size:13px;
+    }
+    .tableHeader{
+      display:none;
+   }
+
+}
+
+
+@media only screen and (min-width:569px) and (max-width:767px)
+{
+   .table
+   {
+     margin-top:30%;
+     width:80%;
+     margin-left: 10%;
+     font-size:12px;
+     border-bottom: 2px solid #FFAF30;
+     border-left: 2px solid #FFAF30;
+     border-right: 2px solid #FFAF30;
+   }
+   .tableHeader{
+    display:none;
+ }
+}
+ 
+
+@media only screen and (min-width:240px) and (max-width:568px)
+{
+  .tableHeader{
+    display:block;
+    padding:10px;
+    background-color:#3F51B5;
+    margin-bottom:5px;
+    color: white;
+ }
+   .table
+   {
+    margin-top:50%;
+     width:100%;
+     border-bottom: 2px solid #FFAF30;
+     border-left: 2px solid #FFAF30;
+     border-right: 2px solid #FFAF30;
+   }
+   table thead
+   {
+     display:none;
+   }
+   table tr
+   {
+     display:block;
+     margin-top:5px;
+     padding-bottom: 5px;
+     border-bottom:3px solid #FFAF30;
+   }
+   table td
+   {
+     display:block;
+     text-align:right;
+     font-size:13px;
+     border-radius:5px;
+     margin-bottom:1px;
+     min-height:14px;
+   }
+ }

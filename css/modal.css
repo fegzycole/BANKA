@@ -1,0 +1,124 @@
+.modal
+{
+    display:none;
+    position:fixed;
+    z-index:1;
+    left:0;
+    top:5%;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background-color:rgba(0,0,0,.5);
+}
+.modal-content
+{
+    background-color:#3F51B5;
+    margin: 20% auto;
+    width:70%;
+    box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
+}
+.closeBtn
+{
+    color:#fff;
+    float:right;
+    font-size:18px;
+}
+.closeBtn:hover,.closeBtn:focus
+{
+    color:#FFAF30;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+/* .modal-body form input[type=text]{
+    width:70%;
+    padding:10px;
+    border:none;
+    border-radius:  0.2em 0 0 0.2em;
+    background: #6272b8;
+    color:white;
+} */
+
+
+
+@keyframes modalopen
+{
+    from { opacity: 0 }
+    to   { opacity: 0 }
+}
+.modal-header
+{
+    background: #3F51B5;
+    padding:15px;
+    color:#fff;
+}
+.modal-header h2, .modal-footer h1
+{
+    margin:0;
+    font-size:18px;
+}
+.modal-body
+{
+    padding: 10px 20px;
+    height:70vh;
+    width:100%;
+    margin-top:0%;
+    
+}
+.modal-footer
+{
+    background:#3F51B5;
+    padding:10px;
+    color: #fff;
+    text-align: center;
+  
+}
+#viewModal .modal-body
+{
+    background-color:#36437A;
+    color:#fff;
+    line-height: 2.0;
+
+}
+.modal-body p
+{
+    text-align:center;
+    color:white;
+    margin-right:40px;
+    font-size:16px;
+
+}
+.modal-form form button
+{
+    width:30%;
+    display:inline-block;
+    position:relative;
+    left:30px;
+    top:-50px;
+    
+}
+
+@media screen and (min-width: 800px)
+{
+  .modal-content
+  {
+    margin: 10% auto;
+  }
+  .modal-form form button
+{
+    width:30%;
+    display:inline-block;
+    position:relative;
+    left:50px;
+    top:-70px;
+    
+}
+
+}
+
+
+
+
+
+
+  
