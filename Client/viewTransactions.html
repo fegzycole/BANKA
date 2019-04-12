@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Banka Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/table.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="..s/css/dashboard.css">
+</head>
+<body>
+    <div id="container">
+        <div id="main">
+            <!-- HEADER MARKUP STARTS HERE -->
+            <header>
+                    <h1 class = 'logo'>BA<span>N</span>KA</h1>
+                <input type = 'checkbox' id="nav-toggle" class="nav-toggle">
+                <nav>
+                    <ul>
+                        <li><a href="./dashboard.html">Dashboard</a></li>
+                        <li><a href="./createaccount.html">Create Account</a></li>
+                        <li><a href="./viewTransactions.html">View Transactions</a></li>
+                        <li><a href="../signin.html">LOGOUT</a></li>
+                    </ul>
+                </nav>
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <span></span>
+                </label>
+            </header>
+            <!-- HEADER STYLES END HERE -->
+            <div class="view-transactions">
+                    <form>
+                            <input type="date" name="search" id="" placeholder="Enter Account Number">
+                            <input type="submit" name="submit" value="Search">
+                        </form>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               <th>Date</th>
+                               <th>Account Type</th>
+                               <th>Account Number</th>
+                               <th>Transaction Amount</th>
+                               <th>Transaction Type</th>
+                               <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>30/01/2018</td>
+                                <td>Savings</td>
+                                <td>2059725105</td>
+                                <td>10000000</td>
+                                <td>Credit</td>
+                                <td>10000000</td>
+                            </tr>
+                            <tr>
+                                 <td>02/01/2019</td>
+                                 <td>Current</td>
+                                 <td>3044399129 </td>
+                                 <td>7890000.64</td>
+                                 <td>Credit</td>
+                                 <td>7890000.64</td>
+                             </tr>
+                             <tr>
+                                    <td>05/01/2019</td>
+                                 <td>Current</td>
+                                 <td>3044399129 </td>
+                                 <td>7000000.64</td>
+                                 <td>Debit</td>
+                                 <td>890000.64</td>
+                                 </tr>
+                        </tbody>
+                    </table>
+                 </div>
+        </div>
+    </div>
+    <footer id = "footer">
+         <p>&copy; Iyara Oghenefegor For Andela Bootcamp</p>
+    </footer>
+    <script src="./js/signin.js"></script>
+</body>
+</html>
