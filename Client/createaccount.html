@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Banka Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/dashboard.css">
+</head>
+<body>
+    <div id="container">
+        <div id="main">
+            <!-- HEADER MARKUP STARTS HERE -->
+            <header>
+                    <h1 class = 'logo'>BA<span>N</span>KA</h1>
+                <input type = 'checkbox' id="nav-toggle" class="nav-toggle">
+                <nav>
+                    <ul>
+                        <li><a href="./dashboard.html">Dashboard</a></li>
+                        <li><a href="./createaccount.html">Create Account</a></li>
+                        <li><a href="./viewTransactions.html">View Transactions</a></li>
+                        <li><a href="../signin.html">LOGOUT</a></li>
+                    </ul>
+                </nav>
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <span></span>
+                </label>
+            </header>
+            <!-- HEADER STYLES END HERE -->
+            <div class="auth-content" id = 'auth'>
+                    <form onsubmit="validate()" name = 'myForm'>
+                        <h2 class="form-title">BA<span>N</span>KA</h2>
+                          <div>
+                              <input type="text" name="userfirstName" class = 'text-input' id ='userAccountNameTextBox'placeholder='Account Name' required>
+                               <p id ='userFirstNameError'>Please enter a username</p>
+                          </div>
+                          <div>
+                              <input type="text" name="userlastName" class = 'text-input' id ='userPhoneNoTextBox' required placeholder='Phone Number'>
+                                <p id ='userLastNameError'>Please enter a username</p>
+                          </div>
+                          <div>
+                              <input type="email" name="userEmail" class = 'text-input' id ='userEmailTextBox' placeholder='Email' required>
+                                <p id ='userEMailError'>Please enter a username</p>
+                         </div>
+                         <div>
+                                <select name="type" id='selectBox' required>
+                                        <option value="" selected  disabled>Account type</option>
+                                        <option >Savings</option>
+                                        <option >Current</option>
+                                    </select>
+                        </div>
+                        <div>
+                              <input type='submit' />
+                        </div>
+      
+                    </form>
+                             <div class="formResponse"> 
+                            <p id = 'successForm'>User Account created</p>
+                           </div>
+                </div>
+        </div>
+    </div>
+    <footer id = "footer">
+         <p>&copy; Iyara Oghenefegor For Andela Bootcamp</p>
+    </footer>
+    <script src="../js/createaccount.js"></script>
+</body>
+</html>
