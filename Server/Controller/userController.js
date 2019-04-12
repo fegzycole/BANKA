@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import Validator from '../Middleware/validator';
 import testData from '../data/testData';
 import Helper from '../helper/helper';
