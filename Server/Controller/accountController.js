@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable radix */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
@@ -97,6 +98,44 @@ class AccountController {
       },
     });
   }
+
+  static deleteAnAccount(req, res) {
+    const token = req.body.token || req.headers['x-access-token'];
+    if (token) {
+      jwt.verify(token, 'superSecret', (err, decoded) => {
+        if (err) {
+          return res.status(404).json({
+            status: 404,
+            message: err,
+          });
+        }
+        req.decoded = decoded.user;
+      });
+    }
+    if (req.decoded.isStaff === false) {
+      return res.json({
+        status: 401,
+        error: 'You do not have the rights to this resource',
+        message: 'Request denied',
+      });
+    }
+    const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo));
+    if (!account) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Account not found',
+        message: 'Account not found',
+      });
+    }
+
+    const index = accounts.indexOf(account);
+    accounts.splice(index, 1);
+    res.json({
+      status: 200,
+      message: 'Account deleted successfully',
+    });
+  }
 }
+
 
 export default AccountController;
