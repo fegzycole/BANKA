@@ -1,8 +1,10 @@
-import validateSignUpInput from '../Middleware/validator';
+import Validator from '../Middleware/validator';
 import testData from '../data/testData';
 import Helper from '../helper/helper';
 
 const { findUserByEmail, createToken } = Helper;
+
+const { validateSignUpInput } = Validator;
 
 const { users } = testData;
 
@@ -87,8 +89,7 @@ class UserController {
     try {
       // check if user already exists
       const emailExists = findUserByEmail(users, user.email);
-
-      if (emailExists) {
+      if (emailExists.includes(user.email)) {
         return res.status(409).json({
           status: 409,
           message: 'Email Already exists',

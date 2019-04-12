@@ -1,7 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 import Joi from 'joi';
-import testData from '../data/testData';
 
 class Validator {
   static validateSignUpInput(user) {

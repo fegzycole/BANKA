@@ -1,10 +1,12 @@
 import express from 'express';
 import Accountcontroller from '../Controller/accountController';
 
-const { createClientAccount } = Accountcontroller;
+const { createClientAccount, activateOrDeactivate } = Accountcontroller;
 
 const router = express.Router();
 
-router.use('/', createClientAccount);
+router.post('/', createClientAccount);
+
+router.patch('/:accountNo', activateOrDeactivate);
 
 export default router;
