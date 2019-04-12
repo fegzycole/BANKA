@@ -1,10 +1,12 @@
-import validateSignUpInput from '../Middleware/validator';
+import Validator from '../Middleware/validator';
 import testData from '../data/testData';
 import Helper from '../helper/helper';
 
 const { findUserByEmail, createToken } = Helper;
 
 const { users } = testData;
+
+const { validateSignUpInput } = Validator;
 
 
 class UserController {
