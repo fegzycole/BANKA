@@ -4,7 +4,7 @@
   "description": "Banking Application",
   "main": "app.js",
   "scripts": {
-    "test": "mocha tests/*.js --require @babel/register --timeout 50000 --exit --watch || true",
+    "test": "mocha server/tests/*.js --require @babel/register --timeout 50000 --exit --watch || true",
     "test-watch": "nodemon --exec \"npm test\"",
     "start": "node dist/app.js",
     "start-dev": "nodemon --exec babel-node app.js",
@@ -26,6 +26,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1"
