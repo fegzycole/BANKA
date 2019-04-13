@@ -10,7 +10,6 @@ import transactions from './routes/transactions';
 const app = express();
 
 dotenv.config();
-g
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
