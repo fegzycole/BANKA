@@ -6,11 +6,12 @@
   "scripts": {
     "test": "mocha tests/*.js --require @babel/register --timeout 50000 --exit --watch || true",
     "test-watch": "nodemon --exec \"npm test\"",
-    "start": "nodemon --exec babel-node app.js",
+    "start": "node dist/app.js",
     "start-dev": "nodemon --exec babel-node app.js",
     "babel-build": "babel Server -d dist",
     "clean": "rm -rf dist && mkdir dist",
-    "build": "npm run clean && npm run babel-build"
+    "build": "npm run clean && npm run babel-build",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
