@@ -1,7 +1,9 @@
+/* eslint-disable linebreak-style */
 import express from 'express';
 import bodyParser from 'body-parser';
 import Auth from './routes/auth';
 import accounts from './routes/accounts';
+import transactions from './routes/transactions';
 
 const app = express();
 
@@ -11,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/v1/auth', Auth);
 app.use('/api/v1/accounts', accounts);
+app.use('/api/v1/transactions', transactions);
 
 app.get('/', (req, res) => res.status(200).send({
   message: 'Welcome To Banka',
