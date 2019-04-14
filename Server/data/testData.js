@@ -6,6 +6,8 @@ module.exports = {
       lastName: 'Iyara',
       email: 'fergusoniyara@gmail.com',
       password: 'somepassword',
+      type: 'admin',
+      isAdmin: true,
     },
     {
       id: 2,
@@ -13,6 +15,8 @@ module.exports = {
       lastName: 'Solomon',
       email: 'sobed2smile@gmail.com',
       password: 'password2',
+      type: 'cashier',
+      isAdmin: false,
     },
     {
       id: 3,
@@ -20,7 +24,8 @@ module.exports = {
       lastName: 'Fortran',
       email: 'mfontana@gmail.com',
       password: 'daysOfYourLife',
-      isAdmin: false,
+      type: 'admin',
+      isAdmin: true,
     },
   ],
   accounts: [

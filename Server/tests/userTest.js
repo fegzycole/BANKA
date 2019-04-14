@@ -75,7 +75,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('First Name is required');
+          expect(res.body.message).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -92,79 +92,96 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('Last Name is required');
+          expect(res.body.message).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
-    // it('Should return an error if the user name with whitespace', done => {
-    //   chai
-    //     .request(app)
-    //     .post('/api/v1/auth/signup')
-    //     .send({
-    //       firstName: 'jon bellion',
-    //       lastName: 'middlename',
-    //       email: 'jon@gmail.com',
-    //       password: 'simpleandsweet'
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(422);
-    //       expect(res.body.status).to.be.equal(422);
-    //       expect(res.body.error).to.be.equal('Invalid firstname/lastname provided');
-    //       expect(res.body.message).to.be.equal('No spaces are allowed in the firstname/lastname');
+    it('Should return an error if firstname has a  whitespace', done => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'jon y',
+          lastName: 'middlename',
+          email: 'jon@gmail.com',
+          password: 'simpleandsweet'
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.message).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
 
-    //       done();
-    //     });
-    // });
-    // it('Should return an error if the user tries to sign up with an existing email', done => {
-    //   chai
-    //     .request(app)
-    //     .post('/api/v1/auth/signup')
-    //     .send({
-    //       firstName: 'john',
-    //       lastName: 'joe',
-    //       email: 'jon@gmail.com',
-    //       password: 'simpleandsweet'
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(409);
-    //       expect(res.body.status).to.be.equal(409);
-    //       expect(res.body.error).to.be.equal('Email already in use');
-    //       done();
-    //     });
-    // });
+          done();
+        });
+    });
+    it('Should return an error if laststname has a  whitespace', done => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'Ferguson',
+          lastName: 'middl ename',
+          email: 'jon@gmail.com',
+          password: 'simpleandsweet'
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.message).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
+          done();
+        });
+    });
+    it('Should return an error if the user tries to sign up with an existing email', done => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'john',
+          lastName: 'joe',
+          email: 'fergusoniyara@gmail.com',
+          password: 'simplepassword'
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(409);
+          expect(res.body.status).to.be.equal(409);
+          expect(res.body.message).to.be.equal('Email Already exists');
+          done();
+        });
+    });
   });
-  // describe('POST api/v1/auth/login', () => {
-  //   it('Should successfully log in a user and return a token', done => {
-  //     chai
-  //       .request(app)
-  //       .post('/api/v1/auth/login')
-  //       .send({
-  //         email: 'jon@gmail.com',
-  //         password: 'simpleandweet'
-  //       })
-  //       .end((err, res) => {
-  //         expect(res).to.have.status(200);
-  //         expect(res.body.status).to.be.equal(200);
-  //         expect(res.body.data[0]).to.have.key('token');
-  //         expect(res.body.data[0].token).to.be.a('string');
-  //         done();
-  //       });
-  //   });
-
-  //   it('Should return an error if the user provides wrong login credentials', done => {
-  //     chai
-  //       .request(app)
-  //       .post('/api/v1/auth/login')
-  //       .send({
-  //         email: 'wrong@gmail.com',
-  //         password: 'wrongpassword'
-  //       })
-  //       .end((err, res) => {
-  //         expect(res).to.have.status(401);
-  //         expect(res.body.status).to.be.equal(401);
-  //         expect(res.body.error).to.be.equal('Authentication Failed');
-  //         done();
-  //       });
-  //   });
-  // });
+  describe('POST api/v1/auth/signin', () => {
+    it('Should successfully log in a user and return a token', done => {
+      chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send({
+        firstName: 'jon',
+        lastName: 'bellion',
+        email: 'fergusoniyara@gmail.com',
+        password: 'somepassword',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.status).to.be.equal(200);
+        expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email');
+        expect(res.body.data.token).to.be.a('string');
+        done();
+      });
+    });
+    it('Should return an error if the user provides wrong login credentials', done => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: 'wrong@gmail.com',
+          password: 'wrongpassword'
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(409);
+          expect(res.body.status).to.be.equal(409);
+          expect(res.body.message).to.be.equal('Email or password invalid');
+          done();
+        });
+    });
+  });
 });

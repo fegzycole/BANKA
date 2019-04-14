@@ -11,20 +11,27 @@ const { users } = testData;
 
 
 class UserController {
-  static createClientAccount(req, res) {
+  static createUserAccount(req, res) {
+    // variable checking for admin status
+    let isAdmin;
     const { body } = req;
+    if (body.type === 'client' || body.type === 'cashier') {
+      isAdmin = false;
+    } else if (body.type === 'admin') {
+      isAdmin = true;
+    }
     const user = {
       id: users.length + 1,
-      firstName: body.firstName.trim(),
-      lastName: body.lastName.trim(),
+      firstName: body.firstName.trim().toLowerCase(),
+      lastName: body.lastName.trim().toLowerCase(),
       email: body.email.trim(),
       password: body.password,
-      isAdmin: false,
-      isStaff: false,
+      type: body.type.toLowerCase().trim(),
+      isAdmin,
+      // isStaff: false,
     };
     // check if user pass valid and required data
     const { error } = validateSignUpInput(body);
-
     // check if user inputs are valid
     if (error) {
       return res.status(400).json({
@@ -32,74 +39,19 @@ class UserController {
         message: error.message,
       });
     }
-
     try {
       // check if email already exists
       const emailExists = findUserByEmail(users);
       if (emailExists.includes(user.email)) {
         return res.status(409).json({
-          statusCode: 409,
-          message: 'Email Already exists',
-        });
-      }
-      // create token
-      users.push(user);
-      const token = createToken(user);
-      return res.status(201).json({
-        status: 201,
-        data: {
-          token,
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-        },
-      });
-    } catch (e) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Sorry, something went wrong, try again',
-      });
-    }
-  }
-
-  static createCashierAccount(req, res) {
-    const { body } = req;
-    const user = {
-      id: users.length + 1,
-      firstName: body.firstName.trim(),
-      lastName: body.lastName.trim(),
-      email: body.email.trim(),
-      password: body.password,
-      isAdmin: false,
-      isStaff: true,
-    };
-    // check if user pass valid and required data
-    const { error } = validateSignUpInput(body);
-
-    // check if user inputs are valid
-    if (error) {
-      return res.status(400).json({
-        status: 400,
-        message: error.message,
-      });
-    }
-
-    try {
-      // check if user already exists
-      const emailExists = findUserByEmail(users, user.email);
-      if (emailExists.includes(user.email)) {
-        return res.status(409).json({
           status: 409,
           message: 'Email Already exists',
         });
       }
-      // push user into the test Db
-      users.push(user);
       // create token
+      users.push(user);
       const token = createToken(user);
-
-      return res.status(201).json({
+      return res.send(users).status(201).json({
         status: 201,
         data: {
           token,
@@ -107,61 +59,7 @@ class UserController {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-        },
-      });
-    } catch (e) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Sorry, something went wrong, try again',
-      });
-    }
-  }
-
-  static createAdminAccount(req, res) {
-    const { body } = req;
-    const user = {
-      id: users.length + 1,
-      firstName: body.firstName.trim(),
-      lastName: body.lastName.trim(),
-      email: body.email.trim(),
-      password: body.password,
-      isAdmin: true,
-      isStaff: true,
-    };
-    // check if user pass valid and required data
-    const { error } = validateSignUpInput(body);
-
-    // check if user inputs are valid
-    if (error) {
-      return res.status(400).json({
-        status: 400,
-        message: error.message,
-      });
-    }
-
-    try {
-      // check if user already exists
-      const emailExists = findUserByEmail(users, user.email);
-
-      if (emailExists) {
-        return res.status(409).json({
-          status: 409,
-          message: 'Email Already exists',
-        });
-      }
-      // push user into the test Db
-      users.push(user);
-      // create token
-      const token = createToken(user);
-
-      return res.status(201).json({
-        status: 201,
-        data: {
-          token,
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
+          isAdmin,
         },
       });
     } catch (e) {
@@ -183,18 +81,18 @@ class UserController {
       const emailExists = findUserByEmail(users);
       if (!emailExists.includes(userDetails.email)) {
         return res.status(409).json({
-          status: 401,
+          status: 409,
           error: 'Authentication Failed',
-          message: 'Request denied',
+          message: 'Email or password invalid',
         });
       }
       const { email, password } = userDetails;
-      const userInfo = users.find(user => email === user.email);
+      const userInfo = users.find(user => user.email === email);
       const storedPassword = userInfo.password;
       if (password === storedPassword) {
         const token = createToken(userInfo);
-        return res.status(201).json({
-          status: 201,
+        return res.status(200).json({
+          status: 200,
           data: {
             token,
             id: userInfo.id,
