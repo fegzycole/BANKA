@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 describe('Tests for all Auth(signup and signin) Endpoints', () => {
   describe('POST api/v1/auth/signup', () => {
-    it('Should successfully sign up a user and return a token', done => {
+    it('Should successfully sign up a user and return a token', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
@@ -18,17 +18,17 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           firstName: 'jon',
           lastName: 'bellion',
           email: 'jon@gmail.com',
-          password: 'simpleandweet'
+          password: 'simpleandweet',
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body.status).to.be.equal(201);
-          expect(res.body.data).to.have.key('id','token','firstName','lastName','email');
+          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email');
           expect(res.body.data.token).to.be.a('string');
           done();
         });
     });
-    it('Should return an error if the user provides an invalid email', done => {
+    it('Should return an error if the user provides an invalid email', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
@@ -36,7 +36,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           firstName: 'jon',
           lastName: 'bellion',
           email: 'wrongmailaddress',
-          password: 'simpleandweet'
+          password: 'simpleandweet',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -45,7 +45,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           done();
         });
     });
-    it('Should return an error if the user provides password with whitespace in between', done => {
+    it('Should return an error if the user provides password with whitespace in between', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
@@ -53,7 +53,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           firstName: 'jon',
           lastName: 'bellion',
           email: 'jon@gmail.com',
-          password: 'simpl eand'
+          password: 'simpl eand',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -62,7 +62,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           done(err);
         });
     });
-    it('Should return an error if the user provides no firstname', done => {
+    it('Should return an error if the user provides no firstname', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
@@ -70,7 +70,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           firstName: '',
           lastName: 'bellion',
           email: 'jon@gmail.com',
-          password: 'simpleandsweet'
+          password: 'simpleandsweet',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -79,23 +79,23 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           done();
         });
     });
-    // it('Should return an error if the user provides no lastname', done => {
-    //   chai
-    //     .request(app)
-    //     .post('/api/v1/auth/signup')
-    //     .send({
-    //       firstName: 'jon',
-    //       lastName: '',
-    //       email: 'jon@gmail.com',
-    //       password: 'simpleandsweet'
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(400);
-    //       expect(res.body.status).to.be.equal(400);
-    //       expect(res.body.error).to.be.equal('Last Name is required');
-    //       done();
-    //     });
-    // });
+    it('Should return an error if the user provides no lastname', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'jon',
+          lastName: '',
+          email: 'jon@gmail.com',
+          password: 'simpleandsweet',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.message).to.be.equal('Last Name is required');
+          done();
+        });
+    });
     // it('Should return an error if the user name with whitespace', done => {
     //   chai
     //     .request(app)

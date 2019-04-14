@@ -3,7 +3,10 @@
 /* eslint-disable radix */
 import jwt from 'jsonwebtoken';
 // eslint-disable-next-line no-unused-vars
+import dotenv from 'dotenv';
 import testData from '../data/testData';
+
+dotenv.config();
 
 const { accounts } = testData;
 class Helper {
