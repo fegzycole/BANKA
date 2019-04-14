@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import chai from 'chai';
 
 import chaiHttp from 'chai-http';
@@ -7,6 +10,9 @@ import app from '../app';
 const { expect } = chai;
 
 chai.use(chaiHttp);
+
+let UserToken;
+let adminToken;
 
 describe('Tests for all Auth(signup and signin) Endpoints', () => {
   describe('POST api/v1/auth/signup', () => {

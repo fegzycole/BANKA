@@ -4,7 +4,7 @@ const { transaction, accounts } = testData;
 
 class TransactionController {
   static creditAccount(req, res) {
-    // search if account numbee exists
+    // search if account number exists
     try {
       const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo, 10));
       if (!account) {
@@ -17,7 +17,14 @@ class TransactionController {
       const { body } = req;
       const acctBal = account.balance;
       const { amountToDeposit } = body;
-
+      // validate whether a number has been put in the body of the request
+      if (typeof (amountToDeposit) !== 'number') {
+        return res.status(400).json({
+          status: 400,
+          message: 'Please put in a number to Deposit',
+        });
+      }
+      // continue with the account debit logic
       const newBal = acctBal + amountToDeposit;
       const newTransaction = {
         id: transaction.length + 1,
@@ -59,7 +66,14 @@ class TransactionController {
       const { body } = req;
       const acctBal = account.balance;
       const { amountToDeposit } = body;
-
+      // validate whether a number has been put in the body of the request
+      if (typeof (amountToDeposit) !== 'number') {
+        return res.status(400).json({
+          status: 400,
+          message: 'Please put in a number to Withdraw',
+        });
+      }
+      // continue with the account debit logic
       const newBal = acctBal - amountToDeposit;
       const newTransaction = {
         id: transaction.length + 1,
