@@ -22,11 +22,11 @@ class UserController {
     }
     const user = {
       id: users.length + 1,
-      firstName: body.firstName.trim().toLowerCase(),
-      lastName: body.lastName.trim().toLowerCase(),
+      firstName: body.firstName.trim(),
+      lastName: body.lastName.trim(),
       email: body.email.trim(),
       password: body.password,
-      type: body.type.toLowerCase().trim(),
+      type: body.type.trim(),
       isAdmin,
     };
 
@@ -61,6 +61,8 @@ class UserController {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          type: user.type,
+          password: user.password,
           isAdmin,
         },
       });
