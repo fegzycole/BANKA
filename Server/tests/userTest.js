@@ -19,11 +19,12 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           lastName: 'bellion',
           email: 'jon@gmail.com',
           password: 'simpleandweet',
+          type: 'client',
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body.status).to.be.equal(201);
-          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email');
+          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email', 'type', 'password', 'isAdmin');
           expect(res.body.data.token).to.be.a('string');
           done();
         });
@@ -37,6 +38,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           lastName: 'bellion',
           email: 'wrongmailaddress',
           password: 'simpleandweet',
+          type: 'client',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -54,6 +56,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           lastName: 'bellion',
           email: 'jon@gmail.com',
           password: 'simpl eand',
+          type: 'client',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -71,6 +74,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           lastName: 'bellion',
           email: 'jon@gmail.com',
           password: 'simpleandsweet',
+          type: 'client',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -88,6 +92,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           lastName: '',
           email: 'jon@gmail.com',
           password: 'simpleandsweet',
+          type: 'client',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -104,7 +109,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           firstName: 'jon y',
           lastName: 'middlename',
           email: 'jon@gmail.com',
-          password: 'simpleandsweet'
+          password: 'simpleandsweet',
+          type: 'client',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -122,7 +128,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           firstName: 'Ferguson',
           lastName: 'middl ename',
           email: 'jon@gmail.com',
-          password: 'simpleandsweet'
+          password: 'simpleandsweet',
+          type: 'client',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -139,7 +146,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           firstName: 'john',
           lastName: 'joe',
           email: 'fergusoniyara@gmail.com',
-          password: 'simplepassword'
+          password: 'simplepassword',
+          type: 'client',
         })
         .end((err, res) => {
           expect(res).to.have.status(409);
@@ -159,6 +167,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         lastName: 'bellion',
         email: 'fergusoniyara@gmail.com',
         password: 'somepassword',
+        type: 'client',
       })
       .end((err, res) => {
         expect(res).to.have.status(200);

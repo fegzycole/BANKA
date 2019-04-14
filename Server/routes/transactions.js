@@ -5,16 +5,17 @@ import TransactionController from '../Controller/transactionController';
 
 import helper from '../helper/helper';
 
+
 const { creditAccount, debitAccount } = TransactionController;
 
-const { verifyToken } = helper;
+const { verifyTokenTransactions } = helper;
+
 
 const router = express.Router();
 
-router.post('/:accountNo/credit', verifyToken, creditAccount);
+router.post('/:accountNo/credit', verifyTokenTransactions, creditAccount);
 
-router.post('/:accountNo/debit', verifyToken, debitAccount);
+router.post('/:accountNo/debit', verifyTokenTransactions, debitAccount);
 
-// router.post('/:accountNo/debit', verifyToken, debitAccount);
 
 export default router;
