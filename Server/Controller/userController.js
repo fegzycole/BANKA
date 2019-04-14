@@ -28,10 +28,11 @@ class UserController {
       password: body.password,
       type: body.type.toLowerCase().trim(),
       isAdmin,
-      // isStaff: false,
     };
+
     // check if user pass valid and required data
     const { error } = validateSignUpInput(body);
+
     // check if user inputs are valid
     if (error) {
       return res.status(400).json({
@@ -48,10 +49,11 @@ class UserController {
           message: 'Email Already exists',
         });
       }
-      // create token
       users.push(user);
+
+      // create token
       const token = createToken(user);
-      return res.send(users).status(201).json({
+      return res.status(201).json({
         status: 201,
         data: {
           token,
