@@ -15,7 +15,7 @@ module.exports = {
       lastName: 'Solomon',
       email: 'sobed2smile@gmail.com',
       password: 'password2',
-      type: 'cashier',
+      type: 'client',
       isAdmin: false,
     },
     {
@@ -24,8 +24,8 @@ module.exports = {
       lastName: 'Fortran',
       email: 'mfontana@gmail.com',
       password: 'daysOfYourLife',
-      type: 'admin',
-      isAdmin: true,
+      type: 'cashier',
+      isAdmin: false,
     },
   ],
   accounts: [
