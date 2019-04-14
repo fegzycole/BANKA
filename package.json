@@ -7,9 +7,10 @@
     "test": "mocha server/tests/*.js --require @babel/register --timeout 50000 --exit --watch || true",
     "test-watch": "nodemon --exec \"npm test\"",
     "start": "node dist/app.js",
-    "start-dev": "nodemon --exec babel-node app.js",
+    "start-dev": "nodemon --exec babel-node server/app.js",
     "babel-build": "babel Server -d dist",
     "clean": "rm -rf dist && mkdir dist",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "build": "npm run clean && npm run babel-build",
     "heroku-postbuild": "npm run build"
   },

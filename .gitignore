@@ -1,3 +1,6 @@
 node_modules
 dist
 server/middleware/auth.js
+dumps
+debug.log
+file
