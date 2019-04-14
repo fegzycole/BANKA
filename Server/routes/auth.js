@@ -5,18 +5,12 @@ import express from 'express';
 import userController from '../Controller/userController';
 
 const {
-  createClientAccount, createCashierAccount, createAdminAccount, login,
+  createUserAccount, login,
 } = userController;
 
 const router = express.Router();
 
-router.post('/signup', createClientAccount);
-
-
-router.post('/createcashier', createCashierAccount);
-
-router.post('/createadmin', createAdminAccount);
-
+router.post('/signup', createUserAccount);
 
 router.post('/signin', login);
 

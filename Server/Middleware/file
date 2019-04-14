@@ -10,3 +10,9 @@ static CreateNewAccount() {
     }
     return number;
   }
+
+
+   createCashierAccount, createAdminAccount,
+   router.post('/createcashier', createCashierAccount);
+
+router.post('/createadmin', createAdminAccount);
