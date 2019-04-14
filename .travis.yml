@@ -1,8 +1,14 @@
 language: node_js
-env:
- global:
- -CC_TEST_REPORTER_D=8831e651bf6187ace37d8c95b0609d18a76de1ff0efcf1af835302fa715d7f2c
- -NODE_ENV=test
-node_js: 
--"10.15.1"
-before_script:
+node_js:
+  - "10.15.1"
+
+cache:
+  directories:
+    - "node_modules"
+before_install:
+  - "npm install"
+
+after_success:
+  - "npm run coverage"
+script:
+  - "npm run test"
