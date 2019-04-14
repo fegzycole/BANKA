@@ -42,11 +42,9 @@ class UserController {
           message: 'Email Already exists',
         });
       }
-      // push user into the test Db
-      users.push(user);
       // create token
+      users.push(user);
       const token = createToken(user);
-
       return res.status(201).json({
         status: 201,
         data: {
