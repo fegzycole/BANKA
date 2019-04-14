@@ -101,7 +101,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           done();
         });
     });
-    it('Should return an error if firstname has a  whitespace', done => {
+    it('Should return an error if firstname has a  whitespace', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
@@ -120,7 +120,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           done();
         });
     });
-    it('Should return an error if laststname has a  whitespace', done => {
+    it('Should return an error if laststname has a  whitespace', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
@@ -138,7 +138,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           done();
         });
     });
-    it('Should return an error if the user tries to sign up with an existing email', done => {
+    it('Should return an error if the user tries to sign up with an existing email', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
@@ -158,32 +158,32 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
     });
   });
   describe('POST api/v1/auth/signin', () => {
-    it('Should successfully log in a user and return a token', done => {
+    it('Should successfully log in a user and return a token', (done) => {
       chai
-      .request(app)
-      .post('/api/v1/auth/signin')
-      .send({
-        firstName: 'jon',
-        lastName: 'bellion',
-        email: 'fergusoniyara@gmail.com',
-        password: 'somepassword',
-        type: 'client',
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body.status).to.be.equal(200);
-        expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email');
-        expect(res.body.data.token).to.be.a('string');
-        done();
-      });
+        .request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          firstName: 'jon',
+          lastName: 'bellion',
+          email: 'fergusoniyara@gmail.com',
+          password: 'somepassword',
+          type: 'client',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.equal(200);
+          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email');
+          expect(res.body.data.token).to.be.a('string');
+          done();
+        });
     });
-    it('Should return an error if the user provides wrong login credentials', done => {
+    it('Should return an error if the user provides wrong login credentials', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signin')
         .send({
           email: 'wrong@gmail.com',
-          password: 'wrongpassword'
+          password: 'wrongpassword',
         })
         .end((err, res) => {
           expect(res).to.have.status(409);
