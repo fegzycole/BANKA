@@ -1,2 +1,4 @@
 node_modules
 store
+dist
+Middleware/Auth.js
