@@ -4,13 +4,13 @@
   "description": "Banking Application",
   "main": "app.js",
   "scripts": {
-    "test": "mocha server/tests/*.js --require @babel/register --timeout 50000 --exit --watch || true",
+    "test": "mocha Server/tests/*.js --require @babel/register --timeout 50000 --exit --watch || true",
     "test-watch": "nodemon --exec \"npm test\"",
     "start": "node dist/app.js",
     "start-dev": "nodemon --exec babel-node server/app.js",
     "babel-build": "babel Server -d dist",
     "clean": "rm -rf dist && mkdir dist",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc npm run test && nyc report --reporter=text-lcov | coveralls",
     "build": "npm run clean && npm run babel-build",
     "heroku-postbuild": "npm run build"
   },
@@ -31,7 +31,8 @@
     "express": "^4.16.4",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
-    "nyc": "^13.3.0"
+    "nyc": "^13.3.0",
+    "pg": "^7.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",

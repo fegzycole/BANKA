@@ -30,7 +30,7 @@ class UserController {
       isAdmin,
     };
 
-    // check if user pass valid and required data
+    // check if user passes valid and required data
     const { error } = validateSignUpInput(body);
 
     // check if user inputs are valid
@@ -49,7 +49,7 @@ class UserController {
           message: 'Email Already exists',
         });
       }
-      users.push(user);
+      users.push(user);// Should be moved down
 
       // create token
       const token = createToken(user);
@@ -75,14 +75,17 @@ class UserController {
   }
 
   static login(req, res) {
+
     const { body } = req;
+
     const userDetails = {
       email: body.email,
       password: body.password,
     };
+
     try {
-      // check if email already exists
       const emailExists = findUserByEmail(users);
+
       if (!emailExists.includes(userDetails.email)) {
         return res.status(409).json({
           status: 409,
@@ -91,8 +94,11 @@ class UserController {
         });
       }
       const { email, password } = userDetails;
+
       const userInfo = users.find(user => user.email === email);
+
       const storedPassword = userInfo.password;
+     
       if (password === storedPassword) {
         const token = createToken(userInfo);
         return res.status(200).json({
@@ -106,6 +112,7 @@ class UserController {
           },
         });
       }
+
       return res.json({
         status: 401,
         error: 'Authentication Failed. Incorrect Password',

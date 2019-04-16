@@ -173,7 +173,6 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
       .end((err, res) => {
         const { body } = res;
         expect(body.status).to.be.equals(200);
-        console.log(2, body);
         if (!err) {
           cashierToken = body.data.token;
         }
@@ -188,7 +187,6 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
       .set('x-access-token', cashierToken)
       .end((err, res) => {
         const { body } = res;
-        console.log(3, body);
         expect(body.status).to.be.equals(200);
         expect(body).to.be.an('object');
         expect(body.data).to.haveOwnProperty('accountNo');
