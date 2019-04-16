@@ -43,14 +43,14 @@
 }
 
 
-@media screen and (min-width: 800px)
+@media screen and (min-width: 1101px)
 {
    .table 
     {
     width: 80%;
     max-width: 100%;
     margin-bottom: 1rem;
-    margin-top:20%;
+    margin-top:10.5%;
     margin-left: 10%;
     background-color: transparent;
     border-collapse: collapse;
@@ -93,11 +93,11 @@
 
 
 
-@media only screen and (min-width:768px) and (max-width:1024px)
+@media only screen and (min-width:768px) and (max-width:890px)
 {
     .table{
       margin-left: 10%;
-      margin-top:30%;
+      margin-top:15.5%;
       width:80%;
       font-size:13px;
     }
@@ -107,12 +107,35 @@
 
 }
 
+@media only screen and (min-width:891px) and (max-width:901px)
+{
+    .table{
+      margin-left: 10%;
+      margin-top:13.5%;
+      width:80%;
+      font-size:13px;
+    }
+    .tableHeader{
+      display:none;
+   }
 
-@media only screen and (min-width:569px) and (max-width:767px)
+}
+
+@media only screen and (min-width:902px) and (max-width:1100px)
+{
+  .table{
+    margin-left: 10%;
+    margin-top:13.5%;
+    width:80%;
+    font-size:13px;
+  }
+}
+
+@media only screen and (min-width:521px) and (max-width:767px)
 {
    .table
    {
-     margin-top:30%;
+     margin-top:19%;
      width:80%;
      margin-left: 10%;
      font-size:12px;
@@ -124,9 +147,9 @@
     display:none;
  }
 }
- 
 
-@media only screen and (min-width:240px) and (max-width:568px)
+
+@media only screen and (min-width:240px) and (max-width:520px)
 {
   .tableHeader{
     display:block;
@@ -137,7 +160,7 @@
  }
    .table
    {
-    margin-top:50%;
+    margin-top:28%;
      width:100%;
      border-bottom: 2px solid #FFAF30;
      border-left: 2px solid #FFAF30;
