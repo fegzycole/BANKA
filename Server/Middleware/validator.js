@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
 import Joi from 'joi';
 
 class Validator {
@@ -21,6 +18,13 @@ class Validator {
       type: Joi.string().required().error(new Error('Enter An Account Type Please')),
     };
 
+    return Joi.validate(user, schema);
+  }
+
+  static validateStatusInput(user) {
+    const schema = {
+      status: Joi.string().required().valid('active', 'dormant').error(new Error('Status can only be active or dormant')),
+    };
     return Joi.validate(user, schema);
   }
 }

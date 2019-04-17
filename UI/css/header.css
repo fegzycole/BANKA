@@ -85,6 +85,7 @@ nav a:hover
 {
     color:#FFAF30;
 }
+
 .nav-toggle:checked~nav
 {
     transform:scale(1,1);
@@ -104,7 +105,6 @@ nav a:hover
     {
         display:grid;
         grid-template-columns: 1fr 1fr minmax(600px,1fr) 1fr 1fr;
-        
     }
     .logo
     {
@@ -116,26 +116,38 @@ nav a:hover
     nav
     {
         all: unset;
-        grid-column:  3/span 2 ;
+        grid-column:  3/span 3 ;
         display:flex;
         justify-content: flex-end;
         align-items:center;
+        margin-right: 9em;
     }
     nav li
     {
-        margin-left: 1.5em;
+        
         margin-bottom:0;
     }
     nav a
     {
         opacity: 1;
         position:relative;
+        font-size:14px;
     }
     nav ul
     {
         display:flex;
         justify-content:flex-end;
-  
+        margin-left: 7.5em;
+    }
+    nav .dashPage::before{
+        content:'';
+        display:block;
+        height: 5px;
+        background:#FFAF30;
+        position: absolute;
+        bottom: -.75em;
+        transform:scale(1,1);
+        transition:transform ease-in-out 0ms;
     }
     nav a::before
     {
