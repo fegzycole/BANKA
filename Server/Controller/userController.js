@@ -1,4 +1,4 @@
-/* eslint-disable linebreak-style */
+import bcrypt from 'bcryptjs';
 import Validator from '../Middleware/validator';
 import testData from '../data/testData';
 import Helper from '../helper/helper';
@@ -14,18 +14,21 @@ class UserController {
   static createUserAccount(req, res) {
     // variable checking for admin status
     let isAdmin;
+
     const { body } = req;
+
     if (body.type === 'client' || body.type === 'cashier') {
       isAdmin = false;
     } else if (body.type === 'admin') {
       isAdmin = true;
     }
+
     const user = {
       id: users.length + 1,
       firstName: body.firstName.trim(),
       lastName: body.lastName.trim(),
       email: body.email.trim(),
-      password: body.password,
+      password: bcrypt.hashSync(body.password, 10),
       type: body.type.trim(),
       isAdmin,
     };
@@ -43,16 +46,16 @@ class UserController {
     try {
       // check if email already exists
       const emailExists = findUserByEmail(users);
+
       if (emailExists.includes(user.email)) {
         return res.status(409).json({
           status: 409,
           message: 'Email Already exists',
         });
       }
-      users.push(user);// Should be moved down
-
       // create token
       const token = createToken(user);
+      users.push(user);// Should be moved down
       return res.status(201).json({
         status: 201,
         data: {
@@ -62,7 +65,6 @@ class UserController {
           lastName: user.lastName,
           email: user.email,
           type: user.type,
-          password: user.password,
           isAdmin,
         },
       });
@@ -75,7 +77,6 @@ class UserController {
   }
 
   static login(req, res) {
-
     const { body } = req;
 
     const userDetails = {
@@ -97,9 +98,11 @@ class UserController {
 
       const userInfo = users.find(user => user.email === email);
 
-      const storedPassword = userInfo.password;
-     
-      if (password === storedPassword) {
+      const storedPassword = bcrypt.hashSync(userInfo.password);
+
+      const passwordChecker = bcrypt.compareSync(password, storedPassword);
+
+      if (passwordChecker) {
         const token = createToken(userInfo);
         return res.status(200).json({
           status: 200,

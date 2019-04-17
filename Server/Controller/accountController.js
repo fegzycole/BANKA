@@ -1,5 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable radix */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -11,7 +9,7 @@ dotenv.config();
 
 const { accounts } = testData;
 
-const { validateCreateAccount } = Validator;
+const { validateCreateAccount, validateStatusInput } = Validator;
 
 const { createAccountNumber } = helper;
 
@@ -33,8 +31,11 @@ class AccountController {
         });
       }
       const openingBal = parseFloat(0.00);
+
       const accountNumber = createAccountNumber();
+
       const accountNo = accountNumber;
+
       const account = {
         accountNo,
         firstName: req.decoded.user.firstName,
@@ -42,7 +43,7 @@ class AccountController {
         email: req.decoded.user.email,
         owner: req.decoded.user.id,
         type: req.body.type,
-        status: 'active',
+        status: 'draft',
         openingBal,
       };
 
@@ -55,7 +56,7 @@ class AccountController {
       }
       // pushes the new account to the DB if it validates
       accounts.push(account);
-      res.json({
+      return res.json({
         status: 200,
         data: account,
       });
@@ -69,7 +70,7 @@ class AccountController {
 
   static activateOrDeactivate(req, res) {
     try {
-      const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo));
+      const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo, 10));
       if (!account) {
         return res.status(404).json({
           status: 404,
@@ -77,18 +78,22 @@ class AccountController {
           message: 'Account not found',
         });
       }
+      const user = {
+        status: req.body.status,
+      };
+      const { error } = validateStatusInput(req.body);
 
-      if (account.status === 'active') {
-        account.status = 'dormant';
-      } else {
-        account.status = 'active';
+      if (error) {
+        return res.status(400).json({
+          status: 400,
+          message: error.message,
+        });
       }
-      accounts.push(account);
-      res.json({
+      return res.json({
         status: 200,
         data: {
           accountNo: account.accountNo,
-          status: account.status,
+          status: user.status,
         },
       });
     } catch (e) {
@@ -101,7 +106,7 @@ class AccountController {
 
   static deleteAnAccount(req, res) {
     try {
-      const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo));
+      const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo, 10));
       if (!account) {
         return res.status(404).json({
           status: 404,
@@ -112,7 +117,7 @@ class AccountController {
 
       const index = accounts.indexOf(account);
       accounts.splice(index, 1);
-      res.json({
+      return res.json({
         status: 200,
         message: 'Account deleted successfully',
       });

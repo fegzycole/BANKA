@@ -4,4 +4,4 @@ server/middleware/auth.js
 dumps
 debug.log
 file
-UI/css/style.css
+UI/css/gistyle.css

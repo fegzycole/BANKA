@@ -23,7 +23,7 @@ deposit money
 - Admin can create staff and admin user accounts.
 
 
-## Required Features
+## Options Features
 - User can reset password.
 - Integrate real time email notification upon credit/debit transaction on user account.
 - User can upload a photo to their profile.

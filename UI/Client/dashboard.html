@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/dashboard.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/body.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/dashbody.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/header.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/dashtable.css">
 </head>
 <body>
     <div id="container">
@@ -19,7 +20,7 @@
                 <input type = 'checkbox' id="nav-toggle" class="nav-toggle">
                 <nav>
                     <ul>
-                        <li><a href="./dashboard.html">DASHBOARD</a></li>
+                        <li><a href="./dashboard.html" class = 'dashPage'>DASHBOARD</a></li>
                         <li><a href="./createaccount.html">CREATE ACCOUNT</a></li>
                         <li><a href="./viewTransactions.html">TRANSACTIONS</a></li>
                         <li><a href="../signin.html">LOGOUT</a></li>
@@ -30,52 +31,131 @@
                 </label>
             </header>
             <!-- HEADER STYLES END HERE -->
-                    <div id="-dashboard">
-                        <h1>Welcome, Iyara Oghenefegor<span class="circle"></span> </h1>
-                        <div class="account-details">
-                            <h4>Account Number: 2059238909</h4>
-                            <h4>Account Balance: <span>&#8358;</span>2059238909</h4>
-                        </div>
-                       <div class="row">
-                           <div class="action"><p>Transaction Type: Credit</p><br>
-                            <p>Amount: <span>&#8358;</span>5000000</p><br>
-                            <p>Remarks: <span>&#8358;</span>5000000</p><br>
-                           </div>
-                            <div class="action"><p>Transaction Type: Credit</p><br>
-                            <p>Amount: <span>&#8358;</span>5000000</p><br>
-                            <p>Remarks: <span>&#8358;</span>5000000</p><br>
-                           </div>
-                           <div class="action"><p>Transaction Type: Credit</p><br>
-                            <p>Amount: <span>&#8358;</span>5000000</p><br>
-                            <p>Remarks: <span>&#8358;</span>5000000</p><br>
-                           </div>
-                       </div>
-                       <div class="row">
-                           <div class="action"><p>Transaction Type: Credit</p><br>
-                            <p>Amount: <span>&#8358;</span>5000000</p><br>
-                            <p>Remarks: <span>&#8358;</span>5000000</p><br>
-                           </div>
-                           <div class="action"><p>Transaction Type: Credit</p><br>
-                            <p>Amount: <span>&#8358;</span>5000000</p><br>
-                            <p>Remarks: <span>&#8358;</span>5000000</p><br>
-                           </div>
-                        </div>
-                        <div class="row-icon">
-                            <div class="icon-field">
-                                <ul>
-                                    <div class="icon1">
-                               <li><img src="../Images/kisspng-telephone-logo-computer-icons-clip-art-phone-icon-5ac539f9da47f1.4822659315228748738941.png" alt="Call center"></li>
-                                    </div>
-                                    <div class="icon2">
-                               <li><img src="../Images/kisspng-email-computer-icons-symbol-message-inbox-by-gmail-envelope-5ac2f5b5e067a1.3859970715227263259192.png" alt="Notification"></li>
-                                    </div>          
-                               </ul>
-                            </div>
-                        </div>
-
-
-                       </div>
-                    </div>
+            <div class="userSection">
+                <div class="picture">
+                    <img  class = 'pic' src = '../Images/Capture1.PNG' alt= 'Ferguson smiling'>
+                    <button class= 'btn-blue'>Edit Image</button>
+                    <div class="dashUl">
+                    <ul>
+                        <li>Full Name: Iyara Oghenefegor Ferguson</li>
+                        <li>Occupation: Software Developer</li>
+                        <li>Company: Andela</li>
+                        <li>Status: Single</li>
+                        <li>Interests: Singing, Building Software</li>
+                    </ul>
+                    <button class= 'btn-blue'>Edit Profile</button>
+                 </div>
+                </div>
+                <div class="dashcontent">
+                <div class="acctdetails">
+                     <p class ="name">Welcome Oghenefegor</p>
+                     <p class = "balance">Balance: &#x20A6;500000</p>
+                </div>            
+                <div class="view-transactions">
+                    <p class="accounts">Accounts</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               <th>Account Name</th>
+                               <th>Type</th>
+                               <th>Account Number</th>
+                               <th>Balance</th>
+                               <th>Date Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Iyara Ferguson</td>
+                                <td>Savings</td>
+                                <td>2059725105</td>
+                                <td> &#x20A6;10000000</td>
+                                <td>30/02/2019</td>
+                            </tr>
+                            <tr>
+                                <td>Iyara Ferguson</td>
+                                <td>Current</td>
+                                <td>2059728705</td>
+                                <td> &#x20A6;10000000</td>
+                                <td>30/02/2019</td>
+                            </tr>
+                            <tr>
+                                <td>Iyara Ferguson</td>
+                                <td>Current</td>
+                                <td>2050725105</td>
+                                <td> &#x20A6;10000000</td>
+                                <td>30/02/2019</td>
+                            </tr>
+                            <tr>
+                                <td>Iyara Ferguson</td>
+                                <td>Savings</td>
+                                <td>2059705105</td>
+                                <td> &#x20A6;10000000</td>
+                                <td>30/02/2019</td>
+                            </tr>
+                            <tr>
+                                <td>Iyara Ferguson</td>
+                                <td>Current</td>
+                                <td>2059025105</td>
+                                <td> &#x20A6;10000000</td>
+                                <td>30/02/2019</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+                </br>
+                 <div class="view-transactions">
+                        <p class="accounts">Transactions</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                   <th>Account Number</th>
+                                   <th>Type</th>
+                                   <th>Transaction</th>
+                                   <th>Amount</th>
+                                   <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2059725105</td>
+                                    <td>Savings</td>
+                                    <td>Credit</td>
+                                    <td> &#x20A6;10000</td>
+                                    <td>30/02/2019</td>
+                                </tr>
+                                <tr>
+                                        <td>2059725105</td>
+                                        <td>Savings</td>
+                                        <td>Credit</td>
+                                        <td> &#x20A6;10000</td>
+                                        <td>30/02/2019</td>
+                                </tr>
+                                <tr>
+                                        <td>2059725105</td>
+                                        <td>Savings</td>
+                                        <td>Credit</td>
+                                        <td> &#x20A6;10000</td>
+                                        <td>30/02/2019</td>
+                                </tr>
+                                <tr>
+                                        <td>2059725105</td>
+                                        <td>Savings</td>
+                                        <td>Credit</td>
+                                        <td> &#x20A6;10000</td>
+                                        <td>30/02/2019</td>
+                                </tr>
+                                <tr>
+                                        <td>2059725105</td>
+                                        <td>Savings</td>
+                                        <td>Credit</td>
+                                        <td> &#x20A6;10000</td>
+                                        <td>30/02/2019</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                     </div>
+                </div>
+            </div>
         </div>
     </div>
     <footer id = "footer">
