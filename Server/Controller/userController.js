@@ -191,6 +191,47 @@ class UserController {
       });
     }
   }
+
+  static async logindB(req, res) {
+    const { body } = req;
+
+    const userDetails = [body.email, body.password];
+    try {
+      const emailChecker = await Db.query('SELECT * FROM userstable  WHERE email = $1', [body.email]);
+      if (emailChecker.rows.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Email not Registered',
+        });
+      }
+      const getPassword = await Db.query('SELECT password FROM userstable WHERE email = $1', [body.email]);
+      const passwordChecker = bcrypt.compareSync(body.password, getPassword.rows[0].password);
+      if (passwordChecker) {
+        const token = createToken(emailChecker.rows[0]);
+        return res.status(200).json({
+          status: 200,
+          data: {
+            token,
+            id: emailChecker.rows[0].id,
+            firstName: emailChecker.rows[0].firstname,
+            lastName: emailChecker.rows[0].lastname,
+            email: emailChecker.rows[0].email,
+          },
+        });
+      }
+
+      return res.json({
+        status: 401,
+        error: 'Authentication Failed. Incorrect Password',
+        message: 'Request denied',
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
 }
 
 export default UserController;
