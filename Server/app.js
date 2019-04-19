@@ -6,6 +6,7 @@ import Auth from './routes/auth';
 import accounts from './routes/accounts';
 import transactions from './routes/transactions';
 import Authv2 from './routes/authv2';
+import accountsv2 from './routes/accountsv2';
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/v1/accounts', accounts);
 app.use('/api/v1/transactions', transactions);
 
 app.use('/api/v2/auth', Authv2);
+app.use('/api/v2/accounts', accountsv2);
 
 app.get('/', (req, res) => res.status(200).send({
   message: 'Welcome To Banka',
