@@ -2,10 +2,11 @@ import bcrypt from 'bcryptjs';
 import Validator from '../Middleware/validator';
 import testData from '../data/testData';
 import Helper from '../helper/helper';
+import Db from '../Database/index';
 
 const { findUserByEmail, createToken } = Helper;
 
-const { validateSignUpInput } = Validator;
+const { validateSignUpInput, validateSignUpInputDb } = Validator;
 
 const { users } = testData;
 
@@ -75,6 +76,68 @@ class UserController {
       });
     }
   }
+
+  static async dbCreateAccount(req, res) {
+    try {
+      // variable checking for admin status
+      let isadmin;
+      const { body } = req;
+      if (body.type === 'client' || body.type === 'cashier') {
+        isadmin = false;
+      } else if (body.type === 'admin') {
+        isadmin = true;
+      }
+      const user = [
+        body.firstname.trim(),
+        body.lastname.trim(),
+        body.email.trim(),
+        bcrypt.hashSync(body.password, 10),
+        body.type.trim(),
+        isadmin,
+      ];
+      // check if user passes valid and required data
+      const { error } = validateSignUpInputDb(user);
+      // check if user inputs are valid
+      if (error) {
+        return res.status(400).json({
+          status: 400,
+          message: error.message,
+        });
+      }
+      // check if email already exists
+      await Db.query('BEGIN');
+      // eslint-disable-next-line consistent-return
+      const emailChecker = await Db.query('SELECT email FROM userstable  WHERE email = $1', [body.email]);
+      if (emailChecker.rows.length !== 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Email Already Exists',
+        });
+      }
+      const queryString = 'INSERT INTO userstable(firstname, lastname, email, password, type, isadmin) VALUES($1, $2, $3, $4, $5, $6) returning *';
+      const { rows } = await Db.query(queryString, user);
+      // create token
+      const token = createToken(rows[0]);
+      await Db.query('COMMIT');
+      return res.status(201).json({
+        status: 201,
+        data: {
+          firstname: rows[0].firstname,
+          laststname: rows[0].lastname,
+          email: rows[0].email,
+          type: rows[0].type,
+          isadmin,
+          token,
+        },
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        errors: 'internal server error',
+      });
+    }
+  }
+
 
   static login(req, res) {
     const { body } = req;

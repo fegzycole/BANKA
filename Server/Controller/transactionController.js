@@ -7,6 +7,7 @@ class TransactionController {
     // search if account number exists
     try {
       const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo, 10));
+      console.log(2, account);
       if (!account) {
         return res.status(404).json({
           status: 404,

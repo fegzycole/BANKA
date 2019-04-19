@@ -28,11 +28,11 @@ if (deleteBtn.length !== 0) {
 
 const closeDeleteModal = () => {
   deleteModal.style.display = 'none';
-}
+};
 
 const closeViewModal = () => {
   viewModal.style.display = 'none';
-}
+};
 
 viewButton.addEventListener('click', closeViewModal);
 

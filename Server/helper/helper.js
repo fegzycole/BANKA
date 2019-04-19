@@ -1,13 +1,26 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable func-names */
+/* eslint-disable indent */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import testData from '../data/testData';
+import Db from '../Database/index';
 
 dotenv.config();
 
 const { accounts } = testData;
 class Helper {
-  static findUserByEmail(users) {
+  static async findUserByEmailDb(user) {
+    try {
+    const { rows } = await Db.query('SELECT email FROM userstable  WHERE email = $1', [user]);
+    return rows;
+    } catch (err) {
+     console.log(err.message);
+   }
+  }
+
+static findUserByEmail(users) {
     return users.reduce((emailArray, userDetail) => emailArray.concat(userDetail.email), []);
   }
 
@@ -93,6 +106,13 @@ class Helper {
         errors: [error],
       });
     }
+  }
+
+  static retrieveUSers(callback) {
+    db.query('SELECT * from users', function (err, res) {
+      if (err.error) { return callback(err); }
+      callback(res);
+    });
   }
 }
 
