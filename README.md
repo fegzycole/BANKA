@@ -52,7 +52,7 @@ To run:
 git clone <https://github.com/fegzycole/Banka-Project.git>
 cd Banka-Project
 npm install
-npm start
+npm start-dev
 ```
 
 ## Testing

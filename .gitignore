@@ -5,3 +5,4 @@ dumps
 debug.log
 file
 UI/css/gistyle.css
+.env

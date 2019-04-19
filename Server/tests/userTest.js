@@ -30,7 +30,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body.status).to.be.equal(201);
-          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email', 'type', 'password', 'isAdmin');
+          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email', 'type', 'isAdmin');
           expect(res.body.data.token).to.be.a('string');
           done();
         });
