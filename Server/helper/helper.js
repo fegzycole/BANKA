@@ -16,7 +16,7 @@ class Helper {
     const { rows } = await Db.query('SELECT email FROM userstable  WHERE email = $1', [user]);
     return rows;
     } catch (err) {
-     console.log(err.message);
+     return err.error;
    }
   }
 
@@ -38,6 +38,19 @@ static findUserByEmail(users) {
 
   static createAccountNumber() {
     return 200000001 + accounts.length;
+  }
+
+  static async createAccountNumberDb() {
+    try {
+      await Db.query('BEGIN');
+      const arrayHandler = await Db.query('SELECT * FROM accountstable');
+      if (arrayHandler.rows.length === 0) {
+        return 200000001;
+      }
+      return 200000001 + arrayHandler.rows.length;
+    } catch (e) {
+      return e.error;
+    }
   }
 
   static verifyTokenTransactions(req, res, next) {
@@ -106,13 +119,6 @@ static findUserByEmail(users) {
         errors: [error],
       });
     }
-  }
-
-  static retrieveUSers(callback) {
-    db.query('SELECT * from users', function (err, res) {
-      if (err.error) { return callback(err); }
-      callback(res);
-    });
   }
 }
 

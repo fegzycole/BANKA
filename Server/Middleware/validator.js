@@ -21,6 +21,7 @@ class Validator {
     return Joi.validate(user, schema);
   }
 
+
   static validateStatusInput(user) {
     const schema = {
       status: Joi.string().required().valid('active', 'dormant').error(new Error('Status can only be active or dormant')),
@@ -36,6 +37,11 @@ class Validator {
         .error(new Error('Password should be at least 4 characters without any whitespace(s)')),
       Joi.string().required().valid('admin', 'cashier', 'client').error(new Error('This field is required, Account type can only be admin,cashier or staff')),
       Joi.bool().required().error(new Error('This field is required')));
+    return Joi.validate(user, schema);
+  }
+
+  static validateCreateAccountDb(user) {
+    const schema = Joi.string().required().valid('savings', 'current').error(new Error('This field is required, Account type can only be savings or current'));
     return Joi.validate(user, schema);
   }
 }
