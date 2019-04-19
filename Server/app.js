@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable linebreak-style */
 import '@babel/polyfill';
 import express from 'express';
 import bodyParser from 'body-parser';
