@@ -8,7 +8,7 @@ const { verifyTokenAccounts, verifyTokenAll } = helper;
 
 const {
   createClientAccountDb, activateOrDeactivateDb, deleteAnAccountDb, getTransactionsHistory,
-  getspecificTransaction,
+  getspecificAccount,
 } = Accountcontroller;
 
 
@@ -20,7 +20,7 @@ router.patch('/:accountNo', verifyTokenAccounts, activateOrDeactivateDb);
 
 router.get('/:accountNo/transactions', verifyTokenAll, getTransactionsHistory);
 
-router.get('/:accountNo', verifyTokenAll, getspecificTransaction);
+router.get('/:accountNo', verifyTokenAll, getspecificAccount);
 
 router.delete('/:accountNo', verifyTokenAccounts, deleteAnAccountDb);
 
