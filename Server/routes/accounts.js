@@ -4,7 +4,9 @@ import Accountcontroller from '../Controller/accountController';
 
 import helper from '../helper/helper';
 
-const { createClientAccount, activateOrDeactivate, deleteAnAccount } = Accountcontroller;
+const {
+  createClientAccount, activateOrDeactivate, deleteAnAccount,
+} = Accountcontroller;
 
 const { verifyTokenAccounts } = helper;
 

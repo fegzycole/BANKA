@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import testData from '../data/testData';
 import Db from '../Database/index';
 
@@ -155,7 +156,7 @@ class TransactionController {
       const updatedStatus = await Db.query(update, [parseInt(newBal, 10), parseInt(req.params.accountNo, 10)]);
 
       // pushes the new account to the DB if it validates
-      const queryString = 'INSERT INTO transactionstable(type, accountnumber, oldbalance, newbalance, cashier, amount, creadtedon) VALUES($1, $2, $3, $4, $5, $6, NOW()) returning *';
+      const queryString = 'INSERT INTO transactionstable(type, accountnumber, oldbalance, newbalance, cashier, amount, createdon) VALUES($1, $2, $3, $4, $5, $6, NOW()) returning *';
 
       const { rows } = await Db.query(queryString, newTransaction);
 
