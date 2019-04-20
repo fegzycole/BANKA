@@ -12,4 +12,6 @@ const router = express.Router();
 
 router.post('/:accountNo/credit', verifyTokenTransactions, cashTransactionsDb);
 
+router.post('/:accountNo/debit', verifyTokenTransactions, cashTransactionsDb);
+
 export default router;
