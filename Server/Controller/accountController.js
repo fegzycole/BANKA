@@ -186,6 +186,7 @@ class AccountController {
       }
       const update = 'UPDATE accountstable SET status = $1 WHERE accountnumber = $2 returning *';
       const updatedStatus = await Db.query(update, [req.body.status, parseInt(req.params.accountNo, 10)]);
+      await Db.query('COMMIT');
       return res.json({
         status: 200,
         data: {
@@ -264,6 +265,36 @@ class AccountController {
       return res.json({
         status: 200,
         data: update.rows,
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
+
+  static async getspecificTransaction(req, res) {
+    try {
+      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
+      if (accountChecker.rows.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Account Not Found',
+        });
+      }
+      const getOwner = await Db.query('SELECT createdon, CAST(accountnumber as INTEGER), type, status, CAST(balance as FLOAT), owner FROM accountstable WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
+      const getOwnerEmail = await Db.query('SELECT email FROM userstable WHERE id = $1', [parseInt(getOwner.rows[0].owner, 10)]);
+      return res.json({
+        status: 200,
+        data: {
+          createdOn: getOwner.rows[0].createdon,
+          accountNumber: parseInt(req.params.accountNo, 10),
+          ownerEmail: getOwnerEmail.rows[0].email,
+          type: getOwner.rows[0].type,
+          status: getOwner.rows[0].status,
+          balance: parseFloat(getOwner.rows[0].balance),
+        },
       });
     } catch (e) {
       return res.status(500).json({
