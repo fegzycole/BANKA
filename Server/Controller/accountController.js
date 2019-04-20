@@ -306,6 +306,13 @@ class AccountController {
 
   static async getAllAccounts(req, res) {
     try {
+      if (req.query.status === 'active') {
+        const { rows } = await Db.query('SELECT accountstable.createdon, CAST(accountstable.accountnumber as INTEGER), userstable.email, accountstable.type, accountstable.status, CAST(accountstable.balance as FLOAT) from accountstable inner join userstable on accountstable.owner = userstable.id WHERE status = $1', ['active']);
+        return res.status(200).json({
+          status: 200,
+          data: rows,
+        });
+      }
       const { rows } = await Db.query('SELECT accountstable.createdon, CAST(accountstable.accountnumber as INTEGER), userstable.email, accountstable.type, accountstable.status, CAST(accountstable.balance as FLOAT) from accountstable inner join userstable on accountstable.owner = userstable.id');
       return res.status(200).json({
         status: 200,
