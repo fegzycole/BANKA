@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -213,6 +214,31 @@ class AccountController {
 
       const index = accounts.indexOf(account);
       accounts.splice(index, 1);
+      return res.json({
+        status: 200,
+        message: 'Account deleted successfully',
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
+
+  static async deleteAnAccountDb(req, res) {
+    try {
+      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
+      if (accountChecker.rows.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Account Not Found',
+        });
+      }
+
+      const deleteString = 'DELETE FROM accountstable WHERE accountnumber = $1 returning *';
+      const { rows } = Db.query(deleteString, [parseInt(req.params.accountNo, 10)]);
+      await Db.query('COMMIT');
       return res.json({
         status: 200,
         message: 'Account deleted successfully',
