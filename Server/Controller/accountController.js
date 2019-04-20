@@ -10,7 +10,9 @@ dotenv.config();
 
 const { accounts } = testData;
 
-const { validateCreateAccount, validateStatusInput, validateCreateAccountDb } = Validator;
+const {
+  validateCreateAccount, validateStatusInput, validateCreateAccountDb, validateStatusInputdB,
+} = Validator;
 
 const { createAccountNumber, createAccountNumberDb } = helper;
 
@@ -103,10 +105,11 @@ class AccountController {
           message: error.message,
         });
       }
-      // pushes the new account to the DB if it validates
       await Db.query('BEGIN');
+      // pushes the new account to the DB if it validates
       const queryString = 'INSERT INTO accountstable(accountnumber, owner, type, status, balance, createdon) VALUES($1, $2, $3, $4, $5, NOW()) returning *';
       const { rows } = await Db.query(queryString, account);
+      await Db.query('COMMIT');
       return res.json({
         status: 200,
         data: {
@@ -153,6 +156,40 @@ class AccountController {
         data: {
           accountNo: account.accountNo,
           status: user.status,
+        },
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
+
+  static async activateOrDeactivateDb(req, res) {
+    try {
+      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
+      if (accountChecker.rows.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Account Not Found',
+        });
+      }
+      const { error } = validateStatusInputdB(req.body.status);
+
+      if (error) {
+        return res.status(400).json({
+          status: 400,
+          message: error.message,
+        });
+      }
+      const update = 'UPDATE accountstable SET status = $1 WHERE accountnumber = $2 returning *';
+      const updatedStatus = await Db.query(update, [req.body.status, parseInt(req.params.accountNo, 10)]);
+      return res.json({
+        status: 200,
+        data: {
+          accountNo: updatedStatus.rows[0].accountnumber,
+          status: updatedStatus.rows[0].status,
         },
       });
     } catch (e) {

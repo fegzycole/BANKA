@@ -47,7 +47,7 @@ static findUserByEmail(users) {
       if (arrayHandler.rows.length === 0) {
         return 200000001;
       }
-      return 200000001 + arrayHandler.rows.length;
+      return 200000001 + arrayHandler.rows.length + 1;
     } catch (e) {
       return e.error;
     }

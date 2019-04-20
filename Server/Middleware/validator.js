@@ -29,6 +29,11 @@ class Validator {
     return Joi.validate(user, schema);
   }
 
+  static validateStatusInputdB(user) {
+    const schema = Joi.string().required().valid('active', 'dormant').error(new Error('Status can only be active or dormant'));
+    return Joi.validate(user, schema);
+  }
+
   static validateSignUpInputDb(user) {
     const schema = Joi.array().ordered(Joi.string().regex(/^\S+$/).required().error(new Error('First Name is required, It should have no whitespace(s) in between its characters')),
       Joi.string().regex(/^\S+$/).required().error(new Error('Last Name is required, It should have no whitespace(s) in between its characters')),
