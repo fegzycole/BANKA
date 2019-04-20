@@ -15,7 +15,7 @@ const {
   validateCreateAccount, validateStatusInput, validateCreateAccountDb, validateStatusInputdB,
 } = Validator;
 
-const { createAccountNumber, createAccountNumberDb } = helper;
+const { createAccountNumber, createAccountNumberDb, displayInfoOnPostman } = helper;
 
 class AccountController {
   static createClientAccount(req, res) {
@@ -250,7 +250,27 @@ class AccountController {
       });
     }
   }
+
+  static async getTransactionsHistory(req, res) {
+    try {
+      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
+      if (accountChecker.rows.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'Account Not Found',
+        });
+      }
+      const update = await Db.query('SELECT id, CAST(createdon as DATE), type, CAST(accountnumber as INTEGER), CAST(amount as FLOAT), CAST(oldbalance as FLOAT), CAST(newbalance as FLOAT) FROM transactionstable WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
+      return res.json({
+        status: 200,
+        data: update.rows,
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
 }
-
-
 export default AccountController;
