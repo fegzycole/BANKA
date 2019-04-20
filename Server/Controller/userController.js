@@ -232,6 +232,29 @@ class UserController {
       });
     }
   }
+
+  static async getUserAccounts(req, res) {
+    try {
+      const emailChecker = await Db.query('SELECT email, id FROM userstable  WHERE email = $1', [req.params.email]);
+      if (emailChecker.rows.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'No user with the stated email',
+        });
+      }
+      const id = parseInt(emailChecker.rows[0].id, 10);
+      const getOwner = await Db.query('SELECT createdon, CAST(accountnumber as INTEGER), type, status, CAST(balance as FLOAT) FROM accountstable WHERE owner = $1', [id]);
+      return res.json({
+        status: 200,
+        accounts: getOwner.rows,
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
 }
 
 export default UserController;
