@@ -123,7 +123,7 @@ class TransactionController {
       if (typeof (amountToDeposit) !== 'number') {
         return res.status(400).json({
           status: 400,
-          message: 'Please put in a number to Deposit',
+          message: 'Please put in a number',
         });
       }
       if (type !== 'credit' && type !== 'debit') {
@@ -171,6 +171,35 @@ class TransactionController {
           cashier: parseInt(rows[0].cashier, 10),
           transactionType: rows[0].type,
           accountBalance: parseFloat(rows[0].newbalance, 10),
+        },
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
+
+  static async getspecificTransaction(req, res) {
+    try {
+      const idChecker = await Db.query('SELECT id, createdon, CAST(accountnumber as INTEGER), type, CAST(oldbalance as FLOAT),CAST(newbalance as FLOAT), CAST(amount as FLOAT) FROM transactionstable WHERE id = $1', [parseInt(req.params.id, 10)]);
+      if (idChecker.rows.length === 0) {
+        return res.status(404).json({
+          status: 404,
+          message: 'No Transaction with the stated ID',
+        });
+      }
+      return res.json({
+        status: 200,
+        data: {
+          transactionId: idChecker.rows[0].id,
+          createdOn: idChecker.rows[0].createdon,
+          type: idChecker.rows[0].type,
+          accountNumber: idChecker.rows[0].accountnumber,
+          amount: idChecker.rows[0].amount,
+          oldBalance: idChecker.rows[0].oldbalance,
+          newBalance: idChecker.rows[0].newbalance,
         },
       });
     } catch (e) {

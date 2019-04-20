@@ -274,7 +274,7 @@ class AccountController {
     }
   }
 
-  static async getspecificTransaction(req, res) {
+  static async getspecificAccount(req, res) {
     try {
       const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
       if (accountChecker.rows.length === 0) {
