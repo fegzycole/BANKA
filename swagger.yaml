@@ -1,0 +1,298 @@
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: Banka
+  description: Banka is a light-weight core banking application that powers banking operations like account
+    creation, customer deposit and withdrawals. This app is meant to support a single bank, where
+    users can signup and create bank accounts online, but must visit the branch to withdraw or
+    deposit money
+  contact: {}
+host: banka--app.herokuapp.com
+basePath: /api/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /auth/signup:
+    post:
+      description: Allows users to signup and create an account
+      summary: Signup
+      tags:
+        - Auth
+      operationId: AuthSignupPost
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: Body
+          in: body
+          required: true
+          description: ""
+          schema:
+            $ref: "#/definitions/SignupRequest"
+      responses:
+        200:
+          description: ""
+          headers: {}
+  /auth/signin:
+    post:
+      description: Users can login to their EPIC Mail Account
+      summary: signin
+      tags:
+        - Auth
+      operationId: AuthLoginPost
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: Body
+          in: body
+          required: true
+          description: ""
+          schema:
+            $ref: "#/definitions/signinRequest"
+      responses:
+        200:
+          description: ""
+          headers: {}
+  /accounts:
+    post:
+      description: Authorized Users can create a bank account
+      summary: Create bank account
+      tags:
+        - Accounts
+      operationId: CreateAccountPost
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: Body
+          in: body
+          required: true
+          description: ""
+          schema:
+            $ref: "#/definitions/CreateBankAccount"
+      responses:
+        200:
+          description: ""
+          headers: {}
+  /accounts/<account-number>:
+    patch:
+      description: Admin and staff can activate or deactivate a bank account.
+      summary: Activate or deactivate an account
+      tags:
+        - Accounts
+      operationId: ActivateOrDeactivatePatch
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: Body
+          in: body
+          required: true
+          description: ""
+          schema:
+            $ref: "#/definitions/ActivateOrDeactivate"
+      responses:
+        200:
+          description: ""
+          headers: {}
+    delete:
+      description: Admin and staff can delete a bank account.
+      summary: Delete an account
+      tags:
+        - Accounts
+      operationId: AccountsDelete
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+      responses:
+        200:
+          description: ""
+          headers: {}
+  /transactions/<account-number>/credit:
+    post:
+      description: Cashier can credit a bank account.
+      summary: credit a bank account
+      tags:
+        - Transactions
+      operationId: CreditAccountPost
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: Body
+          in: body
+          required: true
+          description: ""
+          schema:
+            $ref: "#/definitions/CreditAccountPost"
+      responses:
+        200:
+          description: ""
+          headers: {}
+  /transactions/<account-number>/debit:
+    post:
+      description: Cashier can debit a bank account.
+      summary: debit a bank account
+      tags:
+        - Transactions
+      operationId: DebitAccountPost
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+        - name: Body
+          in: body
+          required: true
+          description: ""
+          schema:
+            $ref: "#/definitions/DebitAccountPost"
+      responses:
+        200:
+          description: ""
+          headers: {}  
+definitions:
+  SignupRequest:
+    title: SignupRequest
+    example:
+      firstName: ferguson
+      lastName: Iyara
+      email: fergusoniyara@gmail.com
+      password: fegzycole
+      type: cashier
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      type:
+        type: string
+    required:
+      - firstName
+      - lastName
+      - email
+      - password
+      - type
+  signinRequest:
+    title: signinRequest
+    example:
+      email: fergusoniyara@gmail.com.com
+      password: somepassword1
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - email
+      - password
+  CreateBankAccount:
+    title: CreateBankAccount
+    example:
+      type: savings
+    type: object
+    properties:
+      type: 
+        type: string
+    required:
+      - type
+  ActivateOrDeactivate:
+    title: ActivateOrDeactivate
+    example:
+      status: active
+    type: object
+    properties:
+      status: 
+        type: string
+    required:
+      - status
+  CreditAccountPost:
+    title: CreditAccountPost
+    example:
+      amountToDeposit: 25500.30
+    type: object
+    properties:
+      status: 
+        type: integer
+    required:
+      - amountToDeposit
+  DebitAccountPost:
+    title: DebitAccountPost
+    example:
+      amountToDeposit: 25500.30
+    type: object
+    properties:
+      status: 
+        type: integer
+    required:
+      - amountToDeposit
+tags:
+  - name: Auth
+  - name: Accounts
+  - name: Transactions
