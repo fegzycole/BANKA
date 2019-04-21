@@ -106,7 +106,6 @@ class UserController {
       }
       // check if email already exists
       await Db.query('BEGIN');
-      // eslint-disable-next-line consistent-return
       const emailChecker = await Db.query('SELECT email FROM userstable  WHERE email = $1', [body.email]);
       if (emailChecker.rows.length !== 0) {
         return res.status(404).json({
