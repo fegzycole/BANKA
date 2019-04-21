@@ -10,7 +10,7 @@
     "start-dev": "nodemon --exec babel-node server/app.js",
     "babel-build": "babel Server -d dist",
     "clean": "rm -rf dist && mkdir dist",
-    "coverage": "nyc npm run test && nyc report --reporter=text-lcovnpm ",
+    "coverage": "nyc npm run test && nyc report --reporter=text-lcov",
     "build": "npm run clean && npm run babel-build",
     "heroku-postbuild": "npm run build"
   },
