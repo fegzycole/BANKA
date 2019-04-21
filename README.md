@@ -1,6 +1,5 @@
-# Banka-Project <a href="https://codeclimate.com/github/fegzycole/Banka-Project/maintainability"><img src="https://api.codeclimate.com/v1/badges/eeb800fdd3ccccdfb721/maintainability" /></a>
+# Banka-Project <a href="https://codeclimate.com/github/fegzycole/Banka-Project/maintainability"><img src="https://api.codeclimate.com/v1/badges/eeb800fdd3ccccdfb721/maintainability" /></a> [![Build Status](https://travis-ci.com/fegzycole/Banka-Project.svg?branch=develop)](https://travis-ci.com/fegzycole/Banka-Project)
 
-[![Build Status](https://travis-ci.com/fegzycole/Banka-Project.svg?branch=develop)](https://travis-ci.com/fegzycole/Banka-Project)
 Banka is a light-weight core banking application that powers banking operations like account
 creation, customer deposit and withdrawals. This app is meant to support a single bank, where
 users can signup and create bank accounts online, but must visit the branch to withdraw or
