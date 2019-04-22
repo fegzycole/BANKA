@@ -8,7 +8,7 @@ info:
     deposit money
   contact: {}
 host: banka--app.herokuapp.com
-basePath: /api/v1
+basePath: /api/v2
 schemes:
   - https
 consumes:
@@ -79,11 +79,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: Content-Type
-          in: header
-          required: true
-          type: string
-          description: ""
         - name: token
           in: header
           required: true
@@ -99,6 +94,49 @@ paths:
         200:
           description: ""
           headers: {}
+    get:
+      description: Admin/Staff Can view all bank accounts
+      summary: View bank accounts
+      tags:
+        - Accounts
+      operationId: BankAccountsGet
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+      responses:
+        200:
+          description: ""
+          headers: {}
+    get:
+      description: Admin/Staff Can view all active or dormant bank accounts
+      summary: View active/dormant accounts
+      tags:
+        - Accounts
+      operationId: BankAccountActiveOrDormantGet
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: true
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+      responses:
+        200:
+          description: ""
+          headers: {}     
   /accounts/<account-number>:
     patch:
       description: Admin and staff can activate or deactivate a bank account.
@@ -136,6 +174,66 @@ paths:
       tags:
         - Accounts
       operationId: AccountsDelete
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+      responses:
+        200:
+          description: ""
+          headers: {}
+  /accounts/<accountNo>/transactions:
+    get:
+      description: User Can view account transactions history
+      summary: View account transactions history
+      tags:
+        - Accounts
+      operationId: ViewAccountsTransactionsGet
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+      responses:
+        200:
+          description: ""
+          headers: {}
+  /accounts/<accountNo>:
+    get:
+      description: User Can view account details
+      summary: View account details
+      tags:
+        - Accounts
+      operationId: ViewAccountDetailsGet
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+      responses:
+        200:
+          description: ""
+          headers: {}
+  /transactions/<id>:
+    get:
+      description: User Can view a specific transaction
+      summary: View specific transaction
+      tags:
+        - Transactions
+      operationId: ViewSpecificTransactionGet
       deprecated: false
       produces:
         - application/json
@@ -210,6 +308,26 @@ paths:
       responses:
         200:
           description: ""
+          headers: {}
+  /user/<email>/accounts:
+    get:
+      description: View all accounts owned by a specific user
+      summary: View accounts for single user
+      tags:
+        - User
+      operationId: ViewUserAccountsGet
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          required: true
+          type: string
+          description: ""
+      responses:
+        200:
+          description: ""
           headers: {}  
 definitions:
   SignupRequest:
@@ -278,7 +396,7 @@ definitions:
       amountToDeposit: 25500.30
     type: object
     properties:
-      status: 
+      amountToDeposit: 
         type: integer
     required:
       - amountToDeposit
@@ -288,11 +406,18 @@ definitions:
       amountToDeposit: 25500.30
     type: object
     properties:
-      status: 
+      amountToDeposit: 
         type: integer
     required:
       - amountToDeposit
+    type: object
+    properties:
+      status:
+        type: string
+    required:
+      - status
 tags:
   - name: Auth
   - name: Accounts
   - name: Transactions
+  - name: User

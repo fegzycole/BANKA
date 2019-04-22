@@ -1,10 +1,14 @@
-/* eslint-disable max-len */
 import testData from '../data/testData';
 import Db from '../Database/index';
 
 const { transaction, accounts } = testData;
 
 class TransactionController {
+  /**
+   * Creit Bank Account (V1)
+   * @param {*} req
+   * @param {*} res
+   */
   static creditAccount(req, res) {
     // search if account number exists
     try {
@@ -55,6 +59,11 @@ class TransactionController {
     }
   }
 
+  /**
+   * Debit Bank Account (V2)
+   * @param {*} req
+   * @param {*} res
+   */
   static debitAccount(req, res) {
     try {
       const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo, 10));
@@ -104,6 +113,11 @@ class TransactionController {
     }
   }
 
+  /**
+   * Cash Transactions(Debit an Credit) V2
+   * @param {*} req
+   * @param {*} res
+   */
   static async cashTransactionsDb(req, res) {
     // search if account number exists
     try {
@@ -135,10 +149,10 @@ class TransactionController {
       // continue with the account credit/debit logic
       let newBal;
       if (req.body.type === 'credit') {
-        newBal = parseInt(acctBal, 10) + parseInt(amountToDeposit, 10);
+        newBal = parseFloat(acctBal) + parseFloat(amountToDeposit);
       }
       if (req.body.type === 'debit') {
-        newBal = parseInt(acctBal, 10) - parseInt(amountToDeposit, 10);
+        newBal = parseFloat(acctBal) - parseFloat(amountToDeposit);
       }
 
       const newTransaction = [
@@ -151,12 +165,11 @@ class TransactionController {
       ];
       await Db.query('BEGIN');
 
-      const update = 'UPDATE accountstable SET balance = $1 WHERE accountnumber = $2 returning *';
 
-      const updatedStatus = await Db.query(update, [parseInt(newBal, 10), parseInt(req.params.accountNo, 10)]);
+      await Db.query('UPDATE accountstable SET balance = $1 WHERE accountnumber = $2 returning *', [parseFloat(newBal), parseInt(req.params.accountNo, 10)]);
 
       // pushes the new account to the DB if it validates
-      const queryString = 'INSERT INTO transactionstable(type, accountnumber, oldbalance, newbalance, cashier, amount, createdon) VALUES($1, $2, $3, $4, $5, $6, NOW()) returning *';
+      const queryString = 'INSERT INTO transactions(type, accountnumber, oldbalance, newbalance, cashier, amount, createdon) VALUES($1, $2, $3, $4, $5, $6, NOW()) returning *';
 
       const { rows } = await Db.query(queryString, newTransaction);
 
@@ -181,9 +194,14 @@ class TransactionController {
     }
   }
 
+  /**
+   * Get A Specific Transaction(V2)
+   * @param {*} req
+   * @param {*} res
+   */
   static async getspecificTransaction(req, res) {
     try {
-      const idChecker = await Db.query('SELECT id, createdon, CAST(accountnumber as INTEGER), type, CAST(oldbalance as FLOAT),CAST(newbalance as FLOAT), CAST(amount as FLOAT) FROM transactionstable WHERE id = $1', [parseInt(req.params.id, 10)]);
+      const idChecker = await Db.query('SELECT id, createdon, CAST(accountnumber as INTEGER), type, CAST(oldbalance as FLOAT),CAST(newbalance as FLOAT), CAST(amount as FLOAT) FROM transactions WHERE id = $1', [parseInt(req.params.id, 10)]);
       if (idChecker.rows.length === 0) {
         return res.status(404).json({
           status: 404,

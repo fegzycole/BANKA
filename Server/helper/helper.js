@@ -1,7 +1,4 @@
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable func-names */
-/* eslint-disable indent */
-/* eslint-disable consistent-return */
+
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import testData from '../data/testData';
@@ -11,19 +8,22 @@ dotenv.config();
 
 const { accounts } = testData;
 class Helper {
+  // find a user by emailv2
   static async findUserByEmailDb(user) {
     try {
-    const { rows } = await Db.query('SELECT email FROM userstable  WHERE email = $1', [user]);
-    return rows;
+      const { rows } = await Db.query('SELECT email FROM userstable  WHERE email = $1', [user]);
+      return rows;
     } catch (err) {
-     return err.error;
-   }
+      return err.error;
+    }
   }
 
-static findUserByEmail(users) {
+  // fin a user by email v1
+  static findUserByEmail(users) {
     return users.reduce((emailArray, userDetail) => emailArray.concat(userDetail.email), []);
   }
 
+  // create JsonWebToken for new user
   static createToken(user) {
     const token = jwt.sign(
       {
@@ -36,23 +36,33 @@ static findUserByEmail(users) {
     return token;
   }
 
+  // create an account number v1
   static createAccountNumber() {
     return 200000001 + accounts.length;
   }
 
+  // Create a unique account number v2
   static async createAccountNumberDb() {
     try {
+      let getMaxId = 0;
       await Db.query('BEGIN');
       const arrayHandler = await Db.query('SELECT * FROM accountstable');
       if (arrayHandler.rows.length === 0) {
         return 200000001;
       }
-      return 200000001 + arrayHandler.rows.length + 1;
+
+      for (let i = 0; i < arrayHandler.rows.length; i += 1) {
+        if (arrayHandler.rows[i].id > getMaxId) {
+          getMaxId = arrayHandler.rows[i].id;
+        }
+      }
+      return 20000000 + parseInt(getMaxId, 10) + 1;
     } catch (e) {
       return e.error;
     }
   }
 
+  // Token verification Logic that permits only cashiers to do cash transactions
   static verifyTokenTransactions(req, res, next) {
     try {
       const token = req.body.token || req.headers['x-access-token'];
@@ -87,6 +97,7 @@ static findUserByEmail(users) {
     }
   }
 
+  // Token verification Logic that permits only cashiers/admins to do account related transactions
   static verifyTokenAccounts(req, res, next) {
     try {
       const token = req.body.token || req.headers['x-access-token'];
@@ -121,6 +132,7 @@ static findUserByEmail(users) {
     }
   }
 
+  // Token verification Logic that permits clients, cashiers and admins to view transactions
   static verifyTokenAll(req, res, next) {
     try {
       const token = req.body.token || req.headers['x-access-token'];

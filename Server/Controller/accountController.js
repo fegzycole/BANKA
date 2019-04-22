@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import helper from '../helper/helper';
@@ -15,9 +13,14 @@ const {
   validateCreateAccount, validateStatusInput, validateCreateAccountDb, validateStatusInputdB,
 } = Validator;
 
-const { createAccountNumber, createAccountNumberDb, displayInfoOnPostman } = helper;
+const { createAccountNumber, createAccountNumberDb } = helper;
 
 class AccountController {
+  /**
+   * create a new Bank Account V1
+   * @param {*} req
+   * @param {*} res
+   */
   static createClientAccount(req, res) {
     try {
     // Decode the client's token
@@ -72,6 +75,11 @@ class AccountController {
     }
   }
 
+  /**
+   * create a new Bank Account V2
+   * @param {*} req
+   * @param {*} res
+   */
   static async createClientAccountDb(req, res) {
     try {
     // Decode the client's token
@@ -114,12 +122,12 @@ class AccountController {
       return res.json({
         status: 200,
         data: {
-          accountNumber: rows[0].accountnumber,
+          accountNumber: parseInt(rows[0].accountnumber, 10),
           firstName: req.decoded.user.firstname,
           lastName: req.decoded.user.lastname,
           email: req.decoded.user.email,
           type: rows[0].type,
-          openingBalance: rows[0].balance,
+          openingBalance: parseFloat(rows[0].balance),
 
         },
       });
@@ -131,6 +139,11 @@ class AccountController {
     }
   }
 
+  /**
+   * Toggle Account Status V1
+   * @param {*} req
+   * @param {*} res
+   */
   static activateOrDeactivate(req, res) {
     try {
       const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo, 10));
@@ -167,12 +180,19 @@ class AccountController {
     }
   }
 
+  /**
+   * Toggle Account Status V2
+   * @param {*} req
+   * @param {*} res
+   */
   static async activateOrDeactivateDb(req, res) {
     try {
-      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
-      if (accountChecker.rows.length === 0) {
+      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
+      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
+      if (!account) {
         return res.status(404).json({
           status: 404,
+          error: 'Account Not Found',
           message: 'Account Not Found',
         });
       }
@@ -202,6 +222,11 @@ class AccountController {
     }
   }
 
+  /**
+   * Delete a bank account V1
+   * @param {*} req
+   * @param {*} res
+   */
   static deleteAnAccount(req, res) {
     try {
       const account = accounts.find(c => c.accountNo === parseInt(req.params.accountNo, 10));
@@ -227,18 +252,23 @@ class AccountController {
     }
   }
 
+  /**
+   * Delete a bank account V2
+   * @param {*} req
+   * @param {*} res
+   */
   static async deleteAnAccountDb(req, res) {
     try {
-      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
-      if (accountChecker.rows.length === 0) {
+      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
+      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
+      if (!account) {
         return res.status(404).json({
           status: 404,
+          error: 'Account Not Found',
           message: 'Account Not Found',
         });
       }
-
-      const deleteString = 'DELETE FROM accountstable WHERE accountnumber = $1 returning *';
-      const { rows } = Db.query(deleteString, [parseInt(req.params.accountNo, 10)]);
+      await Db.query('DELETE FROM accountstable WHERE accountnumber = $1 returning *', [parseInt(req.params.accountNo, 10)]);
       await Db.query('COMMIT');
       return res.json({
         status: 200,
@@ -252,6 +282,11 @@ class AccountController {
     }
   }
 
+  /**
+   * Get all Transactions for an account(V2)
+   * @param {*} req
+   * @param {*} res
+   */
   static async getTransactionsHistory(req, res) {
     try {
       const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
@@ -261,7 +296,7 @@ class AccountController {
           message: 'Account Not Found',
         });
       }
-      const update = await Db.query('SELECT id, CAST(createdon as DATE), type, CAST(accountnumber as INTEGER), CAST(amount as FLOAT), CAST(oldbalance as FLOAT), CAST(newbalance as FLOAT) FROM transactionstable WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
+      const update = await Db.query('SELECT id, CAST(createdon as DATE), type, CAST(accountnumber as INTEGER), CAST(amount as FLOAT), CAST(oldbalance as FLOAT), CAST(newbalance as FLOAT) FROM transactions WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
       return res.json({
         status: 200,
         data: update.rows,
@@ -274,6 +309,11 @@ class AccountController {
     }
   }
 
+  /**
+   * Get an account's details(V2)
+   * @param {*} req
+   * @param {*} res
+   */
   static async getspecificAccount(req, res) {
     try {
       const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
@@ -304,6 +344,11 @@ class AccountController {
     }
   }
 
+  /**
+   * Get all bank accounts(V2)
+   * @param {*} req
+   * @param {*} res
+   */
   static async getAllAccounts(req, res) {
     try {
       if (req.query.status === 'active') {

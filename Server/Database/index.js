@@ -3,7 +3,7 @@ import { Pool } from 'pg';
 
 dotenv.config();
 
-const connectionString = 'postgresql://postgres:Password@2018@localhost:5432/bankaa';
+const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({
   connectionString,
 });

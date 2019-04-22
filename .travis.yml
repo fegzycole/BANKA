@@ -12,3 +12,4 @@ after_success:
   - "npm run coverage"
 script:
   - "npm run test"
+  

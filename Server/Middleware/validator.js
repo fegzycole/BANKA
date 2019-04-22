@@ -38,8 +38,7 @@ class Validator {
     const schema = Joi.array().ordered(Joi.string().regex(/^\S+$/).required().error(new Error('First Name is required, It should have no whitespace(s) in between its characters')),
       Joi.string().regex(/^\S+$/).required().error(new Error('Last Name is required, It should have no whitespace(s) in between its characters')),
       Joi.string().email().required().error(new Error('Your Email is required, example fergusoniyara@banka.com')),
-      Joi.string().regex(/^\S+$/).required().min(4)
-        .error(new Error('Password should be at least 4 characters without any whitespace(s)')),
+      Joi.string().regex(/^\S+$/).required().error(new Error('Password should be at least 4 characters without any whitespace(s)')),
       Joi.string().required().valid('admin', 'cashier', 'client').error(new Error('This field is required, Account type can only be admin,cashier or staff')),
       Joi.bool().required().error(new Error('This field is required')));
     return Joi.validate(user, schema);
