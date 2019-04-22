@@ -12,6 +12,11 @@ const { users } = testData;
 
 
 class UserController {
+  /**
+   * Signup a new user V1
+   * @param {*} req
+   * @param {*} res
+   */
   static createUserAccount(req, res) {
     // variable checking for admin status
     let isAdmin;
@@ -77,6 +82,11 @@ class UserController {
     }
   }
 
+  /**
+   * Signup a new user V2
+   * @param {*} req
+   * @param {*} res
+   */
   static async dbCreateAccount(req, res) {
     try {
       // variable checking for admin status
@@ -97,7 +107,7 @@ class UserController {
       ];
       // check if user passes valid and required data
       const { error } = validateSignUpInputDb(user);
-      // check if user inputs are valid
+
       if (error) {
         return res.status(400).json({
           status: 400,
@@ -118,11 +128,13 @@ class UserController {
       // create token
       const token = createToken(rows[0]);
       await Db.query('COMMIT');
+      const getId = await Db.query('SELECT id from userstable WHERE email = $1', [rows[0].email]);
       return res.status(201).json({
         status: 201,
         data: {
+          id: getId.rows[0].id,
           firstname: rows[0].firstname,
-          laststname: rows[0].lastname,
+          lastname: rows[0].lastname,
           email: rows[0].email,
           type: rows[0].type,
           isadmin,
@@ -137,7 +149,11 @@ class UserController {
     }
   }
 
-
+  /**
+   * User signin V1
+   * @param {*} req
+   * @param {*} res
+   */
   static login(req, res) {
     const { body } = req;
 
@@ -191,10 +207,13 @@ class UserController {
     }
   }
 
+  /**
+   * User signin V2
+   * @param {*} req
+   * @param {*} res
+   */
   static async logindB(req, res) {
     const { body } = req;
-
-    const userDetails = [body.email, body.password];
     try {
       const emailChecker = await Db.query('SELECT * FROM userstable  WHERE email = $1', [body.email]);
       if (emailChecker.rows.length === 0) {
@@ -218,7 +237,6 @@ class UserController {
           },
         });
       }
-
       return res.json({
         status: 401,
         error: 'Authentication Failed. Incorrect Password',
@@ -232,6 +250,11 @@ class UserController {
     }
   }
 
+  /**
+   * Get all bank accounts belonging to a user V2
+   * @param {*} req
+   * @param {*} res
+   */
   static async getUserAccounts(req, res) {
     try {
       const emailChecker = await Db.query('SELECT email, id FROM userstable  WHERE email = $1', [req.params.email]);

@@ -44,10 +44,10 @@ app.use('/api/v2/user', user);
 app.get('/', (req, res) => res.status(200).send({
   message: 'Welcome To Banka',
 }));
-// const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-app.listen(3000, () => {
-  console.log('App listening on port 3000');
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
 });
 
 
