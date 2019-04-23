@@ -14,7 +14,8 @@ chai.use(chaiHttp);
 let UserToken = '';
 let adminToken = '';
 let cashierToken = '';
-
+let bankAccount;
+let newAccount;
 describe(' Accounts test for - POST, PATCH, DELETE', () => {
   before((done) => {
     const user = {
@@ -320,7 +321,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
   });
   describe('DELETE /accounts/:accountNumber', () => {
     it('it should throw permission error if user is not an admin or staff', (done) => {
-      const accountNumber = 200000001;
+      const accountNumber = 20000087788725;
       chai
         .request(app)
         .delete(`/api/v2/accounts/${accountNumber}`)
@@ -348,7 +349,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         });
     });
     it('it should delete a user bank account if everything checks fine', (done) => {
-      const accountNumber = 20000028;
+      const accountNumber = 20000018;
       chai
         .request(app)
         .delete(`/api/v2/accounts/${accountNumber}`)
@@ -397,7 +398,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
       });
   });
   it('it should delete a user bank account if everything checks fine', (done) => {
-    const accountNumber = 20000027;
+    const accountNumber = 20000019;
     chai
       .request(app)
       .delete(`/api/v2/accounts/${accountNumber}`)
