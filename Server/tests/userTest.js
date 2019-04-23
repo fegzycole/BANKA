@@ -171,7 +171,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .send({
           firstname: 'fegor',
           lastname: 'theboy',
-          email: 'bammmariiya@gmail.com',
+          email: 'barca@gmail.com',
           password: 'simpleandweet',
           type: 'admin',
         })
