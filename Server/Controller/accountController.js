@@ -90,7 +90,7 @@ class AccountController {
           // return an error if it fails to decode
             return res.status(404).json({
               status: 404,
-              message: err,
+              error: err,
             });
           }
           req.decoded = decoded;
@@ -111,10 +111,9 @@ class AccountController {
       if (error) {
         return res.status(400).json({
           status: 400,
-          message: error.message,
+          error: error.message,
         });
       }
-      await Db.query('BEGIN');
       // pushes the new account to the DB if it validates
       const queryString = 'INSERT INTO accountstable(accountnumber, owner, type, status, balance, createdon) VALUES($1, $2, $3, $4, $5, NOW()) returning *';
       const { rows } = await Db.query(queryString, account);
@@ -190,10 +189,9 @@ class AccountController {
       const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
       const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
       if (!account) {
-        return res.status(404).json({
-          status: 404,
+        return res.status(422).json({
+          status: 422,
           error: 'Account Not Found',
-          message: 'Account Not Found',
         });
       }
       const { error } = validateStatusInputdB(req.body.status);
@@ -262,10 +260,9 @@ class AccountController {
       const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
       const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
       if (!account) {
-        return res.status(404).json({
-          status: 404,
+        return res.status(422).json({
+          status: 422,
           error: 'Account Not Found',
-          message: 'Account Not Found',
         });
       }
       await Db.query('DELETE FROM accountstable WHERE accountnumber = $1 returning *', [parseInt(req.params.accountNo, 10)]);
@@ -289,11 +286,12 @@ class AccountController {
    */
   static async getTransactionsHistory(req, res) {
     try {
-      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
-      if (accountChecker.rows.length === 0) {
-        return res.status(404).json({
-          status: 404,
-          message: 'Account Not Found',
+      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
+      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
+      if (!account) {
+        return res.status(422).json({
+          status: 422,
+          error: 'Account Not Found',
         });
       }
       const update = await Db.query('SELECT id, CAST(createdon as DATE), type, CAST(accountnumber as INTEGER), CAST(amount as FLOAT), CAST(oldbalance as FLOAT), CAST(newbalance as FLOAT) FROM transactions WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
@@ -316,11 +314,12 @@ class AccountController {
    */
   static async getspecificAccount(req, res) {
     try {
-      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
-      if (accountChecker.rows.length === 0) {
-        return res.status(404).json({
-          status: 404,
-          message: 'Account Not Found',
+      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
+      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
+      if (!account) {
+        return res.status(422).json({
+          status: 422,
+          error: 'Account Not Found',
         });
       }
       const getOwner = await Db.query('SELECT createdon, CAST(accountnumber as INTEGER), type, status, CAST(balance as FLOAT), owner FROM accountstable WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);

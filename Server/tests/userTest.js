@@ -357,9 +357,9 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           password: 'wrongpassword',
         })
         .end((err, res) => {
-          expect(res).to.have.status(404);
-          expect(res.body.status).to.be.equal(404);
-          expect(res.body.message).to.be.equal('Email not Registered');
+          expect(res).to.have.status(422);
+          expect(res.body.status).to.be.equal(422);
+          expect(res.body.error).to.be.equal('Email not Registered');
           done();
         });
     });
@@ -373,7 +373,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         })
         .end((err, res) => {
           expect(res.body.status).to.be.equal(401);
-          expect(res.body.error).to.be.equal('Authentication Failed. Incorrect Password');
+          expect(res.body.error).to.be.equal('Email or Password Incorrect');
           done();
         });
     });
@@ -408,8 +408,8 @@ describe('Test for User Endpoint', () => {
         .get(`/api/v2/user/${email}/accounts`)
         .set('x-access-token', UserToken)
         .end((err, res) => {
-          expect(res.body.status).to.be.equals(404);
-          expect(res.body.message).to.be.equals('No user with the stated email');
+          expect(res.body.status).to.be.equals(422);
+          expect(res.body.error).to.be.equals('No user with the stated email');
           done();
         });
     });
