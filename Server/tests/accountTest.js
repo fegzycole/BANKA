@@ -398,7 +398,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
       });
   });
   it('it should delete a user bank account if everything checks fine', (done) => {
-    const accountNumber = 20000022gi;
+    const accountNumber = 20000022;
     chai
       .request(app)
       .delete(`/api/v2/accounts/${accountNumber}`)

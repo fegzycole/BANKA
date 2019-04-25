@@ -171,7 +171,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .send({
           firstname: 'fegor',
           lastname: 'theboy',
-          email: 'barca@gmail.com',
+          email: 'barcaaddict@gmail.com',
           password: 'simpleandweet',
           type: 'admin',
         })
@@ -377,5 +377,70 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           done();
         });
     });
+  });
+});
+
+
+describe('Test for User Endpoint', () => {
+  describe('GET api/v2/user/<user-email-address>/accounts', () => {
+    before((done) => {
+      const user = {
+        email: 'fegorson@gmail.com',
+        password: 'somepassword1',
+      };
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          const { body } = res;
+          expect(body.status).to.be.equals(200);
+          if (!err) {
+            UserToken = body.data.token;
+          }
+          done();
+        });
+    });
+    it('Should return an error if the email is not found', (done) => {
+      const email = 'mariana@gmail.com';
+      chai
+        .request(app)
+        .get(`/api/v2/user/${email}/accounts`)
+        .set('x-access-token', UserToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(404);
+          expect(res.body.message).to.be.equals('No user with the stated email');
+          done();
+        });
+    });
+    it('Should return a list of all accounts belonging to a user', (done) => {
+      const email = 'fereoomee@gmail.com';
+      chai
+        .request(app)
+        .get(`/api/v2/user/${email}/accounts`)
+        .set('x-access-token', UserToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(200);
+          expect(res.body.accounts).to.be.an('array');
+          done();
+        });
+    });
+  });
+});
+
+// Test that handles non-existent routes
+describe('GET *', () => {
+  it('Should throw a 404 error', (done) => {
+    chai
+      .request(app)
+      .get('/account/number/try')
+      .end((err, res) => {
+        if (err) done();
+        const { body } = res;
+        expect(body).to.be.an('object');
+        expect(body.status).to.be.equals(404);
+        expect(body.error).to.be.equals('The specified route does not exist');
+        done();
+      });
   });
 });
