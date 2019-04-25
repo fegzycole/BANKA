@@ -137,13 +137,13 @@ class TransactionController {
       if (typeof (amountToDeposit) !== 'number') {
         return res.status(400).json({
           status: 400,
-          message: 'Please put in a number',
+          error: 'Please put in a number',
         });
       }
       if (type !== 'credit' && type !== 'debit') {
         return res.status(400).json({
           status: 400,
-          message: 'Put in a transaction type please',
+          error: 'Put in a transaction type please',
         });
       }
       // continue with the account credit/debit logic
