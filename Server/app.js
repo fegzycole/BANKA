@@ -44,6 +44,13 @@ app.use('/api/v2/user', user);
 app.get('/', (req, res) => res.status(200).send({
   message: 'Welcome To Banka',
 }));
+
+// Handling of non-existent routes
+app.all('*', (req, res) => res.status(404).json({
+  status: 404,
+  error: 'The specified route does not exist',
+}));
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
