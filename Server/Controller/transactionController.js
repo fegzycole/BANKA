@@ -133,13 +133,13 @@ class TransactionController {
       if (typeof (req.body.amountToDeposit) !== 'number') {
         return res.status(400).json({
           status: 400,
-          message: 'Please put in a number',
+          error: 'Please put in a number',
         });
       }
       if (req.body.type !== 'credit' && req.body.type !== 'debit') {
         return res.status(400).json({
           status: 400,
-          message: 'Put in a transaction type please',
+          error: 'Put in a transaction type please',
         });
       }
       // continue with the account credit/debit logic

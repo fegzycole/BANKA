@@ -387,7 +387,25 @@ describe(' Transactions test for  POST endpoints', () => {
         const { body } = res;
         expect(body.status).to.be.equals(400);
         expect(body).to.be.an('object');
-        expect(body.message).to.be.equals('Please put in a number');
+        expect(body.error).to.be.equals('Please put in a number');
+        done();
+      });
+  });
+  it('it should throw an error if the type of transaction is not specified', (done) => {
+    const accountNumber = 20000006;
+    chai
+      .request(app)
+      .post(`/api/v2/transactions/${accountNumber}/debit`)
+      .send({
+        token: cashierToken,
+        amountToDeposit: 2500.65,
+        type: '',
+      })
+      .end((err, res) => {
+        const { body } = res;
+        expect(body.status).to.be.equals(400);
+        expect(body).to.be.an('object');
+        expect(body.error).to.be.equals('Put in a transaction type please');
         done();
       });
   });
@@ -414,7 +432,7 @@ describe(' Transactions test for  GET endpoints', () => {
         });
     });
     it('Should throw an error if the id does not exist', (done) => {
-      const id = 256;
+      const id = 120000;
       chai
         .request(app)
         .get(`/api/v2/transactions/${id}`)
