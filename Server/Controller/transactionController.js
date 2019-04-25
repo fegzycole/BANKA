@@ -128,19 +128,15 @@ class TransactionController {
           message: 'Account Not Found',
         });
       }
-      const { body } = req;
       const acctBal = accountChecker.rows[0].balance;
-      const { amountToDeposit } = body;
-
-      const { type } = body;
       // validate whether a number has been put in the body of the request
-      if (typeof (amountToDeposit) !== 'number') {
+      if (typeof (req.body.amountToDeposit) !== 'number') {
         return res.status(400).json({
           status: 400,
           message: 'Please put in a number',
         });
       }
-      if (type !== 'credit' && type !== 'debit') {
+      if (req.body.type !== 'credit' && req.body.type !== 'debit') {
         return res.status(400).json({
           status: 400,
           message: 'Put in a transaction type please',
@@ -149,41 +145,33 @@ class TransactionController {
       // continue with the account credit/debit logic
       let newBal;
       if (req.body.type === 'credit') {
-        newBal = parseFloat(acctBal) + parseFloat(amountToDeposit);
+        newBal = parseFloat(acctBal) + parseFloat(req.body.amountToDeposit);
       }
       if (req.body.type === 'debit') {
-        newBal = parseFloat(acctBal) - parseFloat(amountToDeposit);
+        newBal = parseFloat(acctBal) - parseFloat(req.body.amountToDeposit);
       }
-
       const newTransaction = [
-        type,
+        req.body.type,
         parseInt(req.params.accountNo, 10),
         parseFloat(acctBal),
         parseFloat(newBal),
         req.decoded.id,
         req.body.amountToDeposit,
       ];
-      await Db.query('BEGIN');
-
-
       await Db.query('UPDATE accountstable SET balance = $1 WHERE accountnumber = $2 returning *', [parseFloat(newBal), parseInt(req.params.accountNo, 10)]);
-
       // pushes the new account to the DB if it validates
       const queryString = 'INSERT INTO transactions(type, accountnumber, oldbalance, newbalance, cashier, amount, createdon) VALUES($1, $2, $3, $4, $5, $6, NOW()) returning *';
-
       const { rows } = await Db.query(queryString, newTransaction);
-
       await Db.query('COMMIT');
-
       return res.json({
         status: 200,
         data: {
           transactionId: rows[0].id,
           accountNumber: parseInt(rows[0].accountnumber, 10),
-          amount: parseFloat(rows[0].amount, 10),
+          amount: parseFloat(rows[0].amount).toFixed(2),
           cashier: parseInt(rows[0].cashier, 10),
           transactionType: rows[0].type,
-          accountBalance: parseFloat(rows[0].newbalance, 10),
+          accountBalance: parseFloat(rows[0].newbalance).toFixed(2),
         },
       });
     } catch (e) {
