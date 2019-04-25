@@ -216,10 +216,10 @@ class UserController {
     const { body } = req;
     try {
       const emailChecker = await Db.query('SELECT * FROM userstable  WHERE email = $1', [body.email]);
-      if (emailChecker.rows.length === 0) {
-        return res.status(404).json({
-          status: 404,
-          message: 'Email not Registered',
+      if (!emailChecker.rows.length) {
+        return res.status(422).json({
+          status: 422,
+          error: 'Email not Registered',
         });
       }
       const getPassword = await Db.query('SELECT password FROM userstable WHERE email = $1', [body.email]);
@@ -239,8 +239,7 @@ class UserController {
       }
       return res.json({
         status: 401,
-        error: 'Authentication Failed. Incorrect Password',
-        message: 'Request denied',
+        error: 'Email or Password Incorrect',
       });
     } catch (e) {
       return res.status(500).json({
@@ -258,10 +257,10 @@ class UserController {
   static async getUserAccounts(req, res) {
     try {
       const emailChecker = await Db.query('SELECT email, id FROM userstable  WHERE email = $1', [req.params.email]);
-      if (emailChecker.rows.length === 0) {
+      if (!emailChecker.rows.length) {
         return res.status(404).json({
-          status: 404,
-          message: 'No user with the stated email',
+          status: 422,
+          error: 'No user with the stated email',
         });
       }
       const id = parseInt(emailChecker.rows[0].id, 10);

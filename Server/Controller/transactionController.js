@@ -122,7 +122,7 @@ class TransactionController {
     // search if account number exists
     try {
       const accountChecker = await Db.query('SELECT * FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
-      if (accountChecker.rows.length === 0) {
+      if (!accountChecker.rows.length) {
         return res.status(404).json({
           status: 404,
           message: 'Account Not Found',
@@ -202,10 +202,10 @@ class TransactionController {
   static async getspecificTransaction(req, res) {
     try {
       const idChecker = await Db.query('SELECT id, createdon, CAST(accountnumber as INTEGER), type, CAST(oldbalance as FLOAT),CAST(newbalance as FLOAT), CAST(amount as FLOAT) FROM transactions WHERE id = $1', [parseInt(req.params.id, 10)]);
-      if (idChecker.rows.length === 0) {
+      if (!idChecker.rows.length) {
         return res.status(404).json({
-          status: 404,
-          message: 'No Transaction with the stated ID',
+          status: 422,
+          error: 'No Transaction with the stated ID',
         });
       }
       return res.json({
