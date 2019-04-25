@@ -141,74 +141,74 @@ describe(' Transactions test for  POST endpoints', () => {
         done();
       });
   });
-  // it('it should successfully credit an account', (done) => {
-  //   const accountNumber = 3089298272728;
-  //   chai
-  //     .request(app)
-  //     .post(`/api/v1/transactions/${accountNumber}/credit`)
-  //     .send({
-  //       token: cashierToken,
-  //       amountToDeposit: 2500,
-  //     })
-  //     .end((err, res) => {
-  //       const { body } = res;
-  //       expect(body.status).to.be.equals(200);
-  //       expect(body).to.be.an('object');
-  //       expect(res.body.data).to.have.key('transactionId', 'accountNumber', 'amount', 'cashier', 'transactionType', 'accountBalance');
-  //       done();
-  //     });
-  // });
-  // it('it should successfully debit an account', (done) => {
-  //   const accountNumber = 3089298272728;
-  //   chai
-  //     .request(app)
-  //     .post(`/api/v1/transactions/${accountNumber}/debit`)
-  //     .send({
-  //       token: cashierToken,
-  //       amountToDeposit: 2500,
-  //     })
-  //     .end((err, res) => {
-  //       const { body } = res;
-  //       expect(body.status).to.be.equals(200);
-  //       expect(body).to.be.an('object');
-  //       expect(res.body.data).to.have.key('transactionId', 'accountNumber', 'amount', 'cashier', 'transactionType', 'accountBalance');
-  //       done();
-  //     });
-  // });
-  // it('it should throw an error if the amount to withdraw is not a number', (done) => {
-  //   const accountNumber = 3089298272728;
-  //   chai
-  //     .request(app)
-  //     .post(`/api/v1/transactions/${accountNumber}/debit`)
-  //     .send({
-  //       token: cashierToken,
-  //       amountToDeposit: 'dfldsfmdfdf',
-  //     })
-  //     .end((err, res) => {
-  //       const { body } = res;
-  //       expect(body.status).to.be.equals(400);
-  //       expect(body).to.be.an('object');
-  //       expect(body.message).to.be.equals('Please put in a number to Withdraw');
-  //       done();
-  //     });
-  // });
-  // it('it should throw an error if the amount to deposit is not a number', (done) => {
-  //   const accountNumber = 3089298272728;
-  //   chai
-  //     .request(app)
-  //     .post(`/api/v1/transactions/${accountNumber}/credit`)
-  //     .send({
-  //       token: cashierToken,
-  //       amountToDeposit: 'dfldsfmdfdf',
-  //     })
-  //     .end((err, res) => {
-  //       const { body } = res;
-  //       expect(body.status).to.be.equals(400);
-  //       expect(body).to.be.an('object');
-  //       expect(body.message).to.be.equals('Please put in a number to Deposit');
-  //       done();
-  //     });
-  // });
+  it('it should successfully credit an account', (done) => {
+    const accountNumber = 3089298272728;
+    chai
+      .request(app)
+      .post(`/api/v1/transactions/${accountNumber}/credit`)
+      .send({
+        token: cashierToken,
+        amountToDeposit: 2500,
+      })
+      .end((err, res) => {
+        const { body } = res;
+        expect(body.status).to.be.equals(200);
+        expect(body).to.be.an('object');
+        expect(res.body.data).to.have.key('transactionId', 'accountNumber', 'amount', 'cashier', 'transactionType', 'accountBalance');
+        done();
+      });
+  });
+  it('it should successfully debit an account', (done) => {
+    const accountNumber = 3089298272728;
+    chai
+      .request(app)
+      .post(`/api/v1/transactions/${accountNumber}/debit`)
+      .send({
+        token: cashierToken,
+        amountToDeposit: 2500,
+      })
+      .end((err, res) => {
+        const { body } = res;
+        expect(body.status).to.be.equals(200);
+        expect(body).to.be.an('object');
+        expect(res.body.data).to.have.key('transactionId', 'accountNumber', 'amount', 'cashier', 'transactionType', 'accountBalance');
+        done();
+      });
+  });
+  it('it should throw an error if the account number does not exist', (done) => {
+    const accountNumber = 30892982728876655728;
+    chai
+      .request(app)
+      .post(`/api/v1/transactions/${accountNumber}/debit`)
+      .send({
+        token: cashierToken,
+        amountToDeposit: 20000.80,
+      })
+      .end((err, res) => {
+        const { body } = res;
+        expect(body.status).to.be.equals(404);
+        expect(body).to.be.an('object');
+        expect(body.error).to.be.equals('Account not found');
+        done();
+      });
+  });
+  it('it should throw an error if the amount to deposit is not a number', (done) => {
+    const accountNumber = 3089298272728;
+    chai
+      .request(app)
+      .post(`/api/v1/transactions/${accountNumber}/credit`)
+      .send({
+        token: cashierToken,
+        amountToDeposit: 'dfldsfmdfdf',
+      })
+      .end((err, res) => {
+        const { body } = res;
+        expect(body.status).to.be.equals(400);
+        expect(body).to.be.an('object');
+        expect(body.message).to.be.equals('Please put in a number to Deposit');
+        done();
+      });
+  });
 });
 
 describe(' Transactions test for  POST endpoints', () => {
@@ -390,5 +390,52 @@ describe(' Transactions test for  POST endpoints', () => {
         expect(body.message).to.be.equals('Please put in a number');
         done();
       });
+  });
+});
+
+describe(' Transactions test for  GET endpoints', () => {
+  describe('GET api/v2/transactions/transactionid', () => {
+    before((done) => {
+      const user = {
+        email: 'fegorson@gmail.com',
+        password: 'somepassword1',
+      };
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          const { body } = res;
+          expect(body.status).to.be.equals(200);
+          if (!err) {
+            UserToken = body.data.token;
+          }
+          done();
+        });
+    });
+    it('Should throw an error if the id does not exist', (done) => {
+      const id = 256;
+      chai
+        .request(app)
+        .get(`/api/v2/transactions/${id}`)
+        .set('x-access-token', UserToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(404);
+          expect(res.body.message).to.be.equals('No Transaction with the stated ID');
+          done();
+        });
+    });
+    it('Should return a list specific transaction if its ID is correct', (done) => {
+      const id = 3;
+      chai
+        .request(app)
+        .get(`/api/v2/transactions/${id}`)
+        .set('x-access-token', UserToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(200);
+          expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
   });
 });

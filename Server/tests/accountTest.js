@@ -349,7 +349,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         });
     });
     it('it should delete a user bank account if everything checks fine', (done) => {
-      const accountNumber = 20000018;
+      const accountNumber = 20000022;
       chai
         .request(app)
         .delete(`/api/v2/accounts/${accountNumber}`)
@@ -398,7 +398,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
       });
   });
   it('it should delete a user bank account if everything checks fine', (done) => {
-    const accountNumber = 20000019;
+    const accountNumber = 20000022gi;
     chai
       .request(app)
       .delete(`/api/v2/accounts/${accountNumber}`)
@@ -410,5 +410,49 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         expect(body.message).to.be.equals('Account deleted successfully');
         done();
       });
+  });
+  describe('GET api/v2/accounts/accountnumber/transactions', () => {
+    before((done) => {
+      const user = {
+        email: 'fegorson@gmail.com',
+        password: 'somepassword1',
+      };
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          const { body } = res;
+          expect(body.status).to.be.equals(200);
+          if (!err) {
+            UserToken = body.data.token;
+          }
+          done();
+        });
+    });
+    it('Should throw an error if the account number does not exist', (done) => {
+      const accountNumber = 200000766;
+      chai
+        .request(app)
+        .get(`/api/v2/accounts/${accountNumber}/transactions`)
+        .set('x-access-token', UserToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(404);
+          expect(res.body.message).to.be.equals('Account Not Found');
+          done();
+        });
+    });
+    it('Should return a list of all transactions for a particular account', (done) => {
+      const accountNumber = 20000006;
+      chai
+        .request(app)
+        .get(`/api/v2/accounts/${accountNumber}/transactions`)
+        .set('x-access-token', UserToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(200);
+          expect(res.body.data).to.be.an('array');
+          done();
+        });
+    });
   });
 });
