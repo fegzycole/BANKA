@@ -9,16 +9,12 @@ const pool = new Pool({
 });
 class Db {
   static async query(queryString, params) {
-    return new Promise((resolve, reject) => {
-      pool
-        .query(queryString, params)
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+    try {
+      const resolvedPromise = await pool.query(queryString, params);
+      return resolvedPromise;
+    } catch (error) {
+      return error;
+    }
   }
 }
 
