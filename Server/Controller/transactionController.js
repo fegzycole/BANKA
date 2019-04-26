@@ -153,10 +153,10 @@ class TransactionController {
         data: {
           transactionId: rows[0].id,
           accountNumber: parseInt(rows[0].accountnumber, 10),
-          amount: parseFloat(rows[0].amount, 10).toFixed(2),
+          amount: parseFloat(rows[0].amount).toFixed(2),
           cashier: parseInt(rows[0].cashier, 10),
           transactionType: rows[0].type,
-          accountBalance: parseFloat(rows[0].newbalance, 10).toFixed(2),
+          accountBalance: parseFloat(rows[0].newbalance).toFixed(2),
         },
       });
     } catch (e) {
