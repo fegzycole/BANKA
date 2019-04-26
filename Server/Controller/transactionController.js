@@ -123,13 +123,13 @@ class TransactionController {
       const accountChecker = await Db.query('SELECT * FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
       const acctBal = parseFloat(accountChecker.rows[0].balance);
       let newBal;
-      if (req.body.type === 'credit') {
+      if (req.route.path === '/:accountNo/credit') {
         newBal = parseFloat(acctBal) + parseFloat(req.body.amountToDeposit);
       }
-      if (req.body.type === 'debit') {
+      if (req.route.path === '/:accountNo/debit') {
         if (acctBal <= req.body.amountToDeposit) {
           return res.json({
-            status: 404,
+            status: 400,
             error: 'Insufficient Funds',
           });
         }
@@ -153,10 +153,10 @@ class TransactionController {
         data: {
           transactionId: rows[0].id,
           accountNumber: parseInt(rows[0].accountnumber, 10),
-          amount: parseFloat(rows[0].amount, 10).toFixed(2),
+          amount: parseFloat(rows[0].amount).toFixed(2),
           cashier: parseInt(rows[0].cashier, 10),
           transactionType: rows[0].type,
-          accountBalance: parseFloat(rows[0].newbalance, 10).toFixed(2),
+          accountBalance: parseFloat(rows[0].newbalance).toFixed(2),
         },
       });
     } catch (e) {

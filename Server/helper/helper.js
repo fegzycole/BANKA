@@ -48,7 +48,6 @@ class Helper {
   static async createAccountNumberDb() {
     try {
       let getMaxId = 0;
-      await Db.query('BEGIN');
       const arrayHandler = await Db.query('SELECT * FROM accountstable');
       if (arrayHandler.rows.length === 0) {
         return 200000001;
@@ -74,7 +73,7 @@ class Helper {
           if (err) {
             return res.status(404).json({
               status: 404,
-              error: err,
+              error: 'Invalid token',
             });
           }
           req.decoded = decoded;
@@ -83,7 +82,7 @@ class Helper {
       if (!token) {
         return res.status(404).json({
           status: 404,
-          error: 'Input a token to continue...',
+          error: 'You cannot access this resource',
         });
       }
       // fire next middleware
@@ -111,13 +110,31 @@ class Helper {
     if (typeof (req.body.amountToDeposit) !== 'number') {
       return res.status(400).json({
         status: 400,
-        error: 'Please put in a number',
+        error: 'Please put in a number to deposit or withdraw',
       });
     }
     if (req.body.type !== 'credit' && req.body.type !== 'debit') {
       return res.status(400).json({
         status: 400,
         error: 'Put in a transaction type please',
+      });
+    }
+    if (req.body.amountToDeposit <= 0) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid input, try again',
+      });
+    }
+    if (req.route.path === '/:accountNo/credit' && req.body.type === 'debit') {
+      return res.status(400).json({
+        status: 400,
+        error: 'Transaction type should be credit',
+      });
+    }
+    if (req.route.path === '/:accountNo/debit' && req.body.type === 'credit') {
+      return res.status(400).json({
+        status: 400,
+        error: 'Transaction type should be credit',
       });
     }
     return next();

@@ -5,9 +5,9 @@ class Validator {
   static validateSignUpInput(user) {
     const schema = {
       firstName: Joi.string().regex(/^\S+$/).trim().required()
-        .error(new Error('First Name is required, It should have no whitespace(s) in between its characters')),
+        .error(new Error('First name is required, It should have no whitespace(s) in between its characters')),
       lastName: Joi.string().regex(/^\S+$/).trim().required()
-        .error(new Error('Last Name is required, It should have no whitespace(s) in between its characters')),
+        .error(new Error('Last name is required, It should have no whitespace(s) in between its characters')),
       email: Joi.string().email().required().trim()
         .error(new Error('Your Email is required, example fergusoniyara@banka.com')),
       password: Joi.string().regex(/^\S+$/).trim().required()
@@ -16,6 +16,17 @@ class Validator {
     };
     return Joi.validate(user, schema);
   }
+
+  static validateSignInInput(user) {
+    const schema = {
+      email: Joi.string().email().required().trim()
+        .error(new Error('Your email is required, example fergusoniyara@banka.com')),
+      password: Joi.string().regex(/^\S+$/).trim().required()
+        .error(new Error('Password should be at least 4 characters without any whitespace(s)')),
+    };
+    return Joi.validate(user, schema);
+  }
+
 
   static validateCreateAccount(user) {
     const schema = {
@@ -65,6 +76,17 @@ class Validator {
     return next();
   }
 
+  static validateLogIn(req, res, next) {
+    const { error } = Validator.validateSignInInput(req.body);
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error.message,
+      });
+    }
+    return next();
+  }
+
   static async checkEmails(req, res, next) {
     try {
       const emailChecker = await Db.query('SELECT email FROM userstable');
@@ -84,7 +106,8 @@ class Validator {
   static async checkExistingEmail(req, res, next) {
     try {
       const emailChecker = await Db.query('SELECT email FROM userstable');
-      const email = emailChecker.rows.find(c => c.email === req.body.email) || emailChecker.rows.find(c => c.email === req.params.email);
+      const email = emailChecker.rows.find(c => c.email === req.body.email) 
+      || emailChecker.rows.find(c => c.email === req.params.email);
       if (email) {
         return res.status(422).json({
           status: 422,

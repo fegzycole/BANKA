@@ -3,17 +3,20 @@ import userController from '../Controller/userController';
 import Validator from '../Middleware/validator';
 // import Service from '../Services/service';
 
-const { checkEmails, checkExistingEmail, validateNewAccount } = Validator;
+const {
+  checkEmails, checkExistingEmail,
+  validateNewAccount, validateLogIn,
+} = Validator;
 
 // const { checkAdminStatus } = Service;
 
 const router = express.Router();
 
-const { dbCreateAccount, logindB } = userController;
+const { CreateAccount, logindB } = userController;
 
-router.post('/signup', validateNewAccount, checkExistingEmail, dbCreateAccount);
+router.post('/signup', validateNewAccount, checkExistingEmail, CreateAccount);
 
-router.post('/signin', checkEmails, logindB);
+router.post('/signin', validateLogIn, checkEmails, logindB);
 
 // router.post('/:email', resetPasswordB);
 
