@@ -6,7 +6,7 @@ import Db from '../Database/index';
 
 const { findUserByEmail, createToken } = Helper;
 
-const { validateSignUpInput, validateSignUpInputDb } = Validator;
+const { validateSignUpInput } = Validator;
 
 const { users } = testData;
 
@@ -28,20 +28,8 @@ class UserController {
     } else if (body.type === 'admin') {
       isAdmin = true;
     }
-
-    const user = {
-      id: users.length + 1,
-      firstName: body.firstName.trim(),
-      lastName: body.lastName.trim(),
-      email: body.email.trim(),
-      password: bcrypt.hashSync(body.password, 10),
-      type: body.type.trim(),
-      isAdmin,
-    };
-
     // check if user passes valid and required data
     const { error } = validateSignUpInput(body);
-
     // check if user inputs are valid
     if (error) {
       return res.status(400).json({
@@ -50,6 +38,15 @@ class UserController {
       });
     }
     try {
+      const user = {
+        id: users.length + 1,
+        firstName: body.firstName,
+        lastName: body.lastName,
+        email: body.email,
+        password: bcrypt.hashSync(body.password, 10),
+        type: body.type,
+        isAdmin,
+      };
       // check if email already exists
       const emailExists = findUserByEmail(users);
 
@@ -89,43 +86,22 @@ class UserController {
    */
   static async dbCreateAccount(req, res) {
     try {
-      // variable checking for admin status
       let isadmin;
-      const { body } = req;
-      if (body.type === 'client' || body.type === 'cashier') {
+      if (req.body.type === ('client') || req.body.type === ('cashier')) {
         isadmin = false;
-      } else if (body.type === 'admin') {
+      }
+      if (req.body.type === 'admin') {
         isadmin = true;
       }
-      const user = [
-        body.firstname.trim(),
-        body.lastname.trim(),
-        body.email.trim(),
-        bcrypt.hashSync(body.password, 10),
-        body.type.trim(),
-        isadmin,
-      ];
-      // check if user passes valid and required data
-      const { error } = validateSignUpInputDb(user);
-
-      if (error) {
-        return res.status(400).json({
-          status: 400,
-          message: error.message,
-        });
-      }
-      // check if email already exists
-      await Db.query('BEGIN');
-      const emailChecker = await Db.query('SELECT email FROM userstable  WHERE email = $1', [body.email]);
-      if (emailChecker.rows.length !== 0) {
-        return res.status(404).json({
-          status: 404,
-          message: 'Email Already Exists',
-        });
-      }
+      const newUser = [req.body.firstName,
+        req.body.lastName,
+        req.body.email,
+        bcrypt.hashSync(req.body.password, 10),
+        req.body.type,
+        isadmin];
+      // variable checking for admin status
       const queryString = 'INSERT INTO userstable(firstname, lastname, email, password, type, isadmin) VALUES($1, $2, $3, $4, $5, $6) returning *';
-      const { rows } = await Db.query(queryString, user);
-      // create token
+      const { rows } = await Db.query(queryString, newUser);
       const token = createToken(rows[0]);
       await Db.query('COMMIT');
       const getId = await Db.query('SELECT id from userstable WHERE email = $1', [rows[0].email]);
@@ -216,14 +192,7 @@ class UserController {
     const { body } = req;
     try {
       const emailChecker = await Db.query('SELECT * FROM userstable  WHERE email = $1', [body.email]);
-      if (!emailChecker.rows.length) {
-        return res.status(422).json({
-          status: 422,
-          error: 'Email not Registered',
-        });
-      }
-      const getPassword = await Db.query('SELECT password FROM userstable WHERE email = $1', [body.email]);
-      const passwordChecker = bcrypt.compareSync(body.password, getPassword.rows[0].password);
+      const passwordChecker = bcrypt.compareSync(body.password, emailChecker.rows[0].password);
       if (passwordChecker) {
         const token = createToken(emailChecker.rows[0]);
         return res.status(200).json({
@@ -256,13 +225,7 @@ class UserController {
    */
   static async getUserAccounts(req, res) {
     try {
-      const emailChecker = await Db.query('SELECT email, id FROM userstable  WHERE email = $1', [req.params.email]);
-      if (!emailChecker.rows.length) {
-        return res.status(404).json({
-          status: 422,
-          error: 'No user with the stated email',
-        });
-      }
+      const emailChecker = await Db.query('SELECT id FROM userstable  WHERE email = $1', [req.params.email]);
       const id = parseInt(emailChecker.rows[0].id, 10);
       const getOwner = await Db.query('SELECT createdon, CAST(accountnumber as INTEGER), type, status, CAST(balance as FLOAT) FROM accountstable WHERE owner = $1', [id]);
       return res.json({

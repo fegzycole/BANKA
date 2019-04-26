@@ -169,9 +169,9 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstname: 'fegor',
-          lastname: 'theboy',
-          email: 'barcaaddict@gmail.com',
+          firstName: 'fegor',
+          lastName: 'theboy',
+          email: 'barcaaerddict@gmail.com',
           password: 'simpleandweet',
           type: 'admin',
         })
@@ -190,8 +190,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstname: 'jon',
-          lastname: 'bellion',
+          firstName: 'jon',
+          lastName: 'bellion',
           email: 'wrongmailaddress',
           password: 'simpleandweet',
           type: 'client',
@@ -199,7 +199,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('Your Email is required, example fergusoniyara@banka.com');
+          expect(res.body.error).to.be.equal('Your Email is required, example fergusoniyara@banka.com');
           done();
         });
     });
@@ -208,8 +208,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstname: '',
-          lastname: 'bellion',
+          firstName: '',
+          lastName: 'bellion',
           email: 'jon@gmail.com',
           password: 'simpleandsweet',
           type: 'client',
@@ -217,7 +217,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.error).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -226,8 +226,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstname: 'jon',
-          lastname: '',
+          firstName: 'jon',
+          lastName: '',
           email: 'jon@gmail.com',
           password: 'simpleandsweet',
           type: 'client',
@@ -235,7 +235,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.error).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -244,8 +244,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstname: 'jon y',
-          lastname: 'middlename',
+          firstName: 'jon y',
+          lastName: 'middlename',
           email: 'jon@gmail.com',
           password: 'simpleandsweet',
           type: 'client',
@@ -253,18 +253,18 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.error).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
 
           done();
         });
     });
-    it('Should return an error if laststname has a  whitespace', (done) => {
+    it('Should return an error if lastname has a  whitespace', (done) => {
       chai
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstname: 'Ferguson',
-          lastname: 'middl ename',
+          firstName: 'Ferguson',
+          lastName: 'middl ename',
           email: 'jon@gmail.com',
           password: 'simpleandsweet',
           type: 'client',
@@ -272,7 +272,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.error).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -281,16 +281,16 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstname: 'john',
-          lastname: 'joe',
+          firstName: 'john',
+          lastName: 'joe',
           email: 'mamasssboy@gmail.com',
           password: 'simplepassword',
           type: 'client',
         })
         .end((err, res) => {
-          expect(res).to.have.status(404);
-          expect(res.body.status).to.be.equal(404);
-          expect(res.body.message).to.be.equal('Email Already Exists');
+          expect(res).to.have.status(422);
+          expect(res.body.status).to.be.equal(422);
+          expect(res.body.error).to.be.equal('Email Already Exists');
           done();
         });
     });
@@ -359,7 +359,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(422);
           expect(res.body.status).to.be.equal(422);
-          expect(res.body.error).to.be.equal('Email not Registered');
+          expect(res.body.error).to.be.equal('Email does not exist');
           done();
         });
     });
@@ -409,7 +409,7 @@ describe('Test for User Endpoint', () => {
         .set('x-access-token', UserToken)
         .end((err, res) => {
           expect(res.body.status).to.be.equals(422);
-          expect(res.body.error).to.be.equals('No user with the stated email');
+          expect(res.body.error).to.be.equals('Email does not exist');
           done();
         });
     });

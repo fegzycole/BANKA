@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import testData from '../data/testData';
 import Db from '../Database/index';
+import Validator from '../Middleware/validator';
+
+const { validateCreateAccountDb } = Validator;
 
 dotenv.config();
 
@@ -62,76 +65,6 @@ class Helper {
     }
   }
 
-  // Token verification Logic that permits only cashiers to do cash transactions
-  static verifyTokenTransactions(req, res, next) {
-    try {
-      const token = req.body.token || req.headers['x-access-token'];
-      if (token) {
-        jwt.verify(token, process.env.SECRET, (err, decoded) => {
-          if (err) {
-            return res.status(404).json({
-              status: 404,
-              message: err,
-            });
-          }
-          req.decoded = decoded.user;
-        });
-      }
-      // verify user provided token against existing token
-      if (req.decoded.type === 'client' || req.decoded.type === 'admin') {
-        return res.json({
-          status: 401,
-          error: 'You do not have the rights to this resource',
-          message: 'Request denied',
-        });
-      }
-
-
-      // fire next middleware
-      return next();
-    } catch (error) {
-      return res.status(400).json({
-        status: 400,
-        errors: [error],
-      });
-    }
-  }
-
-  // Token verification Logic that permits only cashiers/admins to do account related transactions
-  static verifyTokenAccounts(req, res, next) {
-    try {
-      const token = req.body.token || req.headers['x-access-token'];
-      if (token) {
-        jwt.verify(token, process.env.SECRET, (err, decoded) => {
-          if (err) {
-            return res.status(404).json({
-              status: 404,
-              message: err,
-            });
-          }
-          req.decoded = decoded.user;
-        });
-      }
-      // verify user provided token against existing token
-      if (req.decoded.type === 'client') {
-        return res.json({
-          status: 401,
-          error: 'You do not have the rights to this resource',
-          message: 'Request denied',
-        });
-      }
-
-
-      // fire next middleware
-      return next();
-    } catch (error) {
-      return res.status(400).json({
-        status: 400,
-        errors: [error],
-      });
-    }
-  }
-
   // Token verification Logic that permits clients, cashiers and admins to view transactions
   static verifyTokenAll(req, res, next) {
     try {
@@ -141,22 +74,18 @@ class Helper {
           if (err) {
             return res.status(404).json({
               status: 404,
-              message: err,
+              error: err,
             });
           }
-          req.decoded = decoded.user;
+          req.decoded = decoded;
         });
       }
-      // verify user provided token against existing token
-      if (req.decoded.type !== 'client' && req.decoded.type !== 'cashier' && req.decoded.type !== 'admin') {
-        return res.json({
-          status: 401,
-          error: 'You do not have the rights to this resource',
-          message: 'Request denied',
+      if (!token) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Input a token to continue...',
         });
       }
-
-
       // fire next middleware
       return next();
     } catch (error) {
@@ -165,6 +94,33 @@ class Helper {
         errors: [error],
       });
     }
+  }
+
+  static validateAccountType(req, res, next) {
+    const { error } = validateCreateAccountDb(req.body.type);
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error.message,
+      });
+    }
+    return next();
+  }
+
+  static validateTransactionDetails(req, res, next) {
+    if (typeof (req.body.amountToDeposit) !== 'number') {
+      return res.status(400).json({
+        status: 400,
+        error: 'Please put in a number',
+      });
+    }
+    if (req.body.type !== 'credit' && req.body.type !== 'debit') {
+      return res.status(400).json({
+        status: 400,
+        error: 'Put in a transaction type please',
+      });
+    }
+    return next();
   }
 }
 

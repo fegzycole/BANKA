@@ -4,16 +4,25 @@ import TransactionController from '../Controller/transactionController';
 
 import helper from '../helper/helper';
 
+import Service from '../Services/service';
+
+import Validator from '../Middleware/validator';
+
+
+const { cashierToken } = Service;
+
 const { cashTransactionsDb, getspecificTransaction } = TransactionController;
 
-const { verifyTokenTransactions, verifyTokenAll } = helper;
+const { verifyTokenAll, validateTransactionDetails } = helper;
+
+const { checkAccountNo, checkId } = Validator;
 
 const router = express.Router();
 
-router.post('/:accountNo/credit', verifyTokenTransactions, cashTransactionsDb);
+router.post('/:accountNo/credit', verifyTokenAll, cashierToken, checkAccountNo, validateTransactionDetails, cashTransactionsDb);
 
-router.post('/:accountNo/debit', verifyTokenTransactions, cashTransactionsDb);
+router.post('/:accountNo/debit', verifyTokenAll, cashierToken, checkAccountNo, validateTransactionDetails, cashTransactionsDb);
 
-router.get('/:id', verifyTokenAll, getspecificTransaction);
+router.get('/:id', verifyTokenAll, checkId, getspecificTransaction);
 
 export default router;
