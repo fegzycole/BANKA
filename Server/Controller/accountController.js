@@ -9,9 +9,7 @@ dotenv.config();
 
 const { accounts } = testData;
 
-const {
-  validateCreateAccount, validateStatusInput, validateCreateAccountDb, validateStatusInputdB,
-} = Validator;
+const { validateCreateAccount, validateStatusInput } = Validator;
 
 const { createAccountNumber, createAccountNumberDb } = helper;
 
@@ -82,38 +80,10 @@ class AccountController {
    */
   static async createClientAccountDb(req, res) {
     try {
-    // Decode the client's token
-      const token = req.body.token || req.headers['x-access-token'];
-      if (token) {
-        jwt.verify(token, process.env.SECRET, (err, decoded) => {
-          if (err) {
-          // return an error if it fails to decode
-            return res.status(404).json({
-              status: 404,
-              error: err,
-            });
-          }
-          req.decoded = decoded;
-        });
-      }
+      const userDetails = req.decoded.user;
       const openingBal = parseFloat(0.00);
-
       const accountNumber = await createAccountNumberDb();
-      const accountNo = accountNumber;
-      const account = [
-        accountNo,
-        req.decoded.user.id,
-        req.body.type,
-        'draft',
-        openingBal,
-      ];
-      const { error } = validateCreateAccountDb(req.body.type);
-      if (error) {
-        return res.status(400).json({
-          status: 400,
-          error: error.message,
-        });
-      }
+      const account = [accountNumber, userDetails.id, req.body.type, 'draft', openingBal];
       // pushes the new account to the DB if it validates
       const queryString = 'INSERT INTO accountstable(accountnumber, owner, type, status, balance, createdon) VALUES($1, $2, $3, $4, $5, NOW()) returning *';
       const { rows } = await Db.query(queryString, account);
@@ -122,12 +92,11 @@ class AccountController {
         status: 200,
         data: {
           accountNumber: parseInt(rows[0].accountnumber, 10),
-          firstName: req.decoded.user.firstname,
-          lastName: req.decoded.user.lastname,
-          email: req.decoded.user.email,
+          firstName: userDetails.firstname,
+          lastName: userDetails.lastname,
+          email: userDetails.email,
           type: rows[0].type,
-          openingBalance: parseFloat(rows[0].balance),
-
+          openingBalance: parseFloat(rows[0].balance).toFixed(2),
         },
       });
     } catch (e) {
@@ -164,7 +133,7 @@ class AccountController {
           message: error.message,
         });
       }
-      return res.json({
+      return res.status(200).json({
         status: 200,
         data: {
           accountNo: account.accountNo,
@@ -186,26 +155,10 @@ class AccountController {
    */
   static async activateOrDeactivateDb(req, res) {
     try {
-      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
-      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
-      if (!account) {
-        return res.status(422).json({
-          status: 422,
-          error: 'Account Not Found',
-        });
-      }
-      const { error } = validateStatusInputdB(req.body.status);
-
-      if (error) {
-        return res.status(400).json({
-          status: 400,
-          message: error.message,
-        });
-      }
       const update = 'UPDATE accountstable SET status = $1 WHERE accountnumber = $2 returning *';
       const updatedStatus = await Db.query(update, [req.body.status, parseInt(req.params.accountNo, 10)]);
       await Db.query('COMMIT');
-      return res.json({
+      return res.status(200).json({
         status: 200,
         data: {
           accountNo: updatedStatus.rows[0].accountnumber,
@@ -257,14 +210,6 @@ class AccountController {
    */
   static async deleteAnAccountDb(req, res) {
     try {
-      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
-      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
-      if (!account) {
-        return res.status(422).json({
-          status: 422,
-          error: 'Account Not Found',
-        });
-      }
       await Db.query('DELETE FROM accountstable WHERE accountnumber = $1 returning *', [parseInt(req.params.accountNo, 10)]);
       await Db.query('COMMIT');
       return res.json({
@@ -286,18 +231,10 @@ class AccountController {
    */
   static async getTransactionsHistory(req, res) {
     try {
-      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
-      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
-      if (!account) {
-        return res.status(422).json({
-          status: 422,
-          error: 'Account Not Found',
-        });
-      }
-      const update = await Db.query('SELECT id, CAST(createdon as DATE), type, CAST(accountnumber as INTEGER), CAST(amount as FLOAT), CAST(oldbalance as FLOAT), CAST(newbalance as FLOAT) FROM transactions WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
+      const select = await Db.query('SELECT id, CAST(createdon as DATE), type, CAST(accountnumber as INTEGER), CAST(amount as FLOAT), CAST(oldbalance as FLOAT), CAST(newbalance as FLOAT) FROM transactions WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
       return res.json({
         status: 200,
-        data: update.rows,
+        data: select.rows,
       });
     } catch (e) {
       return res.status(500).json({
@@ -314,14 +251,6 @@ class AccountController {
    */
   static async getspecificAccount(req, res) {
     try {
-      const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
-      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
-      if (!account) {
-        return res.status(422).json({
-          status: 422,
-          error: 'Account Not Found',
-        });
-      }
       const getOwner = await Db.query('SELECT createdon, CAST(accountnumber as INTEGER), type, status, CAST(balance as FLOAT), owner FROM accountstable WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
       const getOwnerEmail = await Db.query('SELECT email FROM userstable WHERE id = $1', [parseInt(getOwner.rows[0].owner, 10)]);
       return res.json({

@@ -14,8 +14,6 @@ chai.use(chaiHttp);
 let UserToken = '';
 let adminToken = '';
 let cashierToken = '';
-let bankAccount;
-let newAccount;
 describe(' Accounts test for - POST, PATCH, DELETE', () => {
   before((done) => {
     const user = {
@@ -289,7 +287,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         });
     });
     it('it should activate or deactivate a user bank account', (done) => {
-      const accountNumber = 20000006;
+      const accountNumber = 20000005;
       chai
         .request(app)
         .patch(`/api/v2/accounts/${accountNumber}`)

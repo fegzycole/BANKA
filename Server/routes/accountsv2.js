@@ -4,7 +4,13 @@ import Accountcontroller from '../Controller/accountController';
 
 import helper from '../helper/helper';
 
-const { verifyTokenAccounts, verifyTokenAll } = helper;
+import Service from '../Services/service';
+
+import Validator from '../Middleware/validator';
+
+const { verifyTokenAll, validateAccountType } = helper;
+
+const { checkAccountNo, validateStatus } = Validator;
 
 const {
   createClientAccountDb,
@@ -14,20 +20,22 @@ const {
   getspecificAccount, getAllAccounts,
 } = Accountcontroller;
 
+const { staffToken } = Service;
+
 
 const router = express.Router();
 
-router.post('/', createClientAccountDb);
+router.post('/', verifyTokenAll, validateAccountType, createClientAccountDb);
 
-router.patch('/:accountNo', verifyTokenAccounts, activateOrDeactivateDb);
+router.patch('/:accountNo', verifyTokenAll, staffToken, checkAccountNo, validateStatus, activateOrDeactivateDb);
 
-router.get('/:accountNo/transactions', verifyTokenAll, getTransactionsHistory);
+router.get('/:accountNo/transactions', verifyTokenAll, checkAccountNo, getTransactionsHistory);
 
-router.get('/', verifyTokenAccounts, getAllAccounts);
+router.get('/', verifyTokenAll, staffToken, getAllAccounts);
 
-router.get('/:accountNo', verifyTokenAll, getspecificAccount);
+router.get('/:accountNo', verifyTokenAll, checkAccountNo, getspecificAccount);
 
-router.delete('/:accountNo', verifyTokenAccounts, deleteAnAccountDb);
+router.delete('/:accountNo', verifyTokenAll, staffToken, checkAccountNo, deleteAnAccountDb);
 
 
 export default router;

@@ -119,35 +119,20 @@ class TransactionController {
    * @param {*} res
    */
   static async cashTransactionsDb(req, res) {
-    // search if account number exists
     try {
       const accountChecker = await Db.query('SELECT * FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
-      if (!accountChecker.rows.length) {
-        return res.status(404).json({
-          status: 404,
-          message: 'Account Not Found',
-        });
-      }
-      const acctBal = accountChecker.rows[0].balance;
-      // validate whether a number has been put in the body of the request
-      if (typeof (req.body.amountToDeposit) !== 'number') {
-        return res.status(400).json({
-          status: 400,
-          error: 'Please put in a number',
-        });
-      }
-      if (req.body.type !== 'credit' && req.body.type !== 'debit') {
-        return res.status(400).json({
-          status: 400,
-          error: 'Put in a transaction type please',
-        });
-      }
-      // continue with the account credit/debit logic
+      const acctBal = parseFloat(accountChecker.rows[0].balance);
       let newBal;
       if (req.body.type === 'credit') {
         newBal = parseFloat(acctBal) + parseFloat(req.body.amountToDeposit);
       }
       if (req.body.type === 'debit') {
+        if (acctBal <= req.body.amountToDeposit) {
+          return res.json({
+            status: 404,
+            error: 'Insufficient Funds',
+          });
+        }
         newBal = parseFloat(acctBal) - parseFloat(req.body.amountToDeposit);
       }
       const newTransaction = [
@@ -155,7 +140,7 @@ class TransactionController {
         parseInt(req.params.accountNo, 10),
         parseFloat(acctBal),
         parseFloat(newBal),
-        req.decoded.id,
+        req.decoded.user.id,
         req.body.amountToDeposit,
       ];
       await Db.query('UPDATE accountstable SET balance = $1 WHERE accountnumber = $2 returning *', [parseFloat(newBal), parseInt(req.params.accountNo, 10)]);
@@ -190,12 +175,6 @@ class TransactionController {
   static async getspecificTransaction(req, res) {
     try {
       const idChecker = await Db.query('SELECT id, createdon, CAST(accountnumber as INTEGER), type, CAST(oldbalance as FLOAT),CAST(newbalance as FLOAT), CAST(amount as FLOAT) FROM transactions WHERE id = $1', [parseInt(req.params.id, 10)]);
-      if (!idChecker.rows.length) {
-        return res.status(404).json({
-          status: 422,
-          error: 'No Transaction with the stated ID',
-        });
-      }
       return res.json({
         status: 200,
         data: {

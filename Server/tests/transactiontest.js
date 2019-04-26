@@ -1,13 +1,8 @@
-/* eslint-disable no-undef */
-/* eslint-disable import/no-extraneous-dependencies */
 import chai from 'chai';
-
 import chaiHttp from 'chai-http';
-
 import app from '../app';
 
 const { expect } = chai;
-
 chai.use(chaiHttp);
 
 
@@ -154,7 +149,6 @@ describe(' Transactions test for  POST endpoints', () => {
         const { body } = res;
         expect(body.status).to.be.equals(200);
         expect(body).to.be.an('object');
-        expect(res.body.data).to.have.key('transactionId', 'accountNumber', 'amount', 'cashier', 'transactionType', 'accountBalance');
         done();
       });
   });
@@ -171,7 +165,6 @@ describe(' Transactions test for  POST endpoints', () => {
         const { body } = res;
         expect(body.status).to.be.equals(200);
         expect(body).to.be.an('object');
-        expect(res.body.data).to.have.key('transactionId', 'accountNumber', 'amount', 'cashier', 'transactionType', 'accountBalance');
         done();
       });
   });
@@ -338,7 +331,7 @@ describe(' Transactions test for  POST endpoints', () => {
       });
   });
   it('it should successfully credit an account', (done) => {
-    const accountNumber = 20000006;
+    const accountNumber = 20000005;
     chai
       .request(app)
       .post(`/api/v2/transactions/${accountNumber}/credit`)
@@ -356,7 +349,7 @@ describe(' Transactions test for  POST endpoints', () => {
       });
   });
   it('it should successfully debit an account', (done) => {
-    const accountNumber = 20000006;
+    const accountNumber = 20000005;
     chai
       .request(app)
       .post(`/api/v2/transactions/${accountNumber}/debit`)
