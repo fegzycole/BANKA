@@ -4,7 +4,7 @@ import Validator from '../Middleware/validator';
 // import Service from '../Services/service';
 
 const {
-  checkEmails, checkExistingEmail,
+  checkExistingEmail,
   validateNewAccount, validateLogIn,
 } = Validator;
 
@@ -12,11 +12,11 @@ const {
 
 const router = express.Router();
 
-const { CreateAccount, logindB } = userController;
+const { CreateAccount, signIn } = userController;
 
 router.post('/signup', validateNewAccount, checkExistingEmail, CreateAccount);
 
-router.post('/signin', validateLogIn, checkEmails, logindB);
+router.post('/signin', validateLogIn, checkExistingEmail, signIn);
 
 // router.post('/:email', resetPasswordB);
 

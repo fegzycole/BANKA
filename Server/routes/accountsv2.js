@@ -13,9 +13,9 @@ const { verifyTokenAll, validateAccountType } = helper;
 const { checkAccountNo, validateStatus } = Validator;
 
 const {
-  createClientAccountDb,
-  activateOrDeactivateDb,
-  deleteAnAccountDb,
+  createBankAccount,
+  changeStatus,
+  deleteAccount,
   getTransactionsHistory,
   getspecificAccount, getAllAccounts,
 } = Accountcontroller;
@@ -25,9 +25,9 @@ const { staffToken } = Service;
 
 const router = express.Router();
 
-router.post('/', verifyTokenAll, validateAccountType, createClientAccountDb);
+router.post('/', verifyTokenAll, validateAccountType, createBankAccount);
 
-router.patch('/:accountNo', verifyTokenAll, staffToken, checkAccountNo, validateStatus, activateOrDeactivateDb);
+router.patch('/:accountNo', verifyTokenAll, staffToken, checkAccountNo, validateStatus, changeStatus);
 
 router.get('/:accountNo/transactions', verifyTokenAll, checkAccountNo, getTransactionsHistory);
 
@@ -35,7 +35,7 @@ router.get('/', verifyTokenAll, staffToken, getAllAccounts);
 
 router.get('/:accountNo', verifyTokenAll, checkAccountNo, getspecificAccount);
 
-router.delete('/:accountNo', verifyTokenAll, staffToken, checkAccountNo, deleteAnAccountDb);
+router.delete('/:accountNo', verifyTokenAll, staffToken, checkAccountNo, deleteAccount);
 
 
 export default router;

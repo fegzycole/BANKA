@@ -11,7 +11,7 @@ import Validator from '../Middleware/validator';
 
 const { cashierToken } = Service;
 
-const { cashTransactionsDb, getspecificTransaction } = TransactionController;
+const { cashTransactions, getspecificTransaction } = TransactionController;
 
 const { verifyTokenAll, validateTransactionDetails } = helper;
 
@@ -19,9 +19,9 @@ const { checkAccountNo, checkId } = Validator;
 
 const router = express.Router();
 
-router.post('/:accountNo/credit', verifyTokenAll, cashierToken, checkAccountNo, validateTransactionDetails, cashTransactionsDb);
+router.post('/:accountNo/credit', verifyTokenAll, cashierToken, checkAccountNo, validateTransactionDetails, cashTransactions);
 
-router.post('/:accountNo/debit', verifyTokenAll, cashierToken, checkAccountNo, validateTransactionDetails, cashTransactionsDb);
+router.post('/:accountNo/debit', verifyTokenAll, cashierToken, checkAccountNo, validateTransactionDetails, cashTransactions);
 
 router.get('/:id', verifyTokenAll, checkId, getspecificTransaction);
 

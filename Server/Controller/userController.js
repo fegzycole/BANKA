@@ -190,7 +190,7 @@ class UserController {
    * @param {*} req
    * @param {*} res
    */
-  static async logindB(req, res) {
+  static async signIn(req, res) {
     const { body } = req;
     try {
       const emailChecker = await Db.query('SELECT * FROM userstable  WHERE email = $1', [body.email]);

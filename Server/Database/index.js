@@ -10,8 +10,8 @@ const pool = new Pool({
 class Db {
   static async query(queryString, params) {
     try {
-      const resolvedPromise = await pool.query(queryString, params);
-      return resolvedPromise;
+      const data = await pool.query(queryString, params);
+      return data;
     } catch (error) {
       return error;
     }

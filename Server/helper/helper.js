@@ -5,7 +5,7 @@ import testData from '../data/testData';
 import Db from '../Database/index';
 import Validator from '../Middleware/validator';
 
-const { validateCreateAccountDb } = Validator;
+const { validateAccount } = Validator;
 
 dotenv.config();
 
@@ -96,7 +96,7 @@ class Helper {
   }
 
   static validateAccountType(req, res, next) {
-    const { error } = validateCreateAccountDb(req.body.type);
+    const { error } = validateAccount(req.body.type);
     if (error) {
       return res.status(400).json({
         status: 400,

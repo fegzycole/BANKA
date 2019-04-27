@@ -2,6 +2,7 @@ import Joi from 'joi';
 import Db from '../Database/index';
 
 class Validator {
+  // Validate a user when he wants to create a new account
   static validateSignUpInput(user) {
     const schema = {
       firstName: Joi.string().regex(/^\S+$/).trim().required()
@@ -17,6 +18,7 @@ class Validator {
     return Joi.validate(user, schema);
   }
 
+  // validate the signin input
   static validateSignInInput(user) {
     const schema = {
       email: Joi.string().email().required().trim()
@@ -27,7 +29,7 @@ class Validator {
     return Joi.validate(user, schema);
   }
 
-
+  // Validate the input for creation of bank accounts
   static validateCreateAccount(user) {
     const schema = {
       type: Joi.string().required().error(new Error('Enter An Account Type Please')),
@@ -36,7 +38,7 @@ class Validator {
     return Joi.validate(user, schema);
   }
 
-
+  // Validate the status input
   static validateStatusInput(user) {
     const schema = {
       status: Joi.string().required().valid('active', 'dormant').error(new Error('Status can only be active or dormant')),
@@ -44,16 +46,19 @@ class Validator {
     return Joi.validate(user, schema);
   }
 
+  // validate the status input V2
   static validateStatusInputdB(user) {
     const schema = Joi.string().required().valid('active', 'dormant').error(new Error('Status can only be active or dormant'));
     return Joi.validate(user, schema);
   }
 
-  static validateCreateAccountDb(user) {
+  // validate the account type for creation of accounts
+  static validateAccount(user) {
     const schema = Joi.string().required().valid('savings', 'current').error(new Error('This field is required, Account type can only be savings or current'));
     return Joi.validate(user, schema);
   }
 
+  // validate the input for changing the account status
   static validateStatus(req, res, next) {
     const { error } = Validator.validateStatusInputdB(req.body.status);
     if (error) {
@@ -65,6 +70,7 @@ class Validator {
     return next();
   }
 
+  // validate the input for  creating a new account
   static validateNewAccount(req, res, next) {
     const { error } = Validator.validateSignUpInput(req.body);
     if (error) {
@@ -76,6 +82,7 @@ class Validator {
     return next();
   }
 
+  // validate the input when a user wants to log in
   static validateLogIn(req, res, next) {
     const { error } = Validator.validateSignInInput(req.body);
     if (error) {
@@ -87,32 +94,27 @@ class Validator {
     return next();
   }
 
-  static async checkEmails(req, res, next) {
-    try {
-      const emailChecker = await Db.query('SELECT email FROM userstable');
-      const email = emailChecker.rows.find(c => c.email === req.body.email) || emailChecker.rows.find(c => c.email === req.params.email);
-      if (!email) {
-        return res.status(422).json({
-          status: 422,
-          error: 'Email does not exist',
-        });
-      }
-      return next();
-    } catch (error) {
-      return error;
-    }
-  }
-
+  // Check for existing emails
   static async checkExistingEmail(req, res, next) {
     try {
       const emailChecker = await Db.query('SELECT email FROM userstable');
-      const email = emailChecker.rows.find(c => c.email === req.body.email) 
+      const email = emailChecker.rows.find(c => c.email === req.body.email)
       || emailChecker.rows.find(c => c.email === req.params.email);
-      if (email) {
-        return res.status(422).json({
-          status: 422,
-          error: 'Email Already Exists',
-        });
+      if (req.route.path === '/signup') {
+        if (email) {
+          return res.status(422).json({
+            status: 422,
+            error: 'Email Already Exists',
+          });
+        }
+      }
+      if (req.route.path === '/signin' || req.route.path === '/:email/accounts') {
+        if (!email) {
+          return res.status(422).json({
+            status: 422,
+            error: 'Email does not exist',
+          });
+        }
       }
       return next();
     } catch (error) {
@@ -120,6 +122,7 @@ class Validator {
     }
   }
 
+  // check the account number
   static async checkAccountNo(req, res, next) {
     try {
       const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
@@ -136,6 +139,7 @@ class Validator {
     }
   }
 
+  // check the Id
   static async checkId(req, res, next) {
     const idChecker = await Db.query('SELECT id FROM transactions WHERE id = $1', [parseInt(req.params.id, 10)]);
     if (!idChecker.rows.length) {

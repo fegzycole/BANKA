@@ -118,7 +118,7 @@ class TransactionController {
    * @param {*} req
    * @param {*} res
    */
-  static async cashTransactionsDb(req, res) {
+  static async cashTransactions(req, res) {
     try {
       const accountChecker = await Db.query('SELECT * FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
       const acctBal = parseFloat(accountChecker.rows[0].balance);
