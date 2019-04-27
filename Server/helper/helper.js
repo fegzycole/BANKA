@@ -125,6 +125,10 @@ class Helper {
         error: 'Invalid input, try again',
       });
     }
+    return next();
+  }
+
+  static validatePath(req, res, next) {
     if (req.route.path === '/:accountNo/credit' && req.body.type === 'debit') {
       return res.status(400).json({
         status: 400,
