@@ -148,12 +148,13 @@ class TransactionController {
       const queryString = 'INSERT INTO transactions(type, accountnumber, oldbalance, newbalance, cashier, amount, createdon) VALUES($1, $2, $3, $4, $5, $6, NOW()) returning *';
       const { rows } = await Db.query(queryString, newTransaction);
       await Db.query('COMMIT');
+      const amount = Number(rows[0].amount).toFixed(2);
       return res.json({
         status: 200,
         data: {
           transactionId: rows[0].id,
-          accountNumber: parseInt(rows[0].accountnumber, 10),
-          amount: parseFloat(rows[0].amount).toFixed(2),
+          accountNumber: rows[0].accountnumber,
+          amount: parseFloat(amount),
           cashier: parseInt(rows[0].cashier, 10),
           transactionType: rows[0].type,
           accountBalance: parseFloat(rows[0].newbalance).toFixed(2),
@@ -175,6 +176,8 @@ class TransactionController {
   static async getspecificTransaction(req, res) {
     try {
       const idChecker = await Db.query('SELECT id, createdon, CAST(accountnumber as INTEGER), type, CAST(oldbalance as FLOAT),CAST(newbalance as FLOAT), CAST(amount as FLOAT) FROM transactions WHERE id = $1', [parseInt(req.params.id, 10)]);
+      const oldBalance = Number(idChecker.rows[0].oldbalance).toFixed(2);
+      const newBalance = Number(idChecker.rows[0].newbalance).toFixed(2);
       return res.json({
         status: 200,
         data: {
@@ -183,8 +186,8 @@ class TransactionController {
           type: idChecker.rows[0].type,
           accountNumber: idChecker.rows[0].accountnumber,
           amount: idChecker.rows[0].amount,
-          oldBalance: idChecker.rows[0].oldbalance,
-          newBalance: idChecker.rows[0].newbalance,
+          oldBalance: parseFloat(oldBalance),
+          newBalance: parseFloat(newBalance),
         },
       });
     } catch (e) {
