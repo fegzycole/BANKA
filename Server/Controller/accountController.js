@@ -88,6 +88,7 @@ class AccountController {
       const queryString = 'INSERT INTO accountstable(accountnumber, owner, type, status, balance, createdon) VALUES($1, $2, $3, $4, $5, NOW()) returning *';
       const { rows } = await Db.query(queryString, account);
       await Db.query('COMMIT');
+      const openingBalance = Number(rows[0].balance).toFixed(2);
       return res.json({
         status: 200,
         data: {
@@ -96,7 +97,7 @@ class AccountController {
           lastName: userDetails.lastname,
           email: userDetails.email,
           type: rows[0].type,
-          openingBalance: parseFloat(rows[0].balance).toFixed(2),
+          openingBalance: parseFloat(openingBalance),
         },
       });
     } catch (e) {
@@ -253,6 +254,7 @@ class AccountController {
     try {
       const getOwner = await Db.query('SELECT createdon, CAST(accountnumber as INTEGER), type, status, CAST(balance as FLOAT), owner FROM accountstable WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
       const getOwnerEmail = await Db.query('SELECT email FROM userstable WHERE id = $1', [parseInt(getOwner.rows[0].owner, 10)]);
+      const balance = Number(getOwner.rows[0].balance).toFixed(2);
       return res.json({
         status: 200,
         data: {
@@ -261,7 +263,7 @@ class AccountController {
           ownerEmail: getOwnerEmail.rows[0].email,
           type: getOwner.rows[0].type,
           status: getOwner.rows[0].status,
-          balance: parseFloat(getOwner.rows[0].balance),
+          balance: parseFloat(balance),
         },
       });
     } catch (e) {
