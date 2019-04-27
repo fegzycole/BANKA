@@ -78,7 +78,7 @@ class AccountController {
    * @param {*} req
    * @param {*} res
    */
-  static async createClientAccountDb(req, res) {
+  static async createBankAccount(req, res) {
     try {
       const userDetails = req.decoded.user;
       const openingBal = parseFloat(0.00);
@@ -153,7 +153,7 @@ class AccountController {
    * @param {*} req
    * @param {*} res
    */
-  static async activateOrDeactivateDb(req, res) {
+  static async changeStatus(req, res) {
     try {
       const update = 'UPDATE accountstable SET status = $1 WHERE accountnumber = $2 returning *';
       const updatedStatus = await Db.query(update, [req.body.status, parseInt(req.params.accountNo, 10)]);
@@ -208,7 +208,7 @@ class AccountController {
    * @param {*} req
    * @param {*} res
    */
-  static async deleteAnAccountDb(req, res) {
+  static async deleteAccount(req, res) {
     try {
       await Db.query('DELETE FROM accountstable WHERE accountnumber = $1 returning *', [parseInt(req.params.accountNo, 10)]);
       await Db.query('COMMIT');

@@ -197,20 +197,6 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         done();
       });
   });
-  // it('it should delete a user bank account if everything checks fine', (done) => {
-  //   const accountNumber = 3089298272728;
-  //   chai
-  //     .request(app)
-  //     .delete(`/api/v1/accounts/${accountNumber}`)
-  //     .set('x-access-token', cashierToken)
-  //     .end((err, res) => {
-  //       const { body } = res;
-  //       expect(body.status).to.be.equals(200);
-  //       expect(body).to.be.an('object');
-  //       expect(body.message).to.be.equals('Account deleted successfully');
-  //       done();
-  //     });
-  // });
 });
 
 describe(' Accounts test for - POST, PATCH, DELETE', () => {
@@ -346,20 +332,6 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
           done();
         });
     });
-    it('it should delete a user bank account if everything checks fine', (done) => {
-      const accountNumber = 20000022;
-      chai
-        .request(app)
-        .delete(`/api/v2/accounts/${accountNumber}`)
-        .set('x-access-token', adminToken)
-        .end((err, res) => {
-          const { body } = res;
-          expect(body.status).to.be.equals(200);
-          expect(body).to.be.an('object');
-          expect(body.message).to.be.equals('Account deleted successfully');
-          done();
-        });
-    });
   });
   before('Sign in as a staff ', (done) => {
     const userCredential = {
@@ -392,20 +364,6 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         expect(body).to.be.an('object');
         expect(body.data).to.haveOwnProperty('accountNo');
         expect(body.data).to.haveOwnProperty('status');
-        done();
-      });
-  });
-  it('it should delete a user bank account if everything checks fine', (done) => {
-    const accountNumber = 20000022;
-    chai
-      .request(app)
-      .delete(`/api/v2/accounts/${accountNumber}`)
-      .set('x-access-token', cashierToken)
-      .end((err, res) => {
-        const { body } = res;
-        expect(body.status).to.be.equals(200);
-        expect(body).to.be.an('object');
-        expect(body.message).to.be.equals('Account deleted successfully');
         done();
       });
   });
@@ -493,6 +451,56 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         .end((err, res) => {
           expect(res.body.status).to.be.equals(200);
           expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
+  });
+  describe('GET api/v2/accounts', () => {
+    it('Should throw an error if a client wants to view a list of all the accounts', (done) => {
+      chai
+        .request(app)
+        .get('/api/v2/accounts')
+        .set('x-access-token', UserToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(401);
+          expect(res.body.error).to.be.equals('You do not have the rights to this resource');
+          done();
+        });
+    });
+  });
+  describe('GET api/v2/accounts', () => {
+    it('Should return a list of all accounts in the database', (done) => {
+      chai
+        .request(app)
+        .get('/api/v2/accounts')
+        .set('x-access-token', cashierToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(200);
+          expect(res.body.data).to.be.an('array');
+          done();
+        });
+    });
+  });
+  describe('GET api/v2/accounts', () => {
+    it('Should throw an error if user doesnt put in a token', (done) => {
+      chai
+        .request(app)
+        .get('/api/v2/accounts')
+        .set('x-access-token', '')
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(404);
+          expect(res.body.error).to.be.equals('You cannot access this resource');
+          done();
+        });
+    });
+    it('Should throw an error if user puts in an invalid token', (done) => {
+      chai
+        .request(app)
+        .get('/api/v2/accounts')
+        .set('x-access-token', 'fdskfldsjklgfjkldskljsfkldskfsdkjfsdfsdlkdsfjs')
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(404);
+          expect(res.body.error).to.be.equals('Invalid token');
           done();
         });
     });

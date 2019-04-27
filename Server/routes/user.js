@@ -5,12 +5,12 @@ import Helper from '../helper/helper';
 
 const { verifyTokenAll } = Helper;
 
-const { checkEmails } = Validator;
+const { checkExistingEmail } = Validator;
 
 const router = express.Router();
 
 const { getUserAccounts } = userController;
 
-router.get('/:email/accounts', verifyTokenAll, checkEmails, getUserAccounts);
+router.get('/:email/accounts', verifyTokenAll, checkExistingEmail, getUserAccounts);
 
 export default router;

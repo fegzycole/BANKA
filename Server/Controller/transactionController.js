@@ -118,18 +118,18 @@ class TransactionController {
    * @param {*} req
    * @param {*} res
    */
-  static async cashTransactionsDb(req, res) {
+  static async cashTransactions(req, res) {
     try {
       const accountChecker = await Db.query('SELECT * FROM accountstable  WHERE accountnumber = $1', [parseInt(req.params.accountNo, 10)]);
       const acctBal = parseFloat(accountChecker.rows[0].balance);
       let newBal;
-      if (req.body.type === 'credit') {
+      if (req.route.path === '/:accountNo/credit') {
         newBal = parseFloat(acctBal) + parseFloat(req.body.amountToDeposit);
       }
-      if (req.body.type === 'debit') {
+      if (req.route.path === '/:accountNo/debit') {
         if (acctBal <= req.body.amountToDeposit) {
           return res.json({
-            status: 404,
+            status: 400,
             error: 'Insufficient Funds',
           });
         }

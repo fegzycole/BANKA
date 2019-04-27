@@ -85,7 +85,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.message).to.be.equal('First name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -103,7 +103,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.message).to.be.equal('Last name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -121,12 +121,12 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.message).to.be.equal('First name is required, It should have no whitespace(s) in between its characters');
 
           done();
         });
     });
-    it('Should return an error if laststname has a  whitespace', (done) => {
+    it('Should return an error if lastname has a  whitespace', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
@@ -140,7 +140,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.message).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.message).to.be.equal('Last name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -164,27 +164,6 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
     });
   });
   describe('POST api/v2/auth/signup', () => {
-    it('Should successfully create a user account if inputs are valid', (done) => {
-      chai
-        .request(app)
-        .post('/api/v2/auth/signup')
-        .send({
-          firstName: 'fegor',
-          lastName: 'theboy',
-          email: 'barcaaerddict@gmail.com',
-          password: 'simpleandweet',
-          type: 'admin',
-        })
-        .end((err, res) => {
-          if (err) done();
-          const { body } = res;
-          expect(res).to.have.status(201);
-          expect(res.body.status).to.be.equal(201);
-          expect(res.body.data).to.have.key('id', 'token', 'firstname', 'lastname', 'email', 'type', 'isadmin');
-          expect(res.body.data.token).to.be.a('string');
-          done();
-        });
-    });
     it('Should return an error if the user provides an invalid email', (done) => {
       chai
         .request(app)
@@ -217,7 +196,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.error).to.be.equal('First name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -235,7 +214,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.error).to.be.equal('Last name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -253,7 +232,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.be.equal('First Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.error).to.be.equal('First name is required, It should have no whitespace(s) in between its characters');
 
           done();
         });
@@ -272,7 +251,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.be.equal('Last Name is required, It should have no whitespace(s) in between its characters');
+          expect(res.body.error).to.be.equal('Last name is required, It should have no whitespace(s) in between its characters');
           done();
         });
     });
@@ -360,6 +339,34 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           expect(res).to.have.status(422);
           expect(res.body.status).to.be.equal(422);
           expect(res.body.error).to.be.equal('Email does not exist');
+          done();
+        });
+    });
+    it('Should return an error if the user provides no email address', (done) => {
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send({
+          password: 'wrongpassword',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.be.equal('Your email is required, example fergusoniyara@banka.com');
+          done();
+        });
+    });
+    it('Should return an error if the user provides no password', (done) => {
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send({
+          email: 'fergie@gmail.com',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.be.equal('Password should be at least 4 characters without any whitespace(s)');
           done();
         });
     });

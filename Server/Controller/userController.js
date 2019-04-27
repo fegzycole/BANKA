@@ -84,7 +84,7 @@ class UserController {
    * @param {*} req
    * @param {*} res
    */
-  static async dbCreateAccount(req, res) {
+  static async CreateAccount(req, res) {
     try {
       let isadmin;
       if (req.body.type === ('client') || req.body.type === ('cashier')) {
@@ -93,12 +93,14 @@ class UserController {
       if (req.body.type === 'admin') {
         isadmin = true;
       }
-      const newUser = [req.body.firstName,
+      const newUser = [
+        req.body.firstName,
         req.body.lastName,
         req.body.email,
         bcrypt.hashSync(req.body.password, 10),
         req.body.type,
-        isadmin];
+        isadmin,
+      ];
       // variable checking for admin status
       const queryString = 'INSERT INTO userstable(firstname, lastname, email, password, type, isadmin) VALUES($1, $2, $3, $4, $5, $6) returning *';
       const { rows } = await Db.query(queryString, newUser);
@@ -188,7 +190,7 @@ class UserController {
    * @param {*} req
    * @param {*} res
    */
-  static async logindB(req, res) {
+  static async signIn(req, res) {
     const { body } = req;
     try {
       const emailChecker = await Db.query('SELECT * FROM userstable  WHERE email = $1', [body.email]);

@@ -19,16 +19,6 @@ class Services {
     }
     return next();
   }
-
-  static checkAdminStatus(req, res, next) {
-    let isadmin;
-    if (req.body.type === 'client' || req.body.type === 'cashier') {
-      isadmin = false;
-    } else {
-      isadmin = true;
-    }
-    return next();
-  }
 }
 
 export default Services;
