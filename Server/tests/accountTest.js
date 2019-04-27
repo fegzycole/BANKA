@@ -296,7 +296,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         .set('x-access-token', adminToken)
         .end((err, res) => {
           const { body } = res;
-          expect(body.status).to.be.equals(422);
+          expect(body.status).to.be.equals(404);
           expect(body).to.be.an('object');
           expect(body.error).to.be.equals('Account Not Found');
           done();
@@ -326,7 +326,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         .set('x-access-token', adminToken)
         .end((err, res) => {
           const { body } = res;
-          expect(body.status).to.be.equals(422);
+          expect(body.status).to.be.equals(404);
           expect(body).to.be.an('object');
           expect(body.error).to.be.equals('Account Not Found');
           done();
@@ -393,7 +393,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         .get(`/api/v2/accounts/${accountNumber}/transactions`)
         .set('x-access-token', UserToken)
         .end((err, res) => {
-          expect(res.body.status).to.be.equals(422);
+          expect(res.body.status).to.be.equals(404);
           expect(res.body.error).to.be.equals('Account Not Found');
           done();
         });
@@ -437,7 +437,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         .get(`/api/v2/accounts/${accountNumber}`)
         .set('x-access-token', UserToken)
         .end((err, res) => {
-          expect(res.body.status).to.be.equals(422);
+          expect(res.body.status).to.be.equals(404);
           expect(res.body.error).to.be.equals('Account Not Found');
           done();
         });

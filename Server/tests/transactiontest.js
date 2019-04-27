@@ -467,7 +467,7 @@ describe(' Transactions test for  GET endpoints', () => {
         .get(`/api/v2/transactions/${id}`)
         .set('x-access-token', UserToken)
         .end((err, res) => {
-          expect(res.body.status).to.be.equals(422);
+          expect(res.body.status).to.be.equals(404);
           expect(res.body.error).to.be.equals('No Transaction with the stated ID');
           done();
         });

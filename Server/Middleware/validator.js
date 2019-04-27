@@ -102,16 +102,16 @@ class Validator {
       || emailChecker.rows.find(c => c.email === req.params.email);
       if (req.route.path === '/signup') {
         if (email) {
-          return res.status(422).json({
-            status: 422,
+          return res.status(409).json({
+            status: 409,
             error: 'Email Already Exists',
           });
         }
       }
       if (req.route.path === '/signin' || req.route.path === '/:email/accounts') {
         if (!email) {
-          return res.status(422).json({
-            status: 422,
+          return res.status(404).json({
+            status: 404,
             error: 'Email does not exist',
           });
         }
@@ -128,8 +128,8 @@ class Validator {
       const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
       const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
       if (!account) {
-        return res.status(422).json({
-          status: 422,
+        return res.status(404).json({
+          status: 404,
           error: 'Account Not Found',
         });
       }
@@ -144,7 +144,7 @@ class Validator {
     const idChecker = await Db.query('SELECT id FROM transactions WHERE id = $1', [parseInt(req.params.id, 10)]);
     if (!idChecker.rows.length) {
       return res.status(404).json({
-        status: 422,
+        status: 404,
         error: 'No Transaction with the stated ID',
       });
     }

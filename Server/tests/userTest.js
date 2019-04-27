@@ -267,8 +267,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           type: 'client',
         })
         .end((err, res) => {
-          expect(res).to.have.status(422);
-          expect(res.body.status).to.be.equal(422);
+          expect(res).to.have.status(409);
+          expect(res.body.status).to.be.equal(409);
           expect(res.body.error).to.be.equal('Email Already Exists');
           done();
         });
@@ -336,8 +336,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           password: 'wrongpassword',
         })
         .end((err, res) => {
-          expect(res).to.have.status(422);
-          expect(res.body.status).to.be.equal(422);
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
           expect(res.body.error).to.be.equal('Email does not exist');
           done();
         });
@@ -415,7 +415,7 @@ describe('Test for User Endpoint', () => {
         .get(`/api/v2/user/${email}/accounts`)
         .set('x-access-token', UserToken)
         .end((err, res) => {
-          expect(res.body.status).to.be.equals(422);
+          expect(res.body.status).to.be.equals(404);
           expect(res.body.error).to.be.equals('Email does not exist');
           done();
         });
