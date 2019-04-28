@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import YAML from 'yamljs';
+import cors from 'cors';
 import swaggerUiExpress from 'swagger-ui-express';
 import Auth from './routes/auth';
 import accounts from './routes/accounts';
@@ -15,6 +16,8 @@ import user from './routes/user';
 
 const app = express();
 
+app.use(cors());
+
 dotenv.config();
 
 const swaggerDoc = YAML.load(`${__dirname}/../swagger.yaml`);
@@ -24,6 +27,13 @@ app.use('/api-docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDoc))
 app.use(express.json());
 
 app.use(bodyParser.json());
+
+
+// Home route
+app.get('/', (req, res) => res.status(200).send({
+  message: 'Welcome To Banka',
+}));
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -41,15 +51,23 @@ app.use('/api/v2/transactions', transactionsv2);
 
 app.use('/api/v2/user', user);
 
-app.get('/', (req, res) => res.status(200).send({
-  message: 'Welcome To Banka',
-}));
-
 // Handling of non-existent routes
 app.all('*', (req, res) => res.status(404).json({
   status: 404,
   error: 'The specified route does not exist',
 }));
+
+// Hanling of other unhandled errors
+app.use((error, req, res, next) =>{
+  res.status(error.status || 500);
+  res.json({
+    status: error.status || 500,
+    success:false,
+    error: error.name,
+    message: error.message
+  });
+  next();
+});
 
 const PORT = process.env.PORT || 3000;
 

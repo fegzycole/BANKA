@@ -13,6 +13,7 @@ chai.use(chaiHttp);
 
 let UserToken;
 let adminToken;
+let cashierToken;
 
 describe('Tests for all Auth(signup and signin) Endpoints', () => {
   describe('POST api/v1/auth/signup', () => {
@@ -408,12 +409,47 @@ describe('Test for User Endpoint', () => {
           done();
         });
     });
+    it('Should return an error if client wants to get a list of all accounts belonging to a user', (done) => {
+      const email = 'fereoomee@gmail.com';
+      chai
+        .request(app)
+        .get(`/api/v2/user/${email}/accounts`)
+        .set('x-access-token', UserToken)
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(401);
+          expect(res.body.error).to.be.equals('You do not have the rights to this resource');
+          done();
+        });
+    });
+  });
+});
+
+describe('Test for User Endpoint', () => {
+  describe('GET api/v2/user/<user-email-address>/accounts', () => {
+    before((done) => {
+      const userCredential = {
+        email: 'fereoomee@gmail.com',
+        password: 'somepassword1',
+      };
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send(userCredential)
+        .end((err, res) => {
+          const { body } = res;
+          expect(body.status).to.be.equals(200);
+          if (!err) {
+            cashierToken = body.data.token;
+          }
+          done();
+        });
+    });
     it('Should return an error if the email is not found', (done) => {
       const email = 'mariana@gmail.com';
       chai
         .request(app)
         .get(`/api/v2/user/${email}/accounts`)
-        .set('x-access-token', UserToken)
+        .set('x-access-token', cashierToken)
         .end((err, res) => {
           expect(res.body.status).to.be.equals(404);
           expect(res.body.error).to.be.equals('Email does not exist');
@@ -425,7 +461,7 @@ describe('Test for User Endpoint', () => {
       chai
         .request(app)
         .get(`/api/v2/user/${email}/accounts`)
-        .set('x-access-token', UserToken)
+        .set('x-access-token', cashierToken)
         .end((err, res) => {
           expect(res.body.status).to.be.equals(200);
           expect(res.body.accounts).to.be.an('array');
@@ -434,6 +470,7 @@ describe('Test for User Endpoint', () => {
     });
   });
 });
+
 
 // Test that handles non-existent routes
 describe('GET *', () => {
