@@ -10,6 +10,9 @@ header
     color:white;
     text-decoration: none;
 }
+.accountlogo a{
+    background: #3F51B5;
+}
 .nav-toggle
 {
     display:none;
@@ -96,7 +99,7 @@ nav a:hover
     transition: opacity 250ms ease-in-out 250ms;
 }
 
-@media screen and (min-width: 800px){
+@media screen and (min-width: 1000px){
     .nav-toggle-label
     {
         display:none;

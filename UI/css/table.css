@@ -90,15 +90,12 @@
    }
 }
 
-
-
-
-@media only screen and (min-width:768px) and (max-width:890px)
+@media only screen and (min-width:768px) and (max-width:1024px)
 {
     .table{
-      margin-left: 10%;
-      margin-top:15.5%;
+      margin-top:19%;
       width:80%;
+      margin-left:10%;
       font-size:13px;
     }
     .tableHeader{
@@ -107,10 +104,9 @@
 
 }
 
-@media only screen and (min-width:891px) and (max-width:901px)
+/* @media only screen and (min-width:891px) and (max-width:901px)
 {
     .table{
-      margin-left: 10%;
       margin-top:13.5%;
       width:80%;
       font-size:13px;
@@ -129,15 +125,15 @@
     width:80%;
     font-size:13px;
   }
-}
+} */
 
-@media only screen and (min-width:521px) and (max-width:767px)
+ @media only screen and (min-width:569px) and (max-width:767px)
 {
    .table
    {
      margin-top:19%;
      width:80%;
-     margin-left: 10%;
+     margin-left:10%;
      font-size:12px;
      border-bottom: 2px solid #FFAF30;
      border-left: 2px solid #FFAF30;
@@ -146,10 +142,9 @@
    .tableHeader{
     display:none;
  }
-}
+} 
 
-
-@media only screen and (min-width:240px) and (max-width:520px)
+@media only screen and (min-width:451px) and (max-width:568px)
 {
   .tableHeader{
     display:block;
@@ -160,7 +155,7 @@
  }
    .table
    {
-    margin-top:28%;
+     margin-top:20%;
      width:100%;
      border-bottom: 2px solid #FFAF30;
      border-left: 2px solid #FFAF30;
@@ -186,5 +181,43 @@
      margin-bottom:1px;
      min-height:14px;
    }
+}
+@media only screen and (min-width:240px) and (max-width:450px)
+{
+  .tableHeader{
+    display:block;
+    padding:10px;
+    background-color:#3F51B5;
+    margin-bottom:5px;
+    color: white;
  }
+   .table
+   {
+     margin-top:30%;
+     width:100%;
+     border-bottom: 2px solid #FFAF30;
+     border-left: 2px solid #FFAF30;
+     border-right: 2px solid #FFAF30;
+   }
+   table thead
+   {
+     display:none;
+   }
+   table tr
+   {
+     display:block;
+     margin-top:5px;
+     padding-bottom: 5px;
+     border-bottom:3px solid #FFAF30;
+   }
+   table td
+   {
+     display:block;
+     text-align:right;
+     font-size:13px;
+     border-radius:5px;
+     margin-bottom:1px;
+     min-height:14px;
+   }
+}
  

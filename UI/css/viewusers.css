@@ -391,7 +391,8 @@ button
   .view-transactions form,
   #cash-transactions1 form,
   .view-users form{
-    top:100px;
+    top:95px;
+    margin-left: -20%;
   }
   .view-users .form input[type=text]{
     width:75%;
@@ -399,7 +400,7 @@ button
     margin-top:10px;
     text-align:center;
     align-items:center;
-    margin-left: 15%;
+
   }
   .view-users input[type=text]::placeholder{
     font-size:12px;
@@ -422,7 +423,7 @@ button
   .view-users form{
     width: 70%;
     top:110px;
-    left: 17%;
+    left: 10%;
     overflow: none;
   }
   .view-transactions input[type=text],
