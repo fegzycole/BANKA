@@ -38,6 +38,11 @@ class Validator {
     return Joi.validate(user, schema);
   }
 
+  static validateNewPassword(user) {
+    const schema = Joi.string().required().error(new Error('Password should be at least 4 characters without any whitespace(s)'));
+    return Joi.validate(user, schema);
+  }
+
   // Validate the status input
   static validateStatusInput(user) {
     const schema = {
@@ -61,6 +66,18 @@ class Validator {
   // validate the input for changing the account status
   static validateStatus(req, res, next) {
     const { error } = Validator.validateStatusInputdB(req.body.status);
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        message: error.message,
+      });
+    }
+    return next();
+  }
+
+  // validate new password
+  static validatePasswordReset(req, res, next) {
+    const { error } = Validator.validateNewPassword(req.body.password);
     if (error) {
       return res.status(400).json({
         status: 400,
@@ -108,7 +125,7 @@ class Validator {
           });
         }
       }
-      if (req.route.path === '/signin' || req.route.path === '/:email/accounts') {
+      if (req.route.path === '/signin' || req.route.path === '/:email/accounts'|| req.route.path === '/:email') {
         if (!email) {
           return res.status(404).json({
             status: 404,

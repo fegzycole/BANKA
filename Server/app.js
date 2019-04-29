@@ -16,6 +16,21 @@ import user from './routes/user';
 
 const app = express();
 
+app.use(
+  cors({
+    origin: '*',
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }),
+);
+
+app.all('/*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  next();
+});
+
 app.use(cors());
 
 dotenv.config();
@@ -58,13 +73,13 @@ app.all('*', (req, res) => res.status(404).json({
 }));
 
 // Hanling of other unhandled errors
-app.use((error, req, res, next) =>{
+app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     status: error.status || 500,
-    success:false,
+    success: false,
     error: error.name,
-    message: error.message
+    message: error.message,
   });
   next();
 });

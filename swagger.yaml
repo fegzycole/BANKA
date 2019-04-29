@@ -1,8 +1,15 @@
 swagger: '2.0'
 info:
   version: '1.0'
-  title: Banka-Project
-  description: 'TODO: Add Description'
+  title: Banka
+  description: >-
+    Banka is a light-weight core banking application that powers banking operations like account
+
+    creation, customer deposit and withdrawals. This app is meant to support a single bank, where
+
+    users can signup and create bank accounts online, but must visit the branch to withdraw or
+
+    deposit money..
   contact: {}
 host: banka--app.herokuapp.com
 basePath: /api/v2
@@ -13,17 +20,86 @@ consumes:
 produces:
 - application/json
 paths:
-  /transactions/<account-number>/debit:
+  /user/{email}/accounts:
+    get:
+      description: GET /user/<user-email-address>/accounts
+      summary: View all accounts owned by a specific user (client) .
+      tags:
+      - User
+      operationId: UserAccountsByEmailGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: email
+        in: path
+        required: true
+        type: string
+        description: ''
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Adminorstaffcanviewallaccountsownedbyaspecificuser%28client%29.'
+          headers:
+            connection:
+              type: string
+              default: keep-alive
+            content-length:
+              type: string
+              default: 2172
+            content-type:
+              type: string
+              default: application/json; charset=utf-8
+            date:
+              type: string
+              default: Sun, 28 Apr 2019 18:37:03 GMT
+            etag:
+              type: string
+              default: W/"87c-ncH7icM+9XRkvwX36PjowMB9Okg"
+            server:
+              type: string
+              default: Cowboy
+            via:
+              type: string
+              default: 1.1 vegur
+            x-powered-by:
+              type: string
+              default: Express
+        404:
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Clienttriestodebitanaccount'
+          examples:
+            application/json:
+              status: 404
+              error: Email does not exist
+  /transactions/{accountNo}/debit:
     post:
       description: POST /transactions/<account-number>/debit
       summary: Debit a bank account
       tags:
       - Transactions
-      operationId: TransactionsAccountNumberDebitPost
+      operationId: TransactionsDebitByAccountNoPost
       deprecated: false
       produces:
       - application/json
       parameters:
+      - name: accountNo
+        in: path
+        required: true
+        type: string
+        description: ''
       - name: Content-Type
         in: header
         required: true
@@ -44,27 +120,27 @@ paths:
         200:
           description: ''
           schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
+            $ref: '#/definitions/Clienttriestodebitanaccount'
           examples:
             application/json:
-              status: 400
-              error: Insufficient Funds
+              status: 401
+              error: You do not have the rights to this resource
           headers:
             connection:
               type: string
               default: keep-alive
             content-length:
               type: string
-              default: 43
+              default: 68
             content-type:
               type: string
               default: application/json; charset=utf-8
             date:
               type: string
-              default: Sun, 28 Apr 2019 18:44:14 GMT
+              default: Sun, 28 Apr 2019 18:47:54 GMT
             etag:
               type: string
-              default: W/"2b-hFJTjxEp6xq/7FHljC7W8aasisc"
+              default: W/"44-qVp6hDINKr5/jvT+n6X/xN9+QZE"
             server:
               type: string
               default: Cowboy
@@ -77,22 +153,27 @@ paths:
         400:
           description: Bad Request
           schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
+            $ref: '#/definitions/Clienttriestodebitanaccount'
           examples:
             application/json:
               status: 400
-              error: Invalid input, try again
-  /transactions/<account-number>/credit:
+              error: Please put in a number to deposit or withdraw
+  /transactions/{accountNo}/credit:
     post:
       description: POST /transactions/<account-number>/credit
       summary: Credit a bank account
       tags:
       - Transactions
-      operationId: TransactionsAccountNumberCreditPost
+      operationId: TransactionsCreditByAccountNoPost
       deprecated: false
       produces:
       - application/json
       parameters:
+      - name: accountNo
+        in: path
+        required: true
+        type: string
+        description: ''
       - name: Content-Type
         in: header
         required: true
@@ -107,33 +188,27 @@ paths:
         200:
           description: ''
           schema:
-            $ref: '#/definitions/Cashiersuccessfullycreditsanaccount'
+            $ref: '#/definitions/Clienttriestodoacredittransaction'
           examples:
             application/json:
-              status: 200
-              data:
-                transactionId: 597
-                accountNumber: 20000005
-                amount: 25000
-                cashier: 37
-                transactionType: credit
-                accountBalance: 32502.18
+              status: 401
+              error: You do not have the rights to this resource
           headers:
             connection:
               type: string
               default: keep-alive
             content-length:
               type: string
-              default: 153
+              default: 68
             content-type:
               type: string
               default: application/json; charset=utf-8
             date:
               type: string
-              default: Sun, 28 Apr 2019 18:53:54 GMT
+              default: Sun, 28 Apr 2019 18:57:14 GMT
             etag:
               type: string
-              default: W/"99-rFXazk6h/RkrxoLogsuFpZB+yQM"
+              default: W/"44-qVp6hDINKr5/jvT+n6X/xN9+QZE"
             server:
               type: string
               default: Cowboy
@@ -146,22 +221,27 @@ paths:
         400:
           description: Bad Request
           schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
+            $ref: '#/definitions/Clienttriestodebitanaccount'
           examples:
             application/json:
               status: 400
               error: Invalid input, try again
-  /transactions/<id>:
+  /transactions/{id}:
     get:
       description: GET /transactions/<transaction-id>
       summary: View a specific transaction .
       tags:
       - Transactions
-      operationId: TransactionsIdGet
+      operationId: TransactionsByIdGet
       deprecated: false
       produces:
       - application/json
       parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: ''
       - name: Content-Type
         in: header
         required: true
@@ -213,221 +293,6 @@ paths:
             x-powered-by:
               type: string
               default: Express
-  /user/<email-address>/accounts:
-    get:
-      description: GET /user/<user-email-address>/accounts
-      summary: View all accounts owned by a specific user (client) .
-      tags:
-      - User
-      operationId: UserEmailAddressAccountsGet
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: Content-Type
-        in: header
-        required: true
-        type: string
-        description: ''
-      - name: x-access-token
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        200:
-          description: ''
-          schema:
-            $ref: '#/definitions/Adminorstaffcanviewallaccountsownedbyaspecificuser%28client%29.'
-          headers:
-            connection:
-              type: string
-              default: keep-alive
-            content-length:
-              type: string
-              default: 2172
-            content-type:
-              type: string
-              default: application/json; charset=utf-8
-            date:
-              type: string
-              default: Sun, 28 Apr 2019 18:37:03 GMT
-            etag:
-              type: string
-              default: W/"87c-ncH7icM+9XRkvwX36PjowMB9Okg"
-            server:
-              type: string
-              default: Cowboy
-            via:
-              type: string
-              default: 1.1 vegur
-            x-powered-by:
-              type: string
-              default: Express
-        404:
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
-          examples:
-            application/json:
-              status: 404
-              error: Email does not exist
-  /auth/signup:
-    post:
-      description: POST /auth/signup
-      summary: Register a new user
-      tags:
-      - Auth
-      operationId: AuthSignupPost
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: Content-Type
-        in: header
-        required: true
-        type: string
-        description: ''
-      - name: Body
-        in: body
-        required: true
-        description: ''
-        schema:
-          $ref: '#/definitions/RegisteranewuserRequest'
-      responses:
-        201:
-          description: ''
-          schema:
-            $ref: '#/definitions/SIgnupnewuser'
-          examples:
-            application/json:
-              status: 201
-              data:
-                id: 35
-                firstname: oghenefegor
-                lastname: iyara
-                email: ferguiosmnssmsbsnljjkvsoniyara@gmail.com
-                type: cashier
-                isadmin: false
-                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozNSwiZW1haWwiOiJmZXJndWlvc21uc3Ntc2Jzbmxqamt2c29uaXlhcmFAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoib2doZW5lZmVnb3IiLCJsYXN0bmFtZSI6Iml5YXJhIiwicGFzc3dvcmQiOiIkMmEkMTAkbUFnUG5vaUF0ODU3ZzZXQW9aTDlTLi9ZeFJLbXZIUFZ5bGFCQUkwbnZaa1MuQndvYnp1RkciLCJ0eXBlIjoiY2FzaGllciIsImlzYWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU2Mzc4ODczLCJleHAiOjE1NTY0NjUyNzN9.J0yMidMq7k9HxTPR7c_PRlMoqZvDI_rfui1ULI-IFS4
-          headers:
-            connection:
-              type: string
-              default: keep-alive
-            content-length:
-              type: string
-              default: 592
-            content-type:
-              type: string
-              default: application/json; charset=utf-8
-            date:
-              type: string
-              default: Sat, 27 Apr 2019 15:27:53 GMT
-            etag:
-              type: string
-              default: W/"250-oHIGRIk4DXcPQfMeYcbvIgzlFRQ"
-            server:
-              type: string
-              default: Cowboy
-            via:
-              type: string
-              default: 1.1 vegur
-            x-powered-by:
-              type: string
-              default: Express
-        400:
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
-          examples:
-            application/json:
-              status: 400
-              error: Last name is required, It should have no whitespace(s) in between its characters
-        409:
-          description: Conflict
-          schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
-          examples:
-            application/json:
-              status: 409
-              error: Email Already Exists
-  /auth/signin:
-    post:
-      description: POST /auth/signin
-      summary: Log in a user
-      tags:
-      - Auth
-      operationId: AuthSigninPost
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: Content-Type
-        in: header
-        required: true
-        type: string
-        description: ''
-      - name: Body
-        in: body
-        required: true
-        description: ''
-        schema:
-          $ref: '#/definitions/LoginauserRequest'
-      responses:
-        200:
-          description: ''
-          schema:
-            $ref: '#/definitions/Signusersuccessfully'
-          examples:
-            application/json:
-              status: 200
-              data:
-                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozMCwiZW1haWwiOiJmZXJndXNvbml5YXJhYUBnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJmZXJndXNvbiIsImxhc3RuYW1lIjoiaXlhcmEgIiwicGFzc3dvcmQiOiIkMmEkMTAkc2pHU1VYR2NqeWdhcGhSeGhBcmJLZWhsR2Uzenh1WHNEUXZLQUJFLkVWY05JTC5FLzhCeHkiLCJ0eXBlIjoiY2xpZW50IiwiaXNhZG1pbiI6ZmFsc2V9LCJpYXQiOjE1NTYzNzk2NjEsImV4cCI6MTU1NjQ2NjA2MX0.O-tEvQaAxhHJi9D634WbCJ-9kXPyKixMWOrMw0JMBj8
-                id: 30
-                firstName: ferguson
-                lastName: 'iyara '
-                email: fergusoniyaraa@gmail.com
-          headers:
-            connection:
-              type: string
-              default: keep-alive
-            content-length:
-              type: string
-              default: 516
-            content-type:
-              type: string
-              default: application/json; charset=utf-8
-            date:
-              type: string
-              default: Sat, 27 Apr 2019 15:41:00 GMT
-            etag:
-              type: string
-              default: W/"204-bErS0s0BjY+fTXzzMx/y3osWf+A"
-            server:
-              type: string
-              default: Cowboy
-            via:
-              type: string
-              default: 1.1 vegur
-            x-powered-by:
-              type: string
-              default: Express
-        400:
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
-          examples:
-            application/json:
-              status: 400
-              error: Password should be at least 4 characters without any whitespace(s)
-        404:
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
-          examples:
-            application/json:
-              status: 404
-              error: Email does not exist
   /accounts:
     post:
       description: POST /accounts
@@ -498,7 +363,7 @@ paths:
         400:
           description: Bad Request
           schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
+            $ref: '#/definitions/Clienttriestodebitanaccount'
           examples:
             application/json:
               status: 400
@@ -553,19 +418,24 @@ paths:
             x-powered-by:
               type: string
               default: Express
-  /accounts/<account-number>:
+  /accounts/{accountNo}:
     patch:
       description: PATCH /account/<account-number>
       summary: Change account status
       tags:
       - Accounts
-      operationId: AccountsAccountNumberPatch
+      operationId: AccountsByAccountNoPatch
       deprecated: false
       produces:
       - application/json
       consumes:
       - application/x-www-form-urlencoded
       parameters:
+      - name: accountNo
+        in: path
+        required: true
+        type: string
+        description: ''
       - name: x-access-token
         in: header
         required: true
@@ -630,11 +500,16 @@ paths:
       summary: Delete an account number
       tags:
       - Accounts
-      operationId: AccountsAccountNumberDelete
+      operationId: AccountsByAccountNoDelete
       deprecated: false
       produces:
       - application/json
       parameters:
+      - name: accountNo
+        in: path
+        required: true
+        type: string
+        description: ''
       - name: x-access-token
         in: header
         required: true
@@ -688,7 +563,7 @@ paths:
         404:
           description: Not Found
           schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
+            $ref: '#/definitions/Clienttriestodebitanaccount'
           examples:
             application/json:
               status: 404
@@ -698,11 +573,16 @@ paths:
       summary: View a specific account’s details .
       tags:
       - Accounts
-      operationId: AccountsAccountNumberGet
+      operationId: AccountsByAccountNoGet
       deprecated: false
       produces:
       - application/json
       parameters:
+      - name: accountNo
+        in: path
+        required: true
+        type: string
+        description: ''
       - name: Content-Type
         in: header
         required: true
@@ -756,22 +636,27 @@ paths:
         404:
           description: Not Found
           schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
+            $ref: '#/definitions/Clienttriestodebitanaccount'
           examples:
             application/json:
               status: 404
               error: Account Not Found
-  /accounts/<account-number>/transactions:
+  /accounts/{accountNo}/transactions:
     get:
       description: GET /accounts/<account-number>/transactions
       summary: View an account’s transaction history .
       tags:
       - Accounts
-      operationId: AccountsAccountNumberTransactionsGet
+      operationId: AccountsTransactionsByAccountNoGet
       deprecated: false
       produces:
       - application/json
       parameters:
+      - name: accountNo
+        in: path
+        required: true
+        type: string
+        description: ''
       - name: Content-Type
         in: header
         required: true
@@ -810,142 +695,168 @@ paths:
         404:
           description: Not Found
           schema:
-            $ref: '#/definitions/Cashierputsinanamountlargerthanclient%27sbalance'
+            $ref: '#/definitions/Clienttriestodebitanaccount'
           examples:
             application/json:
               status: 404
               error: Account Not Found
+  /auth/signup:
+    post:
+      description: POST /auth/signup
+      summary: Register a new user
+      tags:
+      - Auth
+      operationId: AuthSignupPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/RegisteranewuserRequest'
+      responses:
+        201:
+          description: ''
+          schema:
+            $ref: '#/definitions/SIgnupnewuser'
+          examples:
+            application/json:
+              status: 201
+              data:
+                id: 35
+                firstname: oghenefegor
+                lastname: iyara
+                email: ferguiosmnssmsbsnljjkvsoniyara@gmail.com
+                type: cashier
+                isadmin: false
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozNSwiZW1haWwiOiJmZXJndWlvc21uc3Ntc2Jzbmxqamt2c29uaXlhcmFAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoib2doZW5lZmVnb3IiLCJsYXN0bmFtZSI6Iml5YXJhIiwicGFzc3dvcmQiOiIkMmEkMTAkbUFnUG5vaUF0ODU3ZzZXQW9aTDlTLi9ZeFJLbXZIUFZ5bGFCQUkwbnZaa1MuQndvYnp1RkciLCJ0eXBlIjoiY2FzaGllciIsImlzYWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU2Mzc4ODczLCJleHAiOjE1NTY0NjUyNzN9.J0yMidMq7k9HxTPR7c_PRlMoqZvDI_rfui1ULI-IFS4
+          headers:
+            connection:
+              type: string
+              default: keep-alive
+            content-length:
+              type: string
+              default: 592
+            content-type:
+              type: string
+              default: application/json; charset=utf-8
+            date:
+              type: string
+              default: Sat, 27 Apr 2019 15:27:53 GMT
+            etag:
+              type: string
+              default: W/"250-oHIGRIk4DXcPQfMeYcbvIgzlFRQ"
+            server:
+              type: string
+              default: Cowboy
+            via:
+              type: string
+              default: 1.1 vegur
+            x-powered-by:
+              type: string
+              default: Express
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Clienttriestodebitanaccount'
+          examples:
+            application/json:
+              status: 400
+              error: Password should be at least 4 characters without any whitespace(s)
+        409:
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Clienttriestodebitanaccount'
+          examples:
+            application/json:
+              status: 409
+              error: Email Already Exists
+  /auth/signin:
+    post:
+      description: POST /auth/signin
+      summary: Log in a user
+      tags:
+      - Auth
+      operationId: AuthSigninPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/LoginauserRequest'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Signusersuccessfully'
+          examples:
+            application/json:
+              status: 200
+              data:
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozMCwiZW1haWwiOiJmZXJndXNvbml5YXJhYUBnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJmZXJndXNvbiIsImxhc3RuYW1lIjoiaXlhcmEgIiwicGFzc3dvcmQiOiIkMmEkMTAkc2pHU1VYR2NqeWdhcGhSeGhBcmJLZWhsR2Uzenh1WHNEUXZLQUJFLkVWY05JTC5FLzhCeHkiLCJ0eXBlIjoiY2xpZW50IiwiaXNhZG1pbiI6ZmFsc2V9LCJpYXQiOjE1NTYzNzk2NjEsImV4cCI6MTU1NjQ2NjA2MX0.O-tEvQaAxhHJi9D634WbCJ-9kXPyKixMWOrMw0JMBj8
+                id: 30
+                firstName: ferguson
+                lastName: 'iyara '
+                email: fergusoniyaraa@gmail.com
+          headers:
+            connection:
+              type: string
+              default: keep-alive
+            content-length:
+              type: string
+              default: 516
+            content-type:
+              type: string
+              default: application/json; charset=utf-8
+            date:
+              type: string
+              default: Sat, 27 Apr 2019 15:41:00 GMT
+            etag:
+              type: string
+              default: W/"204-bErS0s0BjY+fTXzzMx/y3osWf+A"
+            server:
+              type: string
+              default: Cowboy
+            via:
+              type: string
+              default: 1.1 vegur
+            x-powered-by:
+              type: string
+              default: Express
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Clienttriestodebitanaccount'
+          examples:
+            application/json:
+              status: 400
+              error: Your email is required, example fergusoniyara@banka.com
+        404:
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Clienttriestodebitanaccount'
+          examples:
+            application/json:
+              status: 404
+              error: Email does not exist
 definitions:
-  DebitabankaccountRequest:
-    title: DebitabankaccountRequest
-    example:
-      type: debit
-      amountToDeposit: 2500.56005
-    type: object
-    properties:
-      type:
-        type: string
-      amountToDeposit:
-        type: number
-        format: double
-    required:
-    - type
-    - amountToDeposit
-  Cashierputsinanamountlargerthanclient'sbalance:
-    title: Cashierputsinanamountlargerthanclient'sbalance
-    example:
-      status: 400
-      error: Insufficient Funds
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      error:
-        type: string
-    required:
-    - status
-    - error
-  Cashiersuccessfullycreditsanaccount:
-    title: Cashiersuccessfullycreditsanaccount
-    example:
-      status: 200
-      data:
-        transactionId: 597
-        accountNumber: 20000005
-        amount: 25000
-        cashier: 37
-        transactionType: credit
-        accountBalance: 32502.18
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        $ref: '#/definitions/Data'
-    required:
-    - status
-    - data
-  Data:
-    title: Data
-    type: object
-    properties:
-      transactionId:
-        type: integer
-        format: int32
-      accountNumber:
-        type: string
-      amount:
-        type: integer
-        format: int32
-      cashier:
-        type: integer
-        format: int32
-      transactionType:
-        type: string
-      accountBalance:
-        type: string
-    required:
-    - transactionId
-    - accountNumber
-    - amount
-    - cashier
-    - transactionType
-    - accountBalance
-  Usertriestoviewaspecifictransaction:
-    title: Usertriestoviewaspecifictransaction
-    example:
-      status: 200
-      data:
-        transactionId: 20
-        createdOn: 2019-04-22T20:02:37.278Z
-        type: debit
-        accountNumber: 20000006
-        amount: 2500.5
-        oldBalance: 22505.09
-        newBalance: 20004.59
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        $ref: '#/definitions/Data1'
-    required:
-    - status
-    - data
-  Data1:
-    title: Data1
-    type: object
-    properties:
-      transactionId:
-        type: integer
-        format: int32
-      createdOn:
-        type: string
-      type:
-        type: string
-      accountNumber:
-        type: integer
-        format: int32
-      amount:
-        type: number
-        format: double
-      oldBalance:
-        type: number
-        format: double
-      newBalance:
-        type: number
-        format: double
-    required:
-    - transactionId
-    - createdOn
-    - type
-    - accountNumber
-    - amount
-    - oldBalance
-    - newBalance
   Adminorstaffcanviewallaccountsownedbyaspecificuser(client).:
     title: Adminorstaffcanviewallaccountsownedbyaspecificuser(client).
     type: object
@@ -987,6 +898,421 @@ definitions:
     - type
     - status
     - balance
+  DebitabankaccountRequest:
+    title: DebitabankaccountRequest
+    example:
+      type: debit
+      amountToDeposit: 2500.56005
+    type: object
+    properties:
+      type:
+        type: string
+      amountToDeposit:
+        type: number
+        format: double
+    required:
+    - type
+    - amountToDeposit
+  Clienttriestodebitanaccount:
+    title: Clienttriestodebitanaccount
+    example:
+      status: 401
+      error: You do not have the rights to this resource
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      error:
+        type: string
+    required:
+    - status
+    - error
+  Clienttriestodoacredittransaction:
+    title: Clienttriestodoacredittransaction
+    example:
+      status: 401
+      error: You do not have the rights to this resource
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      error:
+        type: string
+    required:
+    - status
+    - error
+  Usertriestoviewaspecifictransaction:
+    title: Usertriestoviewaspecifictransaction
+    example:
+      status: 200
+      data:
+        transactionId: 20
+        createdOn: 2019-04-22T20:02:37.278Z
+        type: debit
+        accountNumber: 20000006
+        amount: 2500.5
+        oldBalance: 22505.09
+        newBalance: 20004.59
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/Data'
+    required:
+    - status
+    - data
+  Data:
+    title: Data
+    type: object
+    properties:
+      transactionId:
+        type: integer
+        format: int32
+      createdOn:
+        type: string
+      type:
+        type: string
+      accountNumber:
+        type: integer
+        format: int32
+      amount:
+        type: number
+        format: double
+      oldBalance:
+        type: number
+        format: double
+      newBalance:
+        type: number
+        format: double
+    required:
+    - transactionId
+    - createdOn
+    - type
+    - accountNumber
+    - amount
+    - oldBalance
+    - newBalance
+  CreateabankaccountRequest:
+    title: CreateabankaccountRequest
+    example:
+      type: savings
+    type: object
+    properties:
+      type:
+        type: string
+    required:
+    - type
+  Createabankaccount:
+    title: Createabankaccount
+    example:
+      status: 200
+      data:
+        accountNumber: 20000060
+        firstName: oghenefegor
+        lastName: iyara
+        email: fegzycolezya@gmail.com
+        type: savings
+        openingBalance: 0
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/Data1'
+    required:
+    - status
+    - data
+  Data1:
+    title: Data1
+    type: object
+    properties:
+      accountNumber:
+        type: integer
+        format: int32
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      type:
+        type: string
+      openingBalance:
+        type: integer
+        format: int32
+    required:
+    - accountNumber
+    - firstName
+    - lastName
+    - email
+    - type
+    - openingBalance
+  Viewalistofallbankaccounts.:
+    title: Viewalistofallbankaccounts.
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Data2'
+    required:
+    - status
+    - data
+  Data2:
+    title: Data2
+    type: object
+    properties:
+      createdon:
+        example: 2019-04-22T12:35:15.481Z
+        type: string
+      accountnumber:
+        example: 20000003
+        type: integer
+        format: int32
+      email:
+        example: fereoomee@gmail.com
+        type: string
+      type:
+        example: savings
+        type: string
+      status:
+        example: draft
+        type: string
+      balance:
+        example: 0
+        type: integer
+        format: int32
+    required:
+    - createdon
+    - accountnumber
+    - email
+    - type
+    - status
+    - balance
+  Changeaccountstatussuccessfully:
+    title: Changeaccountstatussuccessfully
+    example:
+      status: 200
+      data:
+        accountNo: 20000005
+        status: active
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/Data3'
+    required:
+    - status
+    - data
+  Data3:
+    title: Data3
+    type: object
+    properties:
+      accountNo:
+        type: integer
+        format: int32
+      status:
+        type: string
+    required:
+    - accountNo
+    - status
+  Deleteanaccountnumbersuccessfully:
+    title: Deleteanaccountnumbersuccessfully
+    example:
+      status: 200
+      message: Account deleted successfully
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      message:
+        type: string
+    required:
+    - status
+    - message
+  Viewaspecificaccount’sdetails.:
+    title: Viewaspecificaccount’sdetails.
+    example:
+      status: 200
+      data:
+        createdOn: 2019-04-22T12:35:25.5Z
+        accountNumber: 20000005
+        ownerEmail: fereoomee@gmail.com
+        type: savings
+        status: active
+        balance: 10002.74
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/Data4'
+    required:
+    - status
+    - data
+  Data4:
+    title: Data4
+    type: object
+    properties:
+      createdOn:
+        type: string
+      accountNumber:
+        type: integer
+        format: int32
+      ownerEmail:
+        type: string
+      type:
+        type: string
+      status:
+        type: string
+      balance:
+        type: number
+        format: double
+    required:
+    - createdOn
+    - accountNumber
+    - ownerEmail
+    - type
+    - status
+    - balance
+  Viewanaccount’stransactionhistorysuccessfully:
+    title: Viewanaccount’stransactionhistorysuccessfully
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Data5'
+    required:
+    - status
+    - data
+  Data5:
+    title: Data5
+    type: object
+    properties:
+      id:
+        example: 7
+        type: integer
+        format: int32
+      createdon:
+        example: 2019-04-21T23:00:00Z
+        type: string
+      type:
+        example: credit
+        type: string
+      accountnumber:
+        example: 20000005
+        type: integer
+        format: int32
+      amount:
+        example: 2500
+        type: integer
+        format: int32
+      oldbalance:
+        example: 0
+        type: integer
+        format: int32
+      newbalance:
+        example: 2500
+        type: integer
+        format: int32
+    required:
+    - id
+    - createdon
+    - type
+    - accountnumber
+    - amount
+    - oldbalance
+    - newbalance
+  Viewalistofallactivebankaccounts.:
+    title: Viewalistofallactivebankaccounts.
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Data6'
+    required:
+    - status
+    - data
+  Data6:
+    title: Data6
+    type: object
+    properties:
+      createdon:
+        example: 2019-04-22T12:35:25.5Z
+        type: string
+      accountnumber:
+        example: 20000005
+        type: integer
+        format: int32
+      email:
+        example: fereoomee@gmail.com
+        type: string
+      type:
+        example: savings
+        type: string
+      status:
+        example: active
+        type: string
+      balance:
+        example: 10002.73985
+        type: number
+        format: double
+    required:
+    - createdon
+    - accountnumber
+    - email
+    - type
+    - status
+    - balance
+  Viewalistofalldormantbankaccounts.:
+    title: Viewalistofalldormantbankaccounts.
+    example:
+      status: 200
+      data:
+      - createdon: 2019-04-22T12:35:25.5Z
+        accountnumber: 20000005
+        email: fereoomee@gmail.com
+        type: savings
+        status: dormant
+        balance: 10002.73985
+      - createdon: 2019-04-25T21:43:43.624Z
+        accountnumber: 20000050
+        email: figoryo@gmail.com
+        type: savings
+        status: dormant
+        balance: 0
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Data6'
+    required:
+    - status
+    - data
   RegisteranewuserRequest:
     title: RegisteranewuserRequest
     example:
@@ -1031,12 +1357,12 @@ definitions:
         type: integer
         format: int32
       data:
-        $ref: '#/definitions/Data2'
+        $ref: '#/definitions/Data8'
     required:
     - status
     - data
-  Data2:
-    title: Data2
+  Data8:
+    title: Data8
     type: object
     properties:
       id:
@@ -1092,12 +1418,12 @@ definitions:
         type: integer
         format: int32
       data:
-        $ref: '#/definitions/Data3'
+        $ref: '#/definitions/Data9'
     required:
     - status
     - data
-  Data3:
-    title: Data3
+  Data9:
+    title: Data9
     type: object
     properties:
       token:
@@ -1117,328 +1443,11 @@ definitions:
     - firstName
     - lastName
     - email
-  CreateabankaccountRequest:
-    title: CreateabankaccountRequest
-    example:
-      type: savings
-    type: object
-    properties:
-      type:
-        type: string
-    required:
-    - type
-  Createabankaccount:
-    title: Createabankaccount
-    example:
-      status: 200
-      data:
-        accountNumber: 20000060
-        firstName: oghenefegor
-        lastName: iyara
-        email: fegzycolezya@gmail.com
-        type: savings
-        openingBalance: 0
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        $ref: '#/definitions/Data4'
-    required:
-    - status
-    - data
-  Data4:
-    title: Data4
-    type: object
-    properties:
-      accountNumber:
-        type: integer
-        format: int32
-      firstName:
-        type: string
-      lastName:
-        type: string
-      email:
-        type: string
-      type:
-        type: string
-      openingBalance:
-        type: integer
-        format: int32
-    required:
-    - accountNumber
-    - firstName
-    - lastName
-    - email
-    - type
-    - openingBalance
-  Viewalistofallbankaccounts.:
-    title: Viewalistofallbankaccounts.
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        type: array
-        items:
-          $ref: '#/definitions/Data5'
-    required:
-    - status
-    - data
-  Data5:
-    title: Data5
-    type: object
-    properties:
-      createdon:
-        example: 2019-04-22T12:35:15.481Z
-        type: string
-      accountnumber:
-        example: 20000003
-        type: integer
-        format: int32
-      email:
-        example: fereoomee@gmail.com
-        type: string
-      type:
-        example: savings
-        type: string
-      status:
-        example: draft
-        type: string
-      balance:
-        example: 0
-        type: integer
-        format: int32
-    required:
-    - createdon
-    - accountnumber
-    - email
-    - type
-    - status
-    - balance
-  Changeaccountstatussuccessfully:
-    title: Changeaccountstatussuccessfully
-    example:
-      status: 200
-      data:
-        accountNo: 20000005
-        status: active
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        $ref: '#/definitions/Data6'
-    required:
-    - status
-    - data
-  Data6:
-    title: Data6
-    type: object
-    properties:
-      accountNo:
-        type: integer
-        format: int32
-      status:
-        type: string
-    required:
-    - accountNo
-    - status
-  Deleteanaccountnumbersuccessfully:
-    title: Deleteanaccountnumbersuccessfully
-    example:
-      status: 200
-      message: Account deleted successfully
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      message:
-        type: string
-    required:
-    - status
-    - message
-  Viewaspecificaccount’sdetails.:
-    title: Viewaspecificaccount’sdetails.
-    example:
-      status: 200
-      data:
-        createdOn: 2019-04-22T12:35:25.5Z
-        accountNumber: 20000005
-        ownerEmail: fereoomee@gmail.com
-        type: savings
-        status: active
-        balance: 10002.74
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        $ref: '#/definitions/Data7'
-    required:
-    - status
-    - data
-  Data7:
-    title: Data7
-    type: object
-    properties:
-      createdOn:
-        type: string
-      accountNumber:
-        type: integer
-        format: int32
-      ownerEmail:
-        type: string
-      type:
-        type: string
-      status:
-        type: string
-      balance:
-        type: number
-        format: double
-    required:
-    - createdOn
-    - accountNumber
-    - ownerEmail
-    - type
-    - status
-    - balance
-  Viewanaccount’stransactionhistorysuccessfully:
-    title: Viewanaccount’stransactionhistorysuccessfully
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        type: array
-        items:
-          $ref: '#/definitions/Data8'
-    required:
-    - status
-    - data
-  Data8:
-    title: Data8
-    type: object
-    properties:
-      id:
-        example: 7
-        type: integer
-        format: int32
-      createdon:
-        example: 2019-04-21T23:00:00Z
-        type: string
-      type:
-        example: credit
-        type: string
-      accountnumber:
-        example: 20000005
-        type: integer
-        format: int32
-      amount:
-        example: 2500
-        type: integer
-        format: int32
-      oldbalance:
-        example: 0
-        type: integer
-        format: int32
-      newbalance:
-        example: 2500
-        type: integer
-        format: int32
-    required:
-    - id
-    - createdon
-    - type
-    - accountnumber
-    - amount
-    - oldbalance
-    - newbalance
-  Viewalistofallactivebankaccounts.:
-    title: Viewalistofallactivebankaccounts.
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        type: array
-        items:
-          $ref: '#/definitions/Data9'
-    required:
-    - status
-    - data
-  Data9:
-    title: Data9
-    type: object
-    properties:
-      createdon:
-        example: 2019-04-22T12:35:25.5Z
-        type: string
-      accountnumber:
-        example: 20000005
-        type: integer
-        format: int32
-      email:
-        example: fereoomee@gmail.com
-        type: string
-      type:
-        example: savings
-        type: string
-      status:
-        example: active
-        type: string
-      balance:
-        example: 10002.73985
-        type: number
-        format: double
-    required:
-    - createdon
-    - accountnumber
-    - email
-    - type
-    - status
-    - balance
-  Viewalistofalldormantbankaccounts.:
-    title: Viewalistofalldormantbankaccounts.
-    example:
-      status: 200
-      data:
-      - createdon: 2019-04-22T12:35:25.5Z
-        accountnumber: 20000005
-        email: fereoomee@gmail.com
-        type: savings
-        status: dormant
-        balance: 10002.73985
-      - createdon: 2019-04-25T21:43:43.624Z
-        accountnumber: 20000050
-        email: figoryo@gmail.com
-        type: savings
-        status: dormant
-        balance: 0
-    type: object
-    properties:
-      status:
-        type: integer
-        format: int32
-      data:
-        type: array
-        items:
-          $ref: '#/definitions/Data9'
-    required:
-    - status
-    - data
 tags:
-- name: Transactions
 - name: User
   description: api/v2/user/<user-email>/accounts
-- name: Auth
-  description: Endpoints for signup and signin
+- name: Transactions
 - name: Accounts
   description: Accounts related endpoints
+- name: Auth
+  description: Endpoints for signup and signin

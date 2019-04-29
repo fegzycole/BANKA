@@ -471,6 +471,35 @@ describe('Test for User Endpoint', () => {
   });
 });
 
+describe('Test for password reset endpoint', () => {
+  describe('GET api/v2/auth/<email-address>', () => {
+    it('Should return an error if the email does not exist', (done) => {
+      const email = 'mariana@gmail.com';
+      chai
+        .request(app)
+        .post(`/api/v2/auth/${email}`)
+        .send({ password: 'Password@2018' })
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(404);
+          expect(res.body.error).to.be.equals('Email does not exist');
+          done();
+        });
+    });
+    it('Should successfully reset a user password and send a mail', (done) => {
+      const email = 'fergusoniyara@gmail.com';
+      chai
+        .request(app)
+        .post(`/api/v2/auth/${email}`)
+        .send({ password: 'Password@2018' })
+        .end((err, res) => {
+          expect(res.body.status).to.be.equals(200);
+          expect(res.body.data).to.be.equals('message sent');
+          done();
+        });
+    });
+  });
+});
+
 
 // Test that handles non-existent routes
 describe('GET *', () => {

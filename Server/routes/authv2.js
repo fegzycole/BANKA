@@ -1,24 +1,26 @@
 import express from 'express';
 import userController from '../Controller/userController';
 import Validator from '../Middleware/validator';
-// import Service from '../Services/service';
+import Service from '../Services/service';
 
 const {
   checkExistingEmail,
-  validateNewAccount, validateLogIn,
+  validateNewAccount,
+  validateLogIn,
+  validatePasswordReset,
 } = Validator;
 
-// const { checkAdminStatus } = Service;
+const { sendPasswordResetEmail } = Service;
 
 const router = express.Router();
 
-const { CreateAccount, signIn } = userController;
+const { CreateAccount, signIn, passwordReset } = userController;
 
 router.post('/signup', validateNewAccount, checkExistingEmail, CreateAccount);
 
 router.post('/signin', validateLogIn, checkExistingEmail, signIn);
 
-// router.post('/:email', resetPasswordB);
+router.post('/:email', validatePasswordReset, checkExistingEmail, passwordReset, sendPasswordResetEmail);
 
 
 export default router;
