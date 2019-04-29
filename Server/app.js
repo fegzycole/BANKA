@@ -16,21 +16,6 @@ import user from './routes/user';
 
 const app = express();
 
-app.use(
-  cors({
-    origin: '*',
-    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  }),
-);
-
-app.all('/*', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-  next();
-});
-
 app.use(cors());
 
 dotenv.config();
