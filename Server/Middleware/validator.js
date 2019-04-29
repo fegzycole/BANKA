@@ -87,6 +87,15 @@ class Validator {
     return next();
   }
 
+  static validateTransactionDetails(user) {
+    const schema = {
+      amountToDeposit: Joi.number().required().error(new Error('Please put in a number to deposit or withdraw')),
+      type: Joi.string().required().valid('credit', 'debit').error(new Error('Put in a transaction type please')),
+    };
+    return Joi.validate(user, schema);
+  }
+
+
   // validate the input for  creating a new account
   static validateNewAccount(req, res, next) {
     const { error } = Validator.validateSignUpInput(req.body);
@@ -125,7 +134,7 @@ class Validator {
           });
         }
       }
-      if (req.route.path === '/signin' || req.route.path === '/:email/accounts'|| req.route.path === '/:email') {
+      if (req.route.path === '/signin' || req.route.path === '/:email/accounts' || req.route.path === '/:email') {
         if (!email) {
           return res.status(404).json({
             status: 404,
@@ -137,6 +146,17 @@ class Validator {
     } catch (error) {
       return error;
     }
+  }
+
+  static validateTransaction(req, res, next) {
+    const { error } = Validator.validateTransactionDetails(req.body);
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error.message,
+      });
+    }
+    return next();
   }
 
   // check the account number
