@@ -1,8 +1,12 @@
 import bcrypt from 'bcryptjs';
+import dotenv from 'dotenv';
 import Validator from '../Middleware/validator';
 import testData from '../data/testData';
 import Helper from '../helper/helper';
 import Db from '../Database/index';
+
+
+dotenv.config();
 
 const { findUserByEmail, createToken } = Helper;
 
@@ -238,6 +242,22 @@ class UserController {
       return res.status(500).json({
         status: 500,
         error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
+
+  static async passwordReset(req, res, next) {
+    try {
+      const emailChecker = await Db.query('SELECT email, firstname FROM userstable  WHERE email = $1', [req.params.email]);
+      const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+      const update = 'UPDATE userstable SET password = $1 WHERE email = $2 returning *';
+      await Db.query(update, [hashedPassword, emailChecker.rows[0].email]);
+      await Db.query('COMMIT');
+      return next();
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error,
       });
     }
   }
