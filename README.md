@@ -6,9 +6,6 @@ users can signup and create bank accounts online, but must visit the branch to w
 deposit money
 
 
-<img src = './UI/Images/Capture.png' alt = 'Banka Landing Page' >
-
-
 ## Required Features
 - User (client) can sign up.
 - User (client) can login.
