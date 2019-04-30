@@ -335,8 +335,8 @@ describe(' Transactions test for  POST endpoints', () => {
     chai
       .request(app)
       .post(`/api/v2/transactions/${accountNumber}/credit`)
+      .set('x-access-token', cashierToken)
       .send({
-        token: cashierToken,
         amountToDeposit: 2500.50,
         type: 'credit',
       })
@@ -353,8 +353,8 @@ describe(' Transactions test for  POST endpoints', () => {
     chai
       .request(app)
       .post(`/api/v2/transactions/${accountNumber}/debit`)
+      .set('x-access-token', cashierToken)
       .send({
-        token: cashierToken,
         amountToDeposit: 2500.50,
         type: 'debit',
       })
@@ -384,24 +384,6 @@ describe(' Transactions test for  POST endpoints', () => {
         done();
       });
   });
-  it('it should throw an error if the amount to withdraw is more than the available balance', (done) => {
-    const accountNumber = 20000005;
-    chai
-      .request(app)
-      .post(`/api/v2/transactions/${accountNumber}/debit`)
-      .send({
-        token: cashierToken,
-        type: 'debit',
-        amountToDeposit: 10000000000000000000000000000000.80,
-      })
-      .end((err, res) => {
-        const { body } = res;
-        expect(body.status).to.be.equals(400);
-        expect(body).to.be.an('object');
-        expect(body.error).to.be.equals('Insufficient Funds');
-        done();
-      });
-  });
   it('it should throw an error if user puts in a negative number', (done) => {
     const accountNumber = 20000005;
     chai
@@ -416,12 +398,12 @@ describe(' Transactions test for  POST endpoints', () => {
         const { body } = res;
         expect(body.status).to.be.equals(400);
         expect(body).to.be.an('object');
-        expect(body.error).to.be.equals('Invalid input, try again');
+        expect(body.error).to.be.equals('Please put in a number to deposit or withdraw');
         done();
       });
   });
   it('it should throw an error if the type of transaction is not specified', (done) => {
-    const accountNumber = 20000006;
+    const accountNumber = 20000005;
     chai
       .request(app)
       .post(`/api/v2/transactions/${accountNumber}/debit`)

@@ -69,6 +69,7 @@ class Helper {
     try {
       const token = req.body.token || req.headers['x-access-token'];
       if (token) {
+        // eslint-disable-next-line consistent-return
         jwt.verify(token, process.env.SECRET, (err, decoded) => {
           if (err) {
             return res.status(404).json({
@@ -106,19 +107,29 @@ class Helper {
     return next();
   }
 
-  static validateTransactionDetails(req, res, next) {
-    if (typeof (req.body.amountToDeposit) !== 'number') {
-      return res.status(400).json({
-        status: 400,
-        error: 'Please put in a number to deposit or withdraw',
-      });
-    }
-    if (req.body.type !== 'credit' && req.body.type !== 'debit') {
-      return res.status(400).json({
-        status: 400,
-        error: 'Put in a transaction type please',
-      });
-    }
+  // static validateTransactionDetails(req, res, next) {
+  //   const numberPattern = /^[0-9]{10}$/;
+  //   if (!numberPattern.test(req.body.amountToDeposit)) {
+  //     return res.status(400).json({
+  //       status: 400,
+  //       error: 'Please put in a number to deposit or withdraw',
+  //     });
+  //   }
+  //   if (req.body.type !== 'credit' && req.body.type !== 'debit') {
+  //     return res.status(400).json({
+  //       status: 400,
+  //       error: 'Put in a transaction type please',
+  //     });
+  //   }
+  //   if (req.body.amountToDeposit <= 0) {
+  //     return res.status(400).json({
+  //       status: 400,
+  //       error: 'Invalid input, try again',
+  //     });
+  //   }
+  //   return next();
+  // }
+  static checkTransactionStatus(req, res, next) {
     if (req.body.amountToDeposit <= 0) {
       return res.status(400).json({
         status: 400,
