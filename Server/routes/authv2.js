@@ -16,11 +16,11 @@ const router = express.Router();
 
 const { CreateAccount, signIn, passwordReset } = userController;
 
-router.post('/signup', validateNewAccount, checkExistingEmail, CreateAccount);
+router.post('/signup', checkExistingEmail, validateNewAccount, CreateAccount);
 
 router.post('/signin', validateLogIn, checkExistingEmail, signIn);
 
-router.post('/:email', validatePasswordReset, checkExistingEmail, passwordReset, sendPasswordResetEmail);
+router.post('/:email/reset', validatePasswordReset, checkExistingEmail, passwordReset, sendPasswordResetEmail);
 
 
 export default router;

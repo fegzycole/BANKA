@@ -477,7 +477,7 @@ describe('Test for password reset endpoint', () => {
       const email = 'mariana@gmail.com';
       chai
         .request(app)
-        .post(`/api/v2/auth/${email}`)
+        .post(`/api/v2/auth/${email}/reset`)
         .send({ password: 'Password@2018' })
         .end((err, res) => {
           expect(res.body.status).to.be.equals(404);
@@ -489,7 +489,7 @@ describe('Test for password reset endpoint', () => {
       const email = 'fergusoniyara@gmail.com';
       chai
         .request(app)
-        .post(`/api/v2/auth/${email}`)
+        .post(`/api/v2/auth/${email}/reset`)
         .send({ password: 'Password@2018' })
         .end((err, res) => {
           expect(res.body.status).to.be.equals(200);

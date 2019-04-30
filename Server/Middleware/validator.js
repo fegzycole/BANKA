@@ -134,7 +134,7 @@ class Validator {
           });
         }
       }
-      if (req.route.path === '/signin' || req.route.path === '/:email/accounts' || req.route.path === '/:email') {
+      if (req.route.path === '/signin' || req.route.path === '/:email/accounts' || req.route.path === '/:email/reset') {
         if (!email) {
           return res.status(404).json({
             status: 404,
