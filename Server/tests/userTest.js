@@ -22,7 +22,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v1/auth/signup')
         .send({
-          firstName: 'jon',
+          firstName: 'john',
           lastName: 'bellion',
           email: 'jon@gmail.com',
           password: 'simpleandweet',
@@ -41,7 +41,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v1/auth/signup')
         .send({
-          firstName: 'jon',
+          firstName: 'john',
           lastName: 'bellion',
           email: 'wrongmailaddress',
           password: 'simpleandweet',
@@ -59,7 +59,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v1/auth/signup')
         .send({
-          firstName: 'jon',
+          firstName: 'john',
           lastName: 'bellion',
           email: 'jon@gmail.com',
           password: 'simpl eand',
@@ -95,7 +95,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v1/auth/signup')
         .send({
-          firstName: 'jon',
+          firstName: 'john',
           lastName: '',
           email: 'jon@gmail.com',
           password: 'simpleandsweet',
@@ -151,7 +151,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .post('/api/v1/auth/signup')
         .send({
           firstName: 'john',
-          lastName: 'joe',
+          lastName: 'bellion',
           email: 'fergusoniyara@gmail.com',
           password: 'simplepassword',
           type: 'client',
@@ -170,7 +170,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstName: 'jon',
+          firstName: 'john',
           lastName: 'bellion',
           email: 'wrongmailaddress',
           password: 'simpleandweet',
@@ -206,7 +206,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v2/auth/signup')
         .send({
-          firstName: 'jon',
+          firstName: 'john',
           lastName: '',
           email: 'jon@gmail.com',
           password: 'simpleandsweet',
@@ -262,7 +262,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .post('/api/v2/auth/signup')
         .send({
           firstName: 'john',
-          lastName: 'joe',
+          lastName: 'jonas',
           email: 'mamasssboy@gmail.com',
           password: 'simplepassword',
           type: 'client',

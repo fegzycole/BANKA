@@ -16,7 +16,7 @@ const router = express.Router();
 
 const { CreateAccount, signIn, passwordReset } = userController;
 
-router.post('/signup', checkExistingEmail, validateNewAccount, CreateAccount);
+router.post('/signup', validateNewAccount, checkExistingEmail, CreateAccount);
 
 router.post('/signin', validateLogIn, checkExistingEmail, signIn);
 

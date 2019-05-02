@@ -4,16 +4,21 @@ import Db from '../Database/index';
 class Validator {
   // Validate a user when he wants to create a new account
   static validateSignUpInput(user) {
+    const pattern = /^[a-zA-Z][a-zA-Z]*$/;
     const schema = {
-      firstName: Joi.string().regex(/^\S+$/).trim().required()
+      firstName: Joi.string().min(4).regex(pattern)
+        .trim()
+        .required()
         .error(new Error('First name is required, It should have no whitespace(s) in between its characters')),
-      lastName: Joi.string().regex(/^\S+$/).trim().required()
+      lastName: Joi.string().min(4).regex(pattern).trim()
+        .required()
         .error(new Error('Last name is required, It should have no whitespace(s) in between its characters')),
       email: Joi.string().email().required().trim()
         .error(new Error('Your Email is required, example fergusoniyara@banka.com')),
-      password: Joi.string().regex(/^\S+$/).trim().required()
+      password: Joi.string().min(4).regex(/^\S+$/).trim()
+        .required()
         .error(new Error('Password should be at least 4 characters without any whitespace(s)')),
-      type: Joi.string().required().valid('admin', 'cashier', 'client').error(new Error('This field is required, Account type can only be admin,cashier or staff')),
+      type: Joi.string().required().valid('admin', 'cashier', 'client').error(new Error('This field is required, Account type can only be admin,cashier or client')),
     };
     return Joi.validate(user, schema);
   }
@@ -163,7 +168,8 @@ class Validator {
   static async checkAccountNo(req, res, next) {
     try {
       const accountChecker = await Db.query('SELECT accountnumber FROM accountstable');
-      const account = accountChecker.rows.find(c => c.accountnumber === parseInt(req.params.accountNo, 10));
+      const account = accountChecker.rows.find(c => c.accountnumber
+        === parseInt(req.params.accountNo, 10));
       if (!account) {
         return res.status(404).json({
           status: 404,
