@@ -1,0 +1,2 @@
+\c database_name
+/*To connect to the database *\

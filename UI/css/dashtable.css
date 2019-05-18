@@ -1,0 +1,406 @@
+.table
+{
+    width: 100%;
+    max-width: 100%;
+    margin-top:9%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-collapse: collapse;
+    font-family:arial;
+    padding:100px;
+}
+.table th
+{
+    color:white;
+}
+.table th,
+.table td 
+{
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #FFAF30;
+    text-align:center;
+}
+.table td{
+    color:#3F51B5;
+}
+.table thead th
+{
+    vertical-align: bottom;
+    border-bottom: 2px solid #FFAF30;
+    background: #3F51B5;
+}  
+.table tbody + tbody 
+{
+    border-top: 2px solid #FFAF30;
+} 
+.table .table 
+{
+    background-color: #fff;
+}
+.tableHeader{
+  display:none;
+}
+
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+@media screen and (min-width: 1101px)
+=======
+@media screen and (min-width: 800px)
+>>>>>>> origin/gh-pages
+=======
+@media screen and (min-width: 1101px)
+>>>>>>> develop
+{
+   .table
+    {
+    width: 80%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:UI/css/dashtable.css
+    margin-top:-1%;
+========
+    margin-top:10.5%;
+>>>>>>>> origin/gh-pages:css/table.css
+=======
+    margin-top:-1%;
+>>>>>>> origin/gh-pages
+=======
+<<<<<<<< HEAD:css/table.css
+    margin-top:10.5%;
+========
+    margin-top:-1%;
+>>>>>>>> develop:UI/css/dashtable.css
+>>>>>>> develop
+    margin-left: 10%;
+    background-color: transparent;
+    border-collapse: collapse;
+    font-family:arial;
+    border-bottom: 2px solid #FFAF30;
+    border-left: 2px solid #FFAF30;
+    border-right: 2px solid #FFAF30;
+    }
+   .table th
+    {
+    color:white;
+    }
+   .table th,
+   .table td 
+    {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #FFAF30;
+    text-align:center;
+    }
+   .table thead th 
+    {
+    vertical-align: bottom;
+    border-bottom: 2px solid #FFAF30;
+    background: #3F51B5;
+    }
+   .table tbody + tbody 
+    {
+    border-top: 2px solid #FFAF30;
+    }
+   .table .table 
+    {
+       background-color: #fff;
+    }
+    .tableHeader{
+      display:none;
+   }
+
+}
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> develop
+@media only screen and (min-width:768px) and (max-width:1024px)
+{
+    .table{
+      margin-top:19%;
+      width:80%;
+      margin-left:10%;
+      font-size:13px;
+    }
+    .tableHeader{
+      display:none;
+   }
+
+}
+
+<<<<<<< HEAD
+<<<<<<<< HEAD:UI/css/dashtable.css
+=======
+
+
+>>>>>>> origin/gh-pages
+=======
+<<<<<<<< HEAD:css/table.css
+/* @media only screen and (min-width:891px) and (max-width:901px)
+{
+    .table{
+      margin-top:13.5%;
+========
+>>>>>>> develop
+
+@media only screen and (min-width:768px) and (max-width:890px)
+{
+    .table{
+      margin-left: 10%;
+      margin-top:0%;
+<<<<<<< HEAD
+<<<<<<< HEAD
+========
+/* @media only screen and (min-width:891px) and (max-width:901px)
+{
+    .table{
+      margin-top:13.5%;
+>>>>>>>> origin/gh-pages:css/table.css
+=======
+>>>>>>> origin/gh-pages
+=======
+>>>>>>>> develop:UI/css/dashtable.css
+>>>>>>> develop
+      width:80%;
+      font-size:13px;
+    }
+    .tableHeader{
+      display:none;
+   }
+
+}
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:UI/css/dashtable.css
+=======
+>>>>>>> origin/gh-pages
+=======
+<<<<<<<< HEAD:css/table.css
+@media only screen and (min-width:902px) and (max-width:1100px)
+{
+  .table{
+    margin-left: 10%;
+    margin-top:13.5%;
+    width:80%;
+    font-size:13px;
+  }
+} */
+
+ @media only screen and (min-width:569px) and (max-width:767px)
+{
+   .table
+   {
+     margin-top:19%;
+========
+>>>>>>> develop
+@media only screen and (min-width:891px) and (max-width:901px)
+{
+    .table{
+      margin-left: 10%;
+      margin-top:0%;
+      width:80%;
+      font-size:13px;
+    }
+    .tableHeader{
+      display:none;
+   }
+
+}
+
+@media only screen and (min-width:902px) and (max-width:1100px)
+{
+  .table{
+    margin-left: 10%;
+    margin-top:0%;
+    width:80%;
+    font-size:13px;
+  }
+}
+
+@media only screen and (min-width:521px) and (max-width:767px)
+{
+   .table
+   {
+     margin-top:0%;
+<<<<<<< HEAD
+<<<<<<< HEAD
+========
+@media only screen and (min-width:902px) and (max-width:1100px)
+{
+  .table{
+    margin-left: 10%;
+    margin-top:13.5%;
+    width:80%;
+    font-size:13px;
+  }
+} */
+
+ @media only screen and (min-width:569px) and (max-width:767px)
+{
+   .table
+   {
+     margin-top:19%;
+>>>>>>>> origin/gh-pages:css/table.css
+     width:80%;
+     margin-left:10%;
+=======
+     width:80%;
+     margin-left: 10%;
+>>>>>>> origin/gh-pages
+=======
+>>>>>>>> develop:UI/css/dashtable.css
+     width:80%;
+     margin-left:10%;
+>>>>>>> develop
+     font-size:12px;
+     border-bottom: 2px solid #FFAF30;
+     border-left: 2px solid #FFAF30;
+     border-right: 2px solid #FFAF30;
+   }
+   .tableHeader{
+    display:none;
+ }
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:UI/css/dashtable.css
+=======
+>>>>>>> origin/gh-pages
+=======
+<<<<<<<< HEAD:css/table.css
+} 
+
+@media only screen and (min-width:451px) and (max-width:568px)
+========
+>>>>>>> develop
+}
+
+
+@media only screen and (min-width:240px) and (max-width:520px)
+<<<<<<< HEAD
+<<<<<<< HEAD
+========
+} 
+
+@media only screen and (min-width:451px) and (max-width:568px)
+>>>>>>>> origin/gh-pages:css/table.css
+=======
+>>>>>>> origin/gh-pages
+=======
+>>>>>>>> develop:UI/css/dashtable.css
+>>>>>>> develop
+{
+  .tableHeader{
+    display:block;
+    padding:10px;
+    background-color:#3F51B5;
+    margin-bottom:5px;
+    color: white;
+ }
+   .table
+   {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:UI/css/dashtable.css
+    margin-top:0%;
+========
+     margin-top:20%;
+>>>>>>>> origin/gh-pages:css/table.css
+=======
+    margin-top:0%;
+>>>>>>> origin/gh-pages
+=======
+<<<<<<<< HEAD:css/table.css
+     margin-top:20%;
+========
+    margin-top:0%;
+>>>>>>>> develop:UI/css/dashtable.css
+>>>>>>> develop
+     width:100%;
+     border-bottom: 2px solid #FFAF30;
+     border-left: 2px solid #FFAF30;
+     border-right: 2px solid #FFAF30;
+   }
+   table thead
+   {
+     display:none;
+   }
+   table tr
+   {
+     display:block;
+     margin-top:5px;
+     padding-bottom: 5px;
+     border-bottom:3px solid #FFAF30;
+   }
+   table td
+   {
+     display:block;
+     text-align:right;
+     font-size:13px;
+     border-radius:5px;
+     margin-bottom:1px;
+     min-height:14px;
+   }
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:UI/css/dashtable.css
+ }
+========
+=======
+<<<<<<<< HEAD:css/table.css
+>>>>>>> develop
+}
+@media only screen and (min-width:240px) and (max-width:450px)
+{
+  .tableHeader{
+    display:block;
+    padding:10px;
+    background-color:#3F51B5;
+    margin-bottom:5px;
+    color: white;
+ }
+   .table
+   {
+     margin-top:30%;
+     width:100%;
+     border-bottom: 2px solid #FFAF30;
+     border-left: 2px solid #FFAF30;
+     border-right: 2px solid #FFAF30;
+   }
+   table thead
+   {
+     display:none;
+   }
+   table tr
+   {
+     display:block;
+     margin-top:5px;
+     padding-bottom: 5px;
+     border-bottom:3px solid #FFAF30;
+   }
+   table td
+   {
+     display:block;
+     text-align:right;
+     font-size:13px;
+     border-radius:5px;
+     margin-bottom:1px;
+     min-height:14px;
+   }
+}
+<<<<<<< HEAD
+>>>>>>>> origin/gh-pages:css/table.css
+=======
+ }
+>>>>>>> origin/gh-pages
+=======
+========
+ }
+>>>>>>>> develop:UI/css/dashtable.css
+>>>>>>> develop
+ 
