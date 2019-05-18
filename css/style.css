@@ -20,7 +20,7 @@ html,body{
     background-color:#3F51B5;
     position:relative;
     height:100px;
-    margin-top:-100px;
+    margin-top:-300px;
     clear:both;
 }
 
@@ -477,8 +477,3 @@ form ::placeholder{
     }
 
 }
-
-
-
-/* MEDIA QUERIES */
-

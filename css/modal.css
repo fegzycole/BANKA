@@ -14,9 +14,26 @@
 {
     background-color:#3F51B5;
     margin: 20% auto;
-    width:70%;
+    width:320px;
+    height: 175px;
     box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
 }
+.view-modal-content
+{
+    background-color:#3F51B5;
+    margin: 20% auto;
+    width:385px;
+    height: 245px;
+    box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
+}
+
+.modal-content p{
+    text-align:center;
+    width:100%;
+    margin-top: 15px;
+
+}
+
 .closeBtn
 {
     color:#fff;
@@ -30,8 +47,8 @@
     cursor:pointer;
 }
 
-/* .modal-body form input[type=text]{
-    width:70%;
+/* .view-modal-content .modal-body form input[type=text]{
+    width:85%;
     padding:10px;
     border:none;
     border-radius:  0.2em 0 0 0.2em;
@@ -57,29 +74,30 @@
     margin:0;
     font-size:18px;
 }
-.modal-body
+/* .modal-body
 {
     padding: 10px 20px;
     height:70vh;
     width:100%;
     margin-top:0%;
     
-}
+} */
 .modal-footer
 {
     background:#3F51B5;
     padding:10px;
     color: #fff;
     text-align: center;
+    padding:30px;
   
 }
-#viewModal .modal-body
+/* #viewModal .modal-body
 {
     background-color:#36437A;
     color:#fff;
     line-height: 2.0;
 
-}
+} */
 .modal-body p
 {
     text-align:center;
@@ -94,31 +112,281 @@
     display:inline-block;
     position:relative;
     left:30px;
-    top:-50px;
-    
+    top:-50px;  
 }
-
-@media screen and (min-width: 800px)
+#YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+    position: relative;
+    left: -5%;
+    top:-90px;
+    width:40%
+}
+#NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+    position: relative;
+    left: 0;
+    top:-90px;
+    width:40%
+}
+@media screen and (min-width: 767px)
 {
   .modal-content
   {
     margin: 10% auto;
+    width:40%;
+    height: 200px;
   }
-  .modal-form form button
-{
-    width:30%;
-    display:inline-block;
-    position:relative;
-    left:50px;
-    top:-70px;
+  .modal-content p{
+      margin-top: 30px;
+  }
+  .view-modal-content
+  {
+    margin: 10% auto;
+    width:40%;
+    height: 280px;
+  }
+
+  .view .modal-content{
+    height: 60%;
+  }
+
+  #YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+    top: -120px;
+    left: 35%;
+  }
+  #NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+    left:40%;
+    top: -120px;
+  }
+
+}
+
+
+ @media only screen and (min-width:569px) and (max-width:766px){
+
+    #YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+        position: relative;
+        left:15%;
+        top:-120px;
+    }
+    #NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+        position: relative;
+        left: 20%;
+        top:-120px;
+    }
     
+} 
+
+/* @media only screen and (min-width:768px) and (max-width:799px)
+{
+    .modal-content
+    {
+      margin: 10% auto;
+      width:60%;
+      height: 30%;
+    }
+    .modal-content p{
+        font-weight:bolder;
+        text-align:center;
+        margin-top: 15%;
+        width:100%;
+        margin-left: 0%;
+        font-size:15px;
+    }
+    #YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+        position: relative;
+        left: 25%;
+        top:-120px;
+    }
+    #NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+        position: relative;
+        left: 30%;
+        top:-120px;
+    }
+    .view-modal-content
+    {
+      margin: 10% auto;
+      width:100%;
+      height: 250px;
+    }
 }
 
-}
+@media only screen and (min-width:240px) and (max-width:419px)
+{
 
-
-
-
-
-
+    .modal-content
+    {
+      margin: 10% auto;
+      width:80%;
+      height: 175px;
+    }
+    .modal-content p{
+        font-weight:bolder;
+        text-align:center;
+        margin-top: 5%;
+        width:100%;
+        margin-left: 0%;
+        font-size:12px;
+    }
+    #YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+        position: relative;
+        left: -20%;
+        top:-90px;
+    }
+    #NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+        position: relative;
+        left: -10%;
+        top:-90px;
+         
+    }
+    .view-modal-content
+    {
+      margin: 10% auto;
+      width:100%;
+      height: 250px;
+    }
   
+
+}
+
+@media only screen and (min-width:521px) and (max-width:767px)
+{
+    .modal-content
+    {
+      margin: 10% auto;
+      width:50%;
+      height: 175px;
+    }
+    .modal-content p{
+        font-weight:bolder;
+        text-align:center;
+        margin-top: 5.5%;
+        margin-left: 0%;
+        font-size:12px;
+        width:100%;
+    }
+    #YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+        position: relative;
+        left:15%;
+        top:-100px;
+        width:45%;
+    }
+    #NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+        position: relative;
+        left: 20%;
+        top:-100px;
+        width:45%;
+    }
+    .view-modal-content
+    {
+      margin: 10% auto;
+      width:100%;
+      height: 250px;
+    }
+}
+
+@media only screen and (min-width:420px) and (max-width:520px)
+{
+    .modal-content
+    {
+      margin: 10% auto;
+      width:60%;
+      height: 175px;
+    }
+    .modal-content p{
+        font-weight:bolder;
+        text-align:center;
+        margin-top: 5.5%;
+        margin-left: 0%;
+        font-size:12px;
+        width:100%;
+    }
+    #YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+        position: relative;
+        left:20%;
+        top:-100px;
+        width:40%;
+    }
+    #NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+        position: relative;
+        left: 25%;
+        top:-100px;
+        width:40%;
+    }
+    .view-modal-content
+    {
+      margin: 10% auto;
+      width:100%;
+      height: 250px;
+    }
+}
+
+@media only screen and (min-width:768px) and (max-width:890px)
+{
+    .modal-content
+    {
+      margin: 10% auto;
+      width:40%;
+      height: 200px;
+    }
+    .modal-content p{
+        font-weight:bolder;
+        text-align:center;
+        margin-top: 10%;
+        margin-left: 0%;
+        width:100%;
+        font-size:14px;
+    }
+    .view-modal-content
+    {
+      margin: 10% auto;
+      width:60%;
+      height: 280px;
+    }
+
+    #YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+        position: relative;
+        left: 25%;
+        top:-120px;
+    }
+    #NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+        position: relative;
+        left: 30%;
+        top:-120px;
+    }
+}
+
+
+@media only screen and (min-width:891px) and (max-width:1030px)
+{
+    .modal-content
+    {
+      margin: 10% auto;
+      width:40%;
+      height: 200px;
+    }
+    .modal-content p{
+        font-weight:bolder;
+        text-align:center;
+        margin-top: 10%;
+        margin-left: 0%;
+        width:100%;
+        font-size:14px;
+    }
+    .view-modal-content
+    {
+      margin: 10% auto;
+      width:40%;
+      height: 280px;
+    }
+
+    #YesBtnDeactivate, #YesBtnActivate, #YesBtnDelete{
+        position: relative;
+        left: 25%;
+        top:-120px;
+    }
+    #NoBtnDelete, #NoBtnActivate, #NoBtnDeactivate{
+        position: relative;
+        left: 30%;
+        top:-120px;
+    }
+}
+   */
