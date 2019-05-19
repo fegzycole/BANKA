@@ -323,7 +323,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.status).to.be.equal(200);
-          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email');
+          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email','type');
           expect(res.body.data.token).to.be.a('string');
           done();
         });

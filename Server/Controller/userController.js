@@ -209,6 +209,7 @@ class UserController {
             firstName: emailChecker.rows[0].firstname,
             lastName: emailChecker.rows[0].lastname,
             email: emailChecker.rows[0].email,
+            type: emailChecker.rows[0].type,
           },
         });
       }
