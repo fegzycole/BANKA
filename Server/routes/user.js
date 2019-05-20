@@ -14,6 +14,6 @@ const router = express.Router();
 
 const { getUserAccounts } = userController;
 
-router.get('/:email/accounts', verifyTokenAll, staffToken, checkExistingEmail, getUserAccounts);
+router.get('/:email/accounts', verifyTokenAll, checkExistingEmail, getUserAccounts);
 
 export default router;
