@@ -323,7 +323,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.status).to.be.equal(200);
-          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email','type');
+          expect(res.body.data).to.have.key('id', 'token', 'firstName', 'lastName', 'email','type', 'isadmin');
           expect(res.body.data.token).to.be.a('string');
           done();
         });
@@ -409,21 +409,8 @@ describe('Test for User Endpoint', () => {
           done();
         });
     });
-    it('Should return an error if client wants to get a list of all accounts belonging to a user', (done) => {
-      const email = 'fereoomee@gmail.com';
-      chai
-        .request(app)
-        .get(`/api/v2/user/${email}/accounts`)
-        .set('x-access-token', UserToken)
-        .end((err, res) => {
-          expect(res.body.status).to.be.equals(401);
-          expect(res.body.error).to.be.equals('You do not have the rights to this resource');
-          done();
-        });
-    });
   });
 });
-
 describe('Test for User Endpoint', () => {
   describe('GET api/v2/user/<user-email-address>/accounts', () => {
     before((done) => {

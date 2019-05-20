@@ -399,7 +399,7 @@ describe(' Accounts test for - POST, PATCH, DELETE', () => {
         });
     });
     it('Should return a list of all transactions for a particular account', (done) => {
-      const accountNumber = 20000005;
+      const accountNumber = 20000064;
       chai
         .request(app)
         .get(`/api/v2/accounts/${accountNumber}/transactions`)
