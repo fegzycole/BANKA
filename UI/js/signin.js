@@ -28,8 +28,6 @@ const validate = (e) => {
   })
     .then(res => res.json())
     .then((data) => { 
-      const { type } = data.data;
-      console.log(data);
       if (data.error === 'Your email is required, example fergusoniyara@banka.com') {
         userEMailError.textContent = data.error;
         userEMailErrorr.style.display = 'block';
@@ -55,6 +53,8 @@ const validate = (e) => {
         userPasswordError.style.display = 'none';
       }
       if (!data.error) {
+        const { type } = data.data;
+        console.log(data);
         if (type === 'client') {
           window.location.href = './Client/dashboard.html';
         }
