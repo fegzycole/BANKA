@@ -76,12 +76,12 @@ header h1
     text-align:center;
     color:#3F51B5;
     font-weight: bolder;
-   }
-.name{
+}
+#name{
     display: none;
 } 
-.balance{
-    font-size: 20px;
+#balance{
+    font-size: 30px;
     color:#fff;
     margin-right: 50px;
     margin-top: 30px;
@@ -89,6 +89,12 @@ header h1
     width:100%;
 }
 
+.noAccount,.noTransaction{
+    font-size: 30px;
+    text-align: center;
+    margin-top: 50px;
+    color: #FFAF30;
+}
 
 .dashUl{
     background: #3F51B5;
@@ -185,7 +191,7 @@ button
       font-size:2rem;
       padding-bottom: 5%;
   }
-.name
+#name
   {
     font-size: 30px;
     color:#fff;
@@ -194,7 +200,7 @@ button
     font-weight: bolder;
     display:block;
   }
-.balance
+#balance
   {
     color:#fff;
     margin-right: 50px;

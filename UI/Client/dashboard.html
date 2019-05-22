@@ -22,7 +22,7 @@
                         <li><a href="./dashboard.html" class = 'dashPage'>DASHBOARD</a></li>
                         <li><a href="./createaccount.html">CREATE ACCOUNT</a></li>
                         <li><a href="./viewTransactions.html">TRANSACTIONS</a></li>
-                        <li><a href="../signin.html">LOGOUT</a></li>
+                        <li id = 'logout'><a href="../signin.html">LOGOUT</a></li>
                     </ul>
                 </nav>
                 <label for="nav-toggle" class="nav-toggle-label">
@@ -47,8 +47,8 @@
                 </div>
                 <div class="dashcontent">
                 <div class="acctdetails">
-                     <p class ="name">Welcome Oghenefegor</p>
-                     <p class = "balance">Balance: &#x20A6;500000</p>
+                     <p id ="name">Welcome Oghenefegor</p>
+                     <p id = "balance">Balance: &#x20A6;500000</p>
                 </div>            
                 <div class="view-transactions">
                     <p class="accounts">Accounts</p>
@@ -160,6 +160,6 @@
     <footer id = "footer">
          <p>&copy; Iyara Oghenefegor For Andela Bootcamp</p>
     </footer>
-    <script src="./js/signin.js"></script>
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>

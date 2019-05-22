@@ -56,6 +56,14 @@ const validate = (e) => {
         const { type } = data.data;
         console.log(data);
         if (type === 'client') {
+          sessionStorage.setItem('token', data.data.token);
+          sessionStorage.setItem('email', data.data.email);
+          sessionStorage.setItem('id', data.data.id);
+          sessionStorage.setItem('firstName', data.data.firstName);
+          sessionStorage.setItem('lastName', data.data.lastName);
+          localStorage.setItem('email', data.data.email);
+          sessionStorage.setItem('type', data.data.type);
+          sessionStorage.setItem('admin', data.data.isadmin);         
           window.location.href = './Client/dashboard.html';
         }
         if (type === 'cashier') {
