@@ -111,10 +111,6 @@ window.onload = () => {
             generateTable(table2, response.data);
             p2.style.display = 'none';
           }
-          if (response.data.length === 0) {
-            table2.style.display = 'none';
-            p2.style.display = 'block';
-          }
         })
         .catch(err => err);
     });
