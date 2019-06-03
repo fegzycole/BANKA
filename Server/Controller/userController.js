@@ -266,6 +266,22 @@ class UserController {
     }
   }
 
+  static async getAccountsByAccountNumber(req, res) {
+    try {
+      const { accountNo } = req.params;
+      const getOwner = await Db.query('SELECT createdon, CAST(accountnumber as INTEGER), type, CAST(oldbalance as FLOAT) , CAST(newbalance as FLOAT) from transactions WHERE accountnumber = $1', [parseInt(accountNo, 10)]);
+      return res.json({
+        status: 200,
+        accounts: getOwner.rows,
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
+
   static async passwordReset(req, res, next) {
     try {
       const emailChecker = await Db.query('SELECT email, firstname FROM userstable  WHERE email = $1', [req.params.email]);
