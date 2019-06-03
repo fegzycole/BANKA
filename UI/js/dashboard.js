@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-
 const url = 'https://banka--app.herokuapp.com';
 
 const token = sessionStorage.getItem('token');
@@ -36,6 +34,8 @@ const p1 = document.createElement('p');
 
 p1.className = 'noAccount';
 
+const storeHolder = [];
+
 const tableHeaders = ['Date Created', 'Account Number', 'Type', 'Status', 'Balance(₦)'];
 
 const transactionHeaders = ['Date', 'Type', 'Account Number', 'Amount', 'Old Balance(₦)', 'New Balance(₦)'];
@@ -57,11 +57,7 @@ window.onload = () => {
   const initialize = () => {
     userName.textContent = `Welcome ${titleCase(firstName)} ${titleCase(lastName)}`;
     accountBal.textContent = '₦0';
-    newTable[0].style.display = 'none';
-    newTable[1].style.display = 'none';
-    p1.textContent = 'You do not have any account with Banka';
     tableHolder[0].appendChild(p1);
-    p2.textContent = 'You have not performed any transaction as of yet';
     tableHolder[1].appendChild(p2);
   };
 
@@ -91,6 +87,7 @@ window.onload = () => {
 
   const getUserTransactions = (dataTable) => {
     p2.style.display = 'none';
+    table2.display = 'none';
     generateTableHead(table2, transactionHeaders, tableHolder[1]);
     dataTable.accounts.forEach(({ accountnumber }) => {
       fetch(`${url}/api/v2/accounts/${accountnumber}/transactions`, {
@@ -108,15 +105,18 @@ window.onload = () => {
             response.data.forEach((user) => {
               delete user.id;
             });
+            storeHolder.push(response.data);
             generateTable(table2, response.data);
             p2.style.display = 'none';
+          }
+          if (response.data.length === 0) {
+            p2.style.display = 'block';
+            table2.display = 'none';
           }
         })
         .catch(err => err);
     });
   };
-
-
   const getUserAccounts = () => {
     let bal = 0;
     fetch(`${url}/api/v2/user/${email}/accounts`, {
@@ -130,7 +130,7 @@ window.onload = () => {
       redirect: 'follow',
     }).then(res => res.json())
       .then((res) => {
-        if (!res.error) {
+        if (!res.error && res.accounts !== 0) {
           res.accounts.forEach(({ balance }) => {
             bal += balance;
           });
@@ -140,12 +140,17 @@ window.onload = () => {
           p1.style.display = 'none';
           getUserTransactions(res);
         }
+        if (res.accounts.length === 0) {
+          p1.textContent = 'You do not have any account with Banka';
+          p1.style.display = 'block';
+        }
       })
       .catch(err => err);
   };
   initialize();
   getUserAccounts();
 };
+
 const logoutButton = document.querySelector('#logout');
 const logout = () => {
   sessionStorage.clear();

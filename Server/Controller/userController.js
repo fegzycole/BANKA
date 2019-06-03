@@ -248,6 +248,24 @@ class UserController {
     }
   }
 
+
+  static async getUserAccountsJoin(req, res) {
+    try {
+      const emailChecker = await Db.query('SELECT id FROM userstable  WHERE email = $1', [req.params.email]);
+      const id = parseInt(emailChecker.rows[0].id, 10);
+      const getOwner = await Db.query('SELECT transactions.createdon, CAST(accountstable.accountnumber as INTEGER), transactions.type, CAST(transactions.oldbalance as FLOAT) , CAST(transactions.newbalance as FLOAT) from transactions inner join accountstable on transactions.accountnumber = accountstable.accountnumber WHERE owner = $1', [id]);
+      return res.json({
+        status: 200,
+        accounts: getOwner.rows,
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Sorry, something went wrong, try again',
+      });
+    }
+  }
+
   static async passwordReset(req, res, next) {
     try {
       const emailChecker = await Db.query('SELECT email, firstname FROM userstable  WHERE email = $1', [req.params.email]);

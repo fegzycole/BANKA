@@ -5,6 +5,7 @@ class Validator {
   // Validate a user when he wants to create a new account
   static validateSignUpInput(user) {
     const pattern = /^[a-zA-Z][a-zA-Z]*$/;
+    // const emailPattern = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
     const schema = {
       firstName: Joi.string().min(4).regex(pattern)
         .trim()
@@ -139,7 +140,7 @@ class Validator {
           });
         }
       }
-      if (req.route.path === '/signin' || req.route.path === '/:email/accounts' || req.route.path === '/:email/reset') {
+      if (req.route.path === '/signin' || req.route.path === '/:email/accounts' || req.route.path === '/:email/reset' || req.route.path === '/:email/transactions') {
         if (!email) {
           return res.status(404).json({
             status: 404,
