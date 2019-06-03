@@ -184,13 +184,6 @@
 }
 @media only screen and (min-width:240px) and (max-width:450px)
 {
-  .tableHeader{
-    display:block;
-    padding:10px;
-    background-color:#3F51B5;
-    margin-bottom:5px;
-    color: white;
- }
    .table
    {
      margin-top:30%;
