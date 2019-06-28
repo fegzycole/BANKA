@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable linebreak-style */
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -5,7 +6,6 @@ import dotenv from 'dotenv';
 import Auth from './routes/auth';
 import accounts from './routes/accounts';
 import transactions from './routes/transactions';
-
 
 const app = express();
 

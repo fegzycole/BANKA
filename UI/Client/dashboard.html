@@ -1,165 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Banka</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/dashbody.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/header.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/dashtable.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Banka</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" media="screen" href="../css/dashbody.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="../css/header.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="../css/dashtable.css">
 </head>
 <body>
-    <div id="container">
-        <div id="main">
-            <!-- HEADER MARKUP STARTS HERE -->
-            <header>
-                    <h1 class = 'logo'>BA<span>N</span>KA</h1>
-                <input type = 'checkbox' id="nav-toggle" class="nav-toggle">
-                <nav>
-                    <ul>
-                        <li><a href="./dashboard.html" class = 'dashPage'>DASHBOARD</a></li>
-                        <li><a href="./createaccount.html">CREATE ACCOUNT</a></li>
-                        <li><a href="./viewTransactions.html">TRANSACTIONS</a></li>
-                        <li id = 'logout'><a href="../signin.html">LOGOUT</a></li>
-                    </ul>
-                </nav>
-                <label for="nav-toggle" class="nav-toggle-label">
-                    <span></span>
-                </label>
-            </header>
-            <!-- HEADER STYLES END HERE -->
-            <div class="userSection">
-                <div class="picture">
-                    <img  class = 'pic' src = '../Images/Capture1.PNG' alt= 'Ferguson smiling'>
-                    <button class= 'btn-blue'>Edit Image</button>
-                    <div class="dashUl">
-                    <ul>
-                        <li>Full Name: Iyara Oghenefegor Ferguson</li>
-                        <li>Occupation: Software Developer</li>
-                        <li>Company: Andela</li>
-                        <li>Status: Single</li>
-                        <li>Interests: Singing, Building Software</li>
-                    </ul>
-                    <button class= 'btn-blue'>Edit Profile</button>
-                 </div>
-                </div>
-                <div class="dashcontent">
-                <div class="acctdetails">
-                     <p id ="name">Welcome Oghenefegor</p>
-                     <p id = "balance">Balance: &#x20A6;500000</p>
-                </div>            
-                <div class="view-transactions">
-                    <p class="accounts">Accounts</p>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                               <th>Account Name</th>
-                               <th>Type</th>
-                               <th>Account Number</th>
-                               <th>Balance</th>
-                               <th>Date Created</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class='tableHeader'>Account Name</span>Iyara Ferguson</td>
-                                <td><span class='tableHeader'>Type</span>Savings</td>
-                                <td><span class='tableHeader'>Account Number</span>2059725105</td>
-                                <td> <span class='tableHeader'>Balance</span>&#x20A6;10000000</td>
-                                <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                            </tr>
-                            <tr>
-                                <td><span class='tableHeader'>Account Name</span>Iyara Ferguson</td>
-                                <td><span class='tableHeader'>Type</span>Current</td>
-                                <td><span class='tableHeader'>Account Number</span>2059728705</td>
-                                <td><span class='tableHeader'>Balance</span> &#x20A6;10000000</td>
-                                <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                            </tr>
-                            <tr>
-                                <td><span class='tableHeader'>Account Name</span>Iyara Ferguson</td>
-                                <td><span class='tableHeader'>Type</span>Current</td>
-                                <td><span class='tableHeader'>Account Number</span>2050725105</td>
-                                <td><span class='tableHeader'>Balance</span> &#x20A6;10000000</td>
-                                <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                            </tr>
-                            <tr>
-                                <td><span class='tableHeader'>Account Name</span>Iyara Ferguson</td>
-                                <td><span class='tableHeader'>Type</span>Savings</td>
-                                <td><span class='tableHeader'>Account Number</span>2059705105</td>
-                                <td><span class='tableHeader'>Balance</span> &#x20A6;10000000</td>
-                                <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                            </tr>
-                            <tr>
-                                <td><span class='tableHeader'>Account Name</span>Iyara Ferguson</td>
-                                <td><span class='tableHeader'>Type</span>Current</td>
-                                <td><span class='tableHeader'>Account Number</span>2059025105</td>
-                                <td><span class='tableHeader'>Balance</span> &#x20A6;10000000</td>
-                                <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                 </div>
-                </br>
-                 <div class="view-transactions">
-                        <p class="accounts">Transactions</p>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                   <th>Account Number</th>
-                                   <th>Type</th>
-                                   <th>Transaction</th>
-                                   <th>Amount</th>
-                                   <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class='tableHeader'>Account Number</span>2059725105</td>
-                                    <td><span class='tableHeader'>Type</span>Savings</td>
-                                    <td><span class='tableHeader'>Transaction</span>Credit</td>
-                                    <td> <span class='tableHeader'>Balance</span>&#x20A6;10000</td>
-                                    <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                                </tr>
-                                <tr>
-                                        <td><span class='tableHeader'>Account Number</span>2059725105</td>
-                                        <td><span class='tableHeader'>Type</span>Savings</td>
-                                        <td><span class='tableHeader'>Transaction</span>Credit</td>
-                                        <td> <span class='tableHeader'>Balance</span>&#x20A6;10000</td>
-                                        <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                                </tr>
-                                <tr>
-                                        <td><span class='tableHeader'>Account Number</span>2059725105</td>
-                                        <td><span class='tableHeader'>Type</span>Savings</td>
-                                        <td><span class='tableHeader'>Transaction</span>Credit</td>
-                                        <td><span class='tableHeader'>Balance</span> &#x20A6;10000</td>
-                                        <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                                </tr>
-                                <tr>
-                                        <td><span class='tableHeader'>Account Number</span>2059725105</td>
-                                        <td><span class='tableHeader'>Type</span>Savings</td>
-                                        <td><span class='tableHeader'>Transaction</span>Credit</td>
-                                        <td><span class='tableHeader'>Balance</span> &#x20A6;10000</td>
-                                        <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                                </tr>
-                                <tr>
-                                        <td><span class='tableHeader'>Account Number</span>2059725105</td>
-                                        <td><span class='tableHeader'>Type</span>Savings</td>
-                                        <td><span class='tableHeader'>Transaction</span>Credit</td>
-                                        <td><span class='tableHeader'>Balance</span> &#x20A6;10000</td>
-                                        <td><span class='tableHeader'>Date Created</span>30/02/2019</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                     </div>
-                
-            </div>
-        </div>
-    </div>
-    <footer id = "footer">
-         <p>&copy; Iyara Oghenefegor For Andela Bootcamp</p>
-    </footer>
-    <script src="../js/dashboard.js"></script>
+	<div id="container">
+			<div id="main">
+					<!-- HEADER MARKUP STARTS HERE -->
+					<header>
+									<h1 class = 'logo'>BA<span>N</span>KA</h1>
+							<input type = 'checkbox' id="nav-toggle" class="nav-toggle">
+							<nav>
+									<ul>
+											<li><a href="./dashboard.html" class = 'dashPage'>DASHBOARD</a></li>
+											<li><a href="./createaccount.html">CREATE ACCOUNT</a></li>
+											<li><a href="./viewTransactions.html">TRANSACTIONS</a></li>
+											<li id = 'logout'><a href="../signin.html">LOGOUT</a></li>
+									</ul>
+							</nav>
+							<label for="nav-toggle" class="nav-toggle-label">
+									<span></span>
+							</label>
+					</header>
+					<!-- HEADER STYLES END HERE -->
+					<div class="userSection">
+							<div class="picture">
+									<img  class = 'pic' src = '../Images/Capture1.PNG' alt= 'Ferguson smiling'>
+									<button class= 'btn-blue'>Edit Image</button>
+									<div class="dashUl">
+									<ul>
+											<li>Full Name: Iyara Oghenefegor Ferguson</li>
+											<li>Occupation: Software Developer</li>
+											<li>Company: Andela</li>
+											<li>Status: Single</li>
+											<li>Interests: Singing, Building Software</li>
+									</ul>
+									<button class= 'btn-blue'>Edit Profile</button>
+								</div>
+							</div>
+							<div class="dashcontent">
+							<div class="acctdetails">
+										<p id ="name">Welcome Oghenefegor</p>
+										<p id = "balance">Balance: &#x20A6;500000</p>
+							</div>            
+							<div class="view-transactions">
+									<p class="accounts">Accounts</p>
+								</div>
+							</br>
+								<div class="view-transactions">
+							</div>		
+					</div>
+			</div>
+	</div>
+	<footer id = "footer">
+				<p>&copy; Iyara Oghenefegor For Andela Bootcamp</p>
+	</footer>
+	<script src="../js/dashboard.js"></script>
 </body>
 </html>
