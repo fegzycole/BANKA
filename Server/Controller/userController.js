@@ -150,7 +150,7 @@ class UserController {
       if (!emailExists.includes(userDetails.email)) {
         return res.status(409).json({
           status: 409,
-          error: 'Authentication Failed',
+          error: 'Authentication Failed', // 08038264476
           message: 'Email or password invalid',
         });
       }

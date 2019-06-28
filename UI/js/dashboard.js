@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const url = 'https://banka--app.herokuapp.com';
 
 const token = sessionStorage.getItem('token');
@@ -11,8 +12,6 @@ const lastName = sessionStorage.getItem('lastName');
 const accountBal = document.querySelector('#balance');
 
 const userName = document.querySelector('#name');
-
-const newTable = document.querySelectorAll('.table');
 
 const tableHolder = document.querySelectorAll('.view-transactions');
 
@@ -34,21 +33,15 @@ const p1 = document.createElement('p');
 
 p1.className = 'noAccount';
 
-const storeHolder = [];
-
 const tableHeaders = ['Date Created', 'Account Number', 'Type', 'Status', 'Balance(₦)'];
 
-const transactionHeaders = ['Date', 'Type', 'Account Number', 'Amount', 'Old Balance(₦)', 'New Balance(₦)'];
 
 if (!token) {
   window.location.replace('../signin.html');
 }
 
 const titleCase = (str) => {
-  const splitStr = str.toLowerCase().split(' ');
-  for (let i = 0; i < splitStr.length; i += 1) {
-    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-  }
+  const splitStr = str.toLowerCase().split(' ').map(el => el.charAt(0).toUpperCase() + el.substring(1));
   return splitStr.join(' ');
 };
 
@@ -82,39 +75,6 @@ window.onload = () => {
         const text = document.createTextNode(element);
         cell.appendChild(text);
       });
-    });
-  };
-
-  const getUserTransactions = (dataTable) => {
-    p2.style.display = 'none';
-    table2.display = 'none';
-    generateTableHead(table2, transactionHeaders, tableHolder[1]);
-    dataTable.accounts.forEach(({ accountnumber }) => {
-      fetch(`${url}/api/v2/accounts/${accountnumber}/transactions`, {
-        method: 'GET', // or 'PUT'
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: {
-          'x-access-token': `${token}`,
-          'Content-Type': 'application/json',
-        },
-        redirect: 'follow',
-      }).then(response => response.json())
-        .then((response) => {
-          if (!response.error && response.data.length !== 0) {
-            response.data.forEach((user) => {
-              delete user.id;
-            });
-            storeHolder.push(response.data);
-            generateTable(table2, response.data);
-            p2.style.display = 'none';
-          }
-          if (response.data.length === 0) {
-            p2.style.display = 'block';
-            table2.display = 'none';
-          }
-        })
-        .catch(err => err);
     });
   };
   const getUserAccounts = () => {
