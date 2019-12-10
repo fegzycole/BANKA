@@ -1,3 +1,5 @@
+const { genSaltSync, hashSync } = require('bcryptjs');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
@@ -24,8 +26,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+  },
+  {
+    hooks: {
+      beforeSave: (user) => {
+        const newUser = user;
+        if (user.changed('password')) {
+          const salt = genSaltSync(10);
+          newUser.password = hashSync(user.password, salt);
+        }
+      },
+    },
     timestamps: true,
-  }, {});
+  });
   // User.associate = (models)  => {
   //   // associations can be defined here
   // };
