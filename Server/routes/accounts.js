@@ -4,7 +4,7 @@ import Accountcontroller from '../Controller/accountController';
 
 import helper from '../helper/helper';
 
-import Service from '../Services/service';
+import Service from '../services/service';
 
 const {
   createClientAccount, activateOrDeactivate, deleteAnAccount,

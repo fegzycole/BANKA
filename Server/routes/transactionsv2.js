@@ -4,7 +4,7 @@ import TransactionController from '../Controller/transactionController';
 
 import helper from '../helper/helper';
 
-import Service from '../Services/service';
+import Service from '../services/service';
 
 import Validator from '../Middleware/validator';
 
