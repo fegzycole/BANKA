@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
-import dotenv from 'dotenv';
+import bcrypt from './node_modules/bcryptjs';
+import dotenv from './node_modules/dotenv';
 import Validator from '../Middleware/validator';
 import testData from '../data/testData';
 import Helper from '../helper/helper';

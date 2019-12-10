@@ -1,7 +1,7 @@
 import express from 'express';
 import userController from '../Controller/userController';
 import Validator from '../Middleware/validator';
-import Service from '../Services/service';
+import Service from '../services/service';
 
 const {
   checkExistingEmail,

@@ -1,4 +1,4 @@
-import sgMail from '@sendgrid/mail';
+import sgMail from './node_modules/@sendgrid/mail';
 import Db from '../Database/index';
 
 class Services {

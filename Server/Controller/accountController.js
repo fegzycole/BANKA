@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import jwt from './node_modules/jsonwebtoken';
+import dotenv from './node_modules/dotenv';
 import helper from '../helper/helper';
 import Validator from '../Middleware/validator';
 import testData from '../data/testData';
