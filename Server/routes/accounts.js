@@ -1,25 +1,25 @@
-/* eslint-disable linebreak-style */
-import express from 'express';
-import Accountcontroller from '../Controller/accountController';
+// /* eslint-disable linebreak-style */
+// import express from 'express';
+// import Accountcontroller from '../Controller/accountController';
 
-import helper from '../helper/helper';
+// import helper from '../helper/helper';
 
-import Service from '../services/service';
+// import Service from '../services/service';
 
-const {
-  createClientAccount, activateOrDeactivate, deleteAnAccount,
-} = Accountcontroller;
+// const {
+//   createClientAccount, activateOrDeactivate, deleteAnAccount,
+// } = Accountcontroller;
 
-const { verifyTokenAll } = helper;
+// const { verifyTokenAll } = helper;
 
-const { staffToken } = Service;
+// const { staffToken } = Service;
 
-const router = express.Router();
+// const router = express.Router();
 
-router.post('/', createClientAccount);
+// router.post('/', createClientAccount);
 
-router.patch('/:accountNo', verifyTokenAll, staffToken, activateOrDeactivate);
+// router.patch('/:accountNo', verifyTokenAll, staffToken, activateOrDeactivate);
 
-router.delete('/:accountNo', verifyTokenAll, staffToken, deleteAnAccount);
+// router.delete('/:accountNo', verifyTokenAll, staffToken, deleteAnAccount);
 
-export default router;
+// export default router;

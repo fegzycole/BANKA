@@ -1,25 +1,25 @@
-/* eslint-disable linebreak-style */
-import express from 'express';
+// /* eslint-disable linebreak-style */
+// import express from 'express';
 
-import TransactionController from '../Controller/transactionController';
+// import TransactionController from '../Controller/transactionController';
 
-import helper from '../helper/helper';
+// import helper from '../helper/helper';
 
-import Service from '../services/service';
-
-
-const { creditAccount, debitAccount } = TransactionController;
-
-const { verifyTokenAll } = helper;
-
-const { cashierToken } = Service;
+// import Service from '../services/service';
 
 
-const router = express.Router();
+// const { creditAccount, debitAccount } = TransactionController;
 
-router.post('/:accountNo/credit', verifyTokenAll, cashierToken, creditAccount);
+// const { verifyTokenAll } = helper;
 
-router.post('/:accountNo/debit', verifyTokenAll, cashierToken, debitAccount);
+// const { cashierToken } = Service;
 
 
-export default router;
+// const router = express.Router();
+
+// router.post('/:accountNo/credit', verifyTokenAll, cashierToken, creditAccount);
+
+// router.post('/:accountNo/debit', verifyTokenAll, cashierToken, debitAccount);
+
+
+// export default router;

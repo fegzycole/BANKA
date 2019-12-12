@@ -1,28 +1,28 @@
-import express from 'express';
+// import express from 'express';
 
-import TransactionController from '../Controller/transactionController';
+// import TransactionController from '../Controller/transactionController';
 
-import helper from '../helper/helper';
+// import helper from '../helper/helper';
 
-import Service from '../services/service';
+// import Service from '../services/service';
 
-import Validator from '../Middleware/validator';
+// import Validator from '../Middleware/validator';
 
 
-const { cashierToken } = Service;
+// const { cashierToken } = Service;
 
-const { cashTransactions, getspecificTransaction } = TransactionController;
+// const { cashTransactions, getspecificTransaction } = TransactionController;
 
-const { verifyTokenAll, validatePath } = helper;
+// const { verifyTokenAll, validatePath } = helper;
 
-const { checkAccountNo, checkId, validateTransaction } = Validator;
+// const { checkAccountNo, checkId, validateTransaction } = Validator;
 
-const router = express.Router();
+// const router = express.Router();
 
-router.post('/:accountNo/credit', verifyTokenAll, cashierToken, checkAccountNo, validateTransaction, validatePath, cashTransactions);
+// router.post('/:accountNo/credit', verifyTokenAll, cashierToken, checkAccountNo, validateTransaction, validatePath, cashTransactions);
 
-router.post('/:accountNo/debit', verifyTokenAll, cashierToken, checkAccountNo, validateTransaction, validatePath, cashTransactions);
+// router.post('/:accountNo/debit', verifyTokenAll, cashierToken, checkAccountNo, validateTransaction, validatePath, cashTransactions);
 
-router.get('/:id', verifyTokenAll, checkId, getspecificTransaction);
+// router.get('/:id', verifyTokenAll, checkId, getspecificTransaction);
 
-export default router;
+// export default router;

@@ -1,23 +1,21 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import models from '../models/index';
+import { errResponse } from '../helper/helper';
 
+const { User } = models;
 
-class Auth {
-  static createToken(user) {
-    const token = jwt.sign(
-      {
-        user,
-      },
-      process.env.SECRET,
-      { expiresIn: '24h' },
-    );
+const checkExistingUser = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const existingUser = await User.findOne({ where: { email } });
 
-    return token;
+    if (existingUser) {
+      return errResponse(res, 409, 'Email already exists!');
+    }
+
+    return next();
+  } catch (error) {
+    return errResponse(res, 500, error.message);
   }
+};
 
-  static hashAllPassword(password) {
-    return bcrypt.hashSync(password, 10);
-  }
-}
-
-export default Auth;
+export default checkExistingUser;

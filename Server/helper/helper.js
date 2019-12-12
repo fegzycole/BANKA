@@ -1,159 +1,34 @@
-
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
-import testData from '../data/testData';
-import Db from '../Database/index';
-import Validator from '../Middleware/validator';
-
-const { validateAccount } = Validator;
+import Validator from 'validatorjs';
 
 dotenv.config();
 
-const { accounts } = testData;
-class Helper {
-  // find a user by emailv2
-  static async findUserByEmailDb(user) {
-    try {
-      const { rows } = await Db.query('SELECT email FROM userstable  WHERE email = $1', [user]);
-      return rows;
-    } catch (err) {
-      return err.error;
-    }
+export const generateToken = (
+  payload,
+  secretKey = process.env.SECRET,
+  duration = { expiresIn: '24hrs' },
+) => jwt.sign(payload, secretKey, duration);
+
+export const errResponse = (res, statusCode, errors) => res.status(statusCode).json({
+  status: 'error',
+  errors,
+});
+
+export const successResponse = (res, statusCode, data) => res.status(statusCode).json({
+  status: 'success',
+  data,
+});
+
+export const hashPassword = (password) => { bcrypt.hashSync(password, bcrypt.genSaltSync(10)); };
+
+export const validate = (data, rules, res, next) => {
+  const validation = new Validator(data, rules);
+
+  if (validation.fails()) {
+    return errResponse(res, 400, validation.errors.all());
   }
 
-  // fin a user by email v1
-  static findUserByEmail(users) {
-    return users.reduce((emailArray, userDetail) => emailArray.concat(userDetail.email), []);
-  }
-
-  // create JsonWebToken for new user
-  static createToken(user) {
-    const token = jwt.sign(
-      {
-        user,
-      },
-      process.env.SECRET,
-      { expiresIn: '24h' },
-    );
-
-    return token;
-  }
-
-  // create an account number v1
-  static createAccountNumber() {
-    return 200000001 + accounts.length;
-  }
-
-  // Create a unique account number v2
-  static async createAccountNumberDb() {
-    try {
-      let getMaxId = 0;
-      const arrayHandler = await Db.query('SELECT * FROM accountstable');
-      if (arrayHandler.rows.length === 0) {
-        return 200000001;
-      }
-
-      for (let i = 0; i < arrayHandler.rows.length; i += 1) {
-        if (arrayHandler.rows[i].id > getMaxId) {
-          getMaxId = arrayHandler.rows[i].id;
-        }
-      }
-      return 20000000 + parseInt(getMaxId, 10) + 1;
-    } catch (e) {
-      return e.error;
-    }
-  }
-
-  // Token verification Logic that permits clients, cashiers and admins to view transactions
-  static verifyTokenAll(req, res, next) {
-    try {
-      const token = req.body.token || req.headers['x-access-token'];
-      if (token) {
-        // eslint-disable-next-line consistent-return
-        jwt.verify(token, process.env.SECRET, (err, decoded) => {
-          if (err) {
-            return res.status(404).json({
-              status: 404,
-              error: 'Invalid token',
-            });
-          }
-          req.decoded = decoded;
-        });
-      }
-      if (!token) {
-        return res.status(404).json({
-          status: 404,
-          error: 'You cannot access this resource',
-        });
-      }
-      // fire next middleware
-      return next();
-    } catch (error) {
-      return res.status(400).json({
-        status: 400,
-        errors: [error],
-      });
-    }
-  }
-
-  static validateAccountType(req, res, next) {
-    const { error } = validateAccount(req.body.type);
-    if (error) {
-      return res.status(400).json({
-        status: 400,
-        error: error.message,
-      });
-    }
-    return next();
-  }
-
-  // static validateTransactionDetails(req, res, next) {
-  //   const numberPattern = /^[0-9]{10}$/;
-  //   if (!numberPattern.test(req.body.amountToDeposit)) {
-  //     return res.status(400).json({
-  //       status: 400,
-  //       error: 'Please put in a number to deposit or withdraw',
-  //     });
-  //   }
-  //   if (req.body.type !== 'credit' && req.body.type !== 'debit') {
-  //     return res.status(400).json({
-  //       status: 400,
-  //       error: 'Put in a transaction type please',
-  //     });
-  //   }
-  //   if (req.body.amountToDeposit <= 0) {
-  //     return res.status(400).json({
-  //       status: 400,
-  //       error: 'Invalid input, try again',
-  //     });
-  //   }
-  //   return next();
-  // }
-  static checkTransactionStatus(req, res, next) {
-    if (req.body.amountToDeposit <= 0) {
-      return res.status(400).json({
-        status: 400,
-        error: 'Invalid input, try again',
-      });
-    }
-    return next();
-  }
-
-  static validatePath(req, res, next) {
-    if (req.route.path === '/:accountNo/credit' && req.body.type === 'debit') {
-      return res.status(400).json({
-        status: 400,
-        error: 'Transaction type should be credit',
-      });
-    }
-    if (req.route.path === '/:accountNo/debit' && req.body.type === 'credit') {
-      return res.status(400).json({
-        status: 400,
-        error: 'Transaction type should be credit',
-      });
-    }
-    return next();
-  }
-}
-
-export default Helper;
+  return next();
+};
