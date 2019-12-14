@@ -12,6 +12,8 @@ const checkExistingUser = async (req, res, next) => {
       return errResponse(res, 409, 'Email already exists!');
     }
 
+    req.user = req.body;
+    req.user.isAdmin = false;
     return next();
   } catch (error) {
     return errResponse(res, 500, error.message);

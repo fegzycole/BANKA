@@ -16,15 +16,20 @@ module.exports = {
     },
     email: {
       type: Sequelize.STRING,
-      allowNull: false,
+      unique: true,
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     isAdmin: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
+    },
+    oauthId: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: true,
     },
     createdAt: {
       allowNull: false,
@@ -35,5 +40,6 @@ module.exports = {
       type: Sequelize.DATE,
     },
   }),
-  down: (queryInterface) => { queryInterface.dropTable('Users'); },
+  // eslint-disable-next-line no-unused-vars
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users'),
 };

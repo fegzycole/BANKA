@@ -15,11 +15,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    oauthId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      unique: true,
       validate: {
-        isEmail: true,
+        isEmail: {
+          msg: 'Email field must be an email.',
+        },
       },
     },
     password: {
@@ -29,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-    }
+    },
   }, {
     hooks: {
       beforeSave: (user) => {
