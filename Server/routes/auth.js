@@ -2,7 +2,14 @@ import express from 'express';
 import validateSignUp from '../middleware/Validations';
 import checkExistingEmail from '../middleware/Auth';
 import signUpUser from '../controller/user';
-import { facebookAuth, facebookAuthRedirect } from '../middleware/passport/authentication';
+import { 
+  facebookAuth,
+  facebookAuthRedirect,
+  twitterAuth,
+  twitterAuthRedirect,
+  googleAuth,
+  googleAuthRedirect,
+} from '../middleware/passport/authentication';
 
 const router = express.Router();
 
@@ -12,8 +19,12 @@ router.get('/facebook', facebookAuth());
 
 router.get('/facebook/redirect', facebookAuthRedirect(), signUpUser);
 
-router.get('/fail', (req, res) => { res.send('Failed attempt'); });
+router.get('/twitter', twitterAuth());
 
-router.get('/', (req, res) => { res.send('Success'); });
+router.get('/twitter/redirect', twitterAuthRedirect(), signUpUser);
+
+router.get('/google', googleAuth());
+
+router.get('/google/redirect', googleAuthRedirect(), signUpUser);
 
 export default router;

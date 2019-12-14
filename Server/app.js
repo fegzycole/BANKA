@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import passport from 'passport';
 import trimmer from 'express-body-trimmer';
+import session from 'express-session';
 import Auth from './routes/auth';
 import setPassportMiddleware from './middleware/passport/strategies';
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(trimmer());
+app.use(session({ secret: process.env.SECRET }));
 setPassportMiddleware(passport, app);
 
 app.use('/api/v1/auth', Auth);
