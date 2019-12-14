@@ -2,28 +2,6 @@ import Joi from 'joi';
 import Db from '../Database/index';
 
 class Validator {
-  // Validate a user when he wants to create a new account
-  static validateSignUpInput(user) {
-    const pattern = /^[a-zA-Z][a-zA-Z]*$/;
-    // const emailPattern = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
-    const schema = {
-      firstName: Joi.string().min(4).regex(pattern)
-        .trim()
-        .required()
-        .error(new Error('First name is required, It should have no whitespace(s) in between its characters')),
-      lastName: Joi.string().min(4).regex(pattern).trim()
-        .required()
-        .error(new Error('Last name is required, It should have no whitespace(s) in between its characters')),
-      email: Joi.string().email().required().trim()
-        .error(new Error('Your Email is required, example fergusoniyara@banka.com')),
-      password: Joi.string().min(4).regex(/^\S+$/).trim()
-        .required()
-        .error(new Error('Password should be at least 4 characters without any whitespace(s)')),
-      type: Joi.string().required().valid('admin', 'cashier', 'client').error(new Error('This field is required, Account type can only be admin,cashier or client')),
-    };
-    return Joi.validate(user, schema);
-  }
-
   // validate the signin input
   static validateSignInInput(user) {
     const schema = {

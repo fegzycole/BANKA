@@ -1,4 +1,4 @@
-const { genSaltSync, hashSync } = require('bcryptjs');
+import { genSaltSync, hashSync } from 'bcryptjs';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -15,32 +15,44 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    oauthId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      unique: true,
       validate: {
-        isEmail: true,
+        isEmail: {
+          msg: 'Email field must be an email.',
+        },
       },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  },
-  {
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+  }, {
     hooks: {
       beforeSave: (user) => {
-        const newUser = user;
         if (user.changed('password')) {
           const salt = genSaltSync(10);
-          newUser.password = hashSync(user.password, salt);
+          // eslint-disable-next-line no-param-reassign
+          user.password = hashSync(user.password, salt);
         }
       },
     },
     timestamps: true,
   });
-  // User.associate = (models)  => {
-  //   // associations can be defined here
-  // };
+
+  User.prototype.getSafeDataValues = function getSafeDataValues() {
+    const { password, ...data } = this.dataValues;
+    return data;
+  };
+
   return User;
 };
