@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { aleaRNGFactory } from 'number-generator';
 import dotenv from 'dotenv';
 import Validator from 'validatorjs';
 
@@ -34,3 +35,8 @@ export const validate = (data, rules, res, next) => {
 };
 
 export const comparePassword = (hashPwd, password) => bcrypt.compareSync(password, hashPwd);
+
+export const generateAccountNumber = () => { 
+  const { uInt32 } = aleaRNGFactory(10);
+  return uInt32();
+};

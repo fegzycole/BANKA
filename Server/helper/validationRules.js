@@ -10,3 +10,7 @@ export const signIn = {
   email: 'required|email',
   password: 'required|string',
 };
+
+export const accountType = {
+  type: ['required', { in: ['current', 'savings'] }],
+};

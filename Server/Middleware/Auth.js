@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import models from '../models/index';
 import { errResponse, comparePassword } from '../helper/helper';
 
@@ -46,4 +47,24 @@ export const compareUserPassword = async (req, res, next) => {
 
   req.user = req.user.getSafeDataValues();
   return next();
+};
+
+export const authorizeUser = (req, res, next) => {
+  try {
+    if (!req.headers['x-access-token']
+    && !req.headers.token && (!req.headers.authorization)
+    && (!req.body.token) && (!req.body.Authorization)) { throw new Error('You do not have access to this resource'); }
+
+    const token = req.body.token
+    || req.headers['x-access-token']
+    || req.headers.token
+    || req.headers.authorization
+    || req.body.Authorization;
+
+    const decoded = jwt.verify(token, process.env.SECRET);
+    req.decoded = decoded.user;
+    return next();
+  } catch (error) {
+    return errResponse(error, res, 401);
+  }
 };
