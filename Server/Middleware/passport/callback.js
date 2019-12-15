@@ -18,6 +18,7 @@ const performCallback = async (accessToken, refreshToken, profile, done) => {
     oauthId: id.toString(),
     password: `${Date.now()}${process.env.SECRET}`,
     isAdmin: false,
+    type: 'customer',
   };
 
   switch (provider) {

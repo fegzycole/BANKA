@@ -8,7 +8,7 @@ import passport from 'passport';
 import trimmer from 'express-body-trimmer';
 import session from 'express-session';
 import Auth from './routes/auth';
-import setPassportMiddleware from './middleware/passport/strategies';
+import setPassportMiddleware from './Middleware/passport/strategies';
 
 const app = express();
 

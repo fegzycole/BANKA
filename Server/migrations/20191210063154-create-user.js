@@ -22,6 +22,10 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    type: {
+      type: Sequelize.ENUM('customer', 'cashier', 'admin'),
+      defaultValue: 'customer',
+    },
     isAdmin: {
       type: Sequelize.BOOLEAN,
       allowNull: false,

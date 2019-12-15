@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    type: {
+      type: DataTypes.ENUM('customer', 'cashier', 'admin'),
+      defaultValue: 'customer',
+    },
     email: {
       type: DataTypes.STRING,
       unique: true,
@@ -34,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      defaultValue: false,
     },
   }, {
     hooks: {
@@ -50,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.prototype.getSafeDataValues = function getSafeDataValues() {
-    const { password, ...data } = this.dataValues;
+    const { password, oauthId, ...data } = this.dataValues;
     return data;
   };
 

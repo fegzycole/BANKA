@@ -32,3 +32,5 @@ export const validate = (data, rules, res, next) => {
 
   return next();
 };
+
+export const comparePassword = (hashPwd, password) => bcrypt.compareSync(password, hashPwd);
