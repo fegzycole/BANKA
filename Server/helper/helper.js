@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { aleaRNGFactory } from 'number-generator';
 import dotenv from 'dotenv';
 import Validator from 'validatorjs';
+import bigInt from 'big-integer';
 
 dotenv.config();
 
@@ -36,7 +36,7 @@ export const validate = (data, rules, res, next) => {
 
 export const comparePassword = (hashPwd, password) => bcrypt.compareSync(password, hashPwd);
 
-export const generateAccountNumber = () => { 
-  const { uInt32 } = aleaRNGFactory(10);
-  return uInt32();
+export const generateAccountNumber = () => {
+  const salt = Math.round(Math.random() * 12);
+  return bigInt(salt);
 };
