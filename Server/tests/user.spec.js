@@ -3,6 +3,8 @@
 /* eslint-disable no-unused-vars */
 import chai from 'chai';
 
+import { internet } from 'faker';
+
 import chaiHttp from 'chai-http';
 
 import app from '../app';
@@ -11,9 +13,13 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
+const { email } = internet;
+
 let UserToken;
 let adminToken;
 let cashierToken;
+
+console.log(email);
 
 describe('Tests for all Auth(signup and signin) Endpoints', () => {
   describe('POST api/v1/auth/signup', () => {
@@ -22,7 +28,7 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
         .request(app)
         .post('/api/v1/auth/signup')
         .send({
-          email: 'lew47uber8y@gmail.com',
+          email: email(),
           password: 'Pasword2018',
           firstName: 'Ferguson',
           lastName: 'Iyara',
@@ -36,42 +42,42 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           done();
         });
     });
-    // it('Should return an error if the user provides an invalid email', (done) => {
-    //   chai
-    //     .request(app)
-    //     .post('/api/v1/auth/signup')
-    //     .send({
-    //       firstName: 'john',
-    //       lastName: 'bellion',
-    //       email: 'wrongmailaddress',
-    //       password: 'simpleandweet',
-    //       type: 'client',
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(400);
-    //       expect(res.body.status).to.be.equal(400);
-    //       expect(res.body.message).to.be.equal('Your Email is required, example fergusoniyara@banka.com');
-    //       done();
-    //     });
-    // });
-    // it('Should return an error if the user provides password with whitespace in between', (done) => {
-    //   chai
-    //     .request(app)
-    //     .post('/api/v1/auth/signup')
-    //     .send({
-    //       firstName: 'john',
-    //       lastName: 'bellion',
-    //       email: 'jon@gmail.com',
-    //       password: 'simpl eand',
-    //       type: 'client',
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(400);
-    //       expect(res.body.status).to.be.equal(400);
-    //       expect(res.body.message).to.be.equal('Password should be at least 4 characters without any whitespace(s)');
-    //       done(err);
-    //     });
-    // });
+    it('Should return an error if the user provides an invalid email', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'john',
+          lastName: 'bellion',
+          email: 'wrongmailaddress',
+          password: 'simpleandweet',
+          type: 'client',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal('error');
+          expect(res.body.errors.email[0]).to.be.equal('The email format is invalid.');
+          done();
+        });
+    });
+    it('Should return an error if the user provides password with whitespace in between', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'john',
+          lastName: 'bellion',
+          email: 'jon@gmail.com',
+          password: 'simpl eand',
+          type: 'customer',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal('error');
+          expect(res.body.errors.password[0]).to.be.equal('The password field must be alphanumeric.');
+          done(err);
+        });
+    });
     // it('Should return an error if the user provides no firstname', (done) => {
     //   chai
     //     .request(app)
@@ -389,74 +395,74 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
 });
 
 
-describe('Test for User Endpoint', () => {
-  describe('GET api/v2/user/<user-email-address>/accounts', () => {
-    before((done) => {
-      const user = {
-        email: 'fegorson@gmail.com',
-        password: 'somepassword1',
-      };
-      chai
-        .request(app)
-        .post('/api/v2/auth/signin')
-        .send(user)
-        .end((err, res) => {
-          const { body } = res;
-          expect(body.status).to.be.equals(200);
-          if (!err) {
-            UserToken = body.data.token;
-          }
-          done();
-        });
-    });
-  });
-});
-describe('Test for User Endpoint', () => {
-  describe('GET api/v2/user/<user-email-address>/accounts', () => {
-    before((done) => {
-      const userCredential = {
-        email: 'fereoomee@gmail.com',
-        password: 'somepassword1',
-      };
-      chai
-        .request(app)
-        .post('/api/v2/auth/signin')
-        .send(userCredential)
-        .end((err, res) => {
-          const { body } = res;
-          expect(body.status).to.be.equals(200);
-          if (!err) {
-            cashierToken = body.data.token;
-          }
-          done();
-        });
-    });
-    it('Should return an error if the email is not found', (done) => {
-      const email = 'mariana@gmail.com';
-      chai
-        .request(app)
-        .get(`/api/v2/user/${email}/accounts`)
-        .set('x-access-token', cashierToken)
-        .end((err, res) => {
-          expect(res.body.status).to.be.equals(404);
-          expect(res.body.error).to.be.equals('Email does not exist');
-          done();
-        });
-    });
-    it('Should return a list of all accounts belonging to a user', (done) => {
-      const email = 'fereoomee@gmail.com';
-      chai
-        .request(app)
-        .get(`/api/v2/user/${email}/accounts`)
-        .set('x-access-token', cashierToken)
-        .end((err, res) => {
-          expect(res.body.status).to.be.equals(200);
-          expect(res.body.accounts).to.be.an('array');
-          done();
-        });
-    });
-  });
-});
+// describe('Test for User Endpoint', () => {
+//   describe('GET api/v2/user/<user-email-address>/accounts', () => {
+//     before((done) => {
+//       const user = {
+//         email: 'fegorson@gmail.com',
+//         password: 'somepassword1',
+//       };
+//       chai
+//         .request(app)
+//         .post('/api/v2/auth/signin')
+//         .send(user)
+//         .end((err, res) => {
+//           const { body } = res;
+//           expect(body.status).to.be.equals(200);
+//           if (!err) {
+//             UserToken = body.data.token;
+//           }
+//           done();
+//         });
+//     });
+//   });
+// });
+// describe('Test for User Endpoint', () => {
+//   describe('GET api/v2/user/<user-email-address>/accounts', () => {
+//     before((done) => {
+//       const userCredential = {
+//         email: 'fereoomee@gmail.com',
+//         password: 'somepassword1',
+//       };
+//       chai
+//         .request(app)
+//         .post('/api/v2/auth/signin')
+//         .send(userCredential)
+//         .end((err, res) => {
+//           const { body } = res;
+//           expect(body.status).to.be.equals(200);
+//           if (!err) {
+//             cashierToken = body.data.token;
+//           }
+//           done();
+//         });
+//     });
+//     it('Should return an error if the email is not found', (done) => {
+//       const email = 'mariana@gmail.com';
+//       chai
+//         .request(app)
+//         .get(`/api/v2/user/${email}/accounts`)
+//         .set('x-access-token', cashierToken)
+//         .end((err, res) => {
+//           expect(res.body.status).to.be.equals(404);
+//           expect(res.body.error).to.be.equals('Email does not exist');
+//           done();
+//         });
+//     });
+//     it('Should return a list of all accounts belonging to a user', (done) => {
+//       const email = 'fereoomee@gmail.com';
+//       chai
+//         .request(app)
+//         .get(`/api/v2/user/${email}/accounts`)
+//         .set('x-access-token', cashierToken)
+//         .end((err, res) => {
+//           expect(res.body.status).to.be.equals(200);
+//           expect(res.body.accounts).to.be.an('array');
+//           done();
+//         });
+//     });
+//   });
+// });
 
 // describe('Test for password reset endpoint', () => {
 //   describe('GET api/v2/auth/<email-address>', () => {

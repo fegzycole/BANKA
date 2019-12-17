@@ -1,7 +1,7 @@
 import express from 'express';
-import validateSignUp from '../Middleware/Validations';
-import checkExistingEmail from '../Middleware/Auth';
-import signUpUser from '../Controller/user';
+import { validateSignup } from '../Middleware/Validations';
+import { checkExistingUser } from '../Middleware/Auth';
+import { signUpUser } from '../Controller/user';
 import { 
   facebookAuth,
   facebookAuthRedirect,
@@ -13,7 +13,7 @@ import {
 
 const router = express.Router();
 
-router.post('/signup', validateSignUp, checkExistingEmail, signUpUser);
+router.post('/signup', validateSignup, checkExistingUser, signUpUser);
 
 router.get('/facebook', facebookAuth());
 
