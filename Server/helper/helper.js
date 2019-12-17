@@ -37,6 +37,5 @@ export const validate = (data, rules, res, next) => {
 export const comparePassword = (hashPwd, password) => bcrypt.compareSync(password, hashPwd);
 
 export const generateAccountNumber = () => {
-  const salt = Math.round(Math.random() * 12);
-  return bigInt(salt);
+  return bigInt(12);
 };

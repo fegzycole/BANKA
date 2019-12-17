@@ -1,22 +1,8 @@
 import express from 'express';
-import {
-  validateSignup,
-  validateSignIn,
-} from '../Middleware/Validations';
-
-import {
-  checkExistingUser,
-  checkUserEmail,
-  compareUserPassword,
-} from '../Middleware/Auth';
-
-import {
-  signUpUser,
-  signIn,
-  oAuth,
-} from '../Controller/user';
-
-import {
+import validateSignUp from '../Middleware/Validations';
+import checkExistingEmail from '../Middleware/Auth';
+import signUpUser from '../Controller/user';
+import { 
   facebookAuth,
   facebookAuthRedirect,
   twitterAuth,
@@ -27,20 +13,18 @@ import {
 
 const router = express.Router();
 
-router.post('/signup', validateSignup, checkExistingUser, signUpUser);
-
-router.post('/signin', validateSignIn, checkUserEmail, compareUserPassword, signIn);
+router.post('/signup', validateSignUp, checkExistingEmail, signUpUser);
 
 router.get('/facebook', facebookAuth());
 
-router.get('/facebook/redirect', facebookAuthRedirect(), oAuth);
+router.get('/facebook/redirect', facebookAuthRedirect(), signUpUser);
 
 router.get('/twitter', twitterAuth());
 
-router.get('/twitter/redirect', twitterAuthRedirect(), oAuth);
+router.get('/twitter/redirect', twitterAuthRedirect(), signUpUser);
 
 router.get('/google', googleAuth());
 
-router.get('/google/redirect', googleAuthRedirect(), oAuth);
+router.get('/google/redirect', googleAuthRedirect(), signUpUser);
 
 export default router;
