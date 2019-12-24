@@ -1,15 +1,15 @@
 import jwt from 'jsonwebtoken';
 import models from '../models/index';
-import { errResponse, comparePassword } from '../helper/helper';
+import { errResponse, comparePassword, userExists } from '../helper/helper';
 
 const { User } = models;
 
 export const checkExistingUser = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const existingUser = await User.findOne({ where: { email } });
+    const user = await userExists(email);
 
-    if (existingUser) {
+    if (user) {
       return errResponse(res, 409, 'Email already exists!');
     }
 
@@ -23,7 +23,7 @@ export const checkExistingUser = async (req, res, next) => {
 export const checkUserEmail = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const user = userExists(email);
 
     if (!user) {
       return errResponse(res, 404, 'User not found');
