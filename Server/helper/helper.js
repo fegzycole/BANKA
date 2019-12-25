@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
+import sequelize from 'sequelize';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import Validator from 'validatorjs';
-import bigInt from 'big-integer';
 import models from '../models/index';
 
-const { User } = models;
+const { User, Account } = models;
 
 dotenv.config();
 
@@ -25,8 +25,6 @@ export const successResponse = (res, statusCode, data) => res.status(statusCode)
   data,
 });
 
-export const hashPassword = (password) => { bcrypt.hashSync(password, bcrypt.genSaltSync(10)); };
-
 export const validate = (data, rules, res, next) => {
   const validation = new Validator(data, rules);
 
@@ -39,8 +37,16 @@ export const validate = (data, rules, res, next) => {
 
 export const comparePassword = (hashPwd, password) => bcrypt.compareSync(password, hashPwd);
 
-export const generateAccountNumber = () => {
-  return bigInt(12);
+export const generateAccountNumber = async () => {
+  let queryResult = await Account.findAll({
+    attributes: [[sequelize.fn('max', sequelize.col('id')), 'maxId']],
+  });
+
+  let { maxId } = queryResult[0].dataValues;
+
+  maxId = (maxId === null) ? (1000000000) : (1000000000 + maxId);
+
+  return maxId;
 };
 
 export const userExists = async (email) => await User.findOne({ where: { email } });

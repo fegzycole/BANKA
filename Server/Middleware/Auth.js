@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import models from '../models/index';
+import { config } from 'dotenv';
 import { errResponse, comparePassword, userExists } from '../helper/helper';
 
-const { User } = models;
+config();
 
 export const checkExistingUser = async (req, res, next) => {
   try {
@@ -59,12 +59,23 @@ export const authorizeUser = (req, res, next) => {
     || req.headers['x-access-token']
     || req.headers.token
     || req.headers.authorization
+    || req.body.token
     || req.body.Authorization;
 
     const decoded = jwt.verify(token, process.env.SECRET);
-    req.decoded = decoded.user;
+    req.decoded = decoded;
     return next();
   } catch (error) {
-    return errResponse(error, res, 401);
+    return errResponse(res, 401, error.message);
   }
 };
+
+export const checkUserAccountType = (req, res, next) => {
+  const { type } = req.decoded;
+
+  if (!type || type !== 'customer') {
+    return errResponse(res, 403, 'only a customer can create an account');
+  }
+
+  return next();
+}
