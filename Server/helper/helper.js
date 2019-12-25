@@ -2,6 +2,10 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import Validator from 'validatorjs';
+import bigInt from 'big-integer';
+import models from '../models/index';
+
+const { User } = models;
 
 dotenv.config();
 
@@ -32,3 +36,11 @@ export const validate = (data, rules, res, next) => {
 
   return next();
 };
+
+export const comparePassword = (hashPwd, password) => bcrypt.compareSync(password, hashPwd);
+
+export const generateAccountNumber = () => {
+  return bigInt(12);
+};
+
+export const userExists = async (email) => await User.findOne({ where: { email } });

@@ -9,7 +9,7 @@ export const twitterAuth = () => passport.authenticate('twitter');
 export const twitterAuthRedirect = () => passport.authenticate('twitter', { session: false });
 
 export const googleAuth = () => passport.authenticate('google', {
-  scope: ['profile', 'email']
+  scope: ['profile', 'email'],
 });
 
 export const googleAuthRedirect = () => passport.authenticate('google', { session: false });
