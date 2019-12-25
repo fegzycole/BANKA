@@ -8,6 +8,7 @@ import passport from 'passport';
 import trimmer from 'express-body-trimmer';
 import session from 'express-session';
 import Auth from './routes/auth';
+import Account from './routes/accounts';
 import setPassportMiddleware from './Middleware/passport/strategies';
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(session({ secret: process.env.SECRET }));
 setPassportMiddleware(passport, app);
 
 app.use('/api/v1/auth', Auth);
+app.use('/api/v1/accounts', Account);
 
 // Home route
 app.get('/', (req, res) => res.status(200).send({

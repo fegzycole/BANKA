@@ -8,7 +8,6 @@ import { internet } from 'faker';
 import chaiHttp from 'chai-http';
 
 import app from '../app';
-
 import models from '../models/index';
 
 const { User } = models;
@@ -90,21 +89,6 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
     });
   });
   describe('POST api/v1/auth/signin', () => {
-    before((done) => {
-      chai
-        .request(app)
-        .post('/api/v1/auth/signup')
-        .send({
-          email: 'fergusoniyara@gmail.com',
-          password: 'starboy1',
-          firstName: 'Ferguson',
-          lastName: 'Iyara',
-          type: 'customer',
-        })
-        .end((err, res) => {
-          done();
-        });
-    });
     it('should successfully signin an already created user', (done) => {
       chai
         .request(app)
@@ -171,6 +155,11 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
       await User.destroy({
         where: {
           email: 'fergusoniyara@gmail.com',
+        },
+      });
+      await User.destroy({
+        where: {
+          email: 'fergusonadmin@gmail.com',
         },
       });
     });

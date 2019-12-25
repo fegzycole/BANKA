@@ -1,25 +1,18 @@
-// /* eslint-disable linebreak-style */
-// import express from 'express';
-// import Accountcontroller from '../Controller/accountController';
+import express from 'express';
+import createAccount from '../Controller/account';
+import { validateAccountType } from '../Middleware/Validations';
+import { authorizeUser, checkUserAccountType } from '../Middleware/Auth';
 
-// import helper from '../helper/helper';
+const router = express.Router();
 
-// import Service from '../services/service';
-
-// const {
-//   createClientAccount, activateOrDeactivate, deleteAnAccount,
-// } = Accountcontroller;
-
-// const { verifyTokenAll } = helper;
-
-// const { staffToken } = Service;
-
-// const router = express.Router();
-
-// router.post('/', createClientAccount);
+router.post('/', 
+authorizeUser,
+checkUserAccountType,
+validateAccountType,
+createAccount);
 
 // router.patch('/:accountNo', verifyTokenAll, staffToken, activateOrDeactivate);
 
 // router.delete('/:accountNo', verifyTokenAll, staffToken, deleteAnAccount);
 
-// export default router;
+export default router;
