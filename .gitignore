@@ -3,3 +3,4 @@ node_modules
 test.http
 rest.http
 .gitignore
+.nyc_output
