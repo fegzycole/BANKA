@@ -9,6 +9,10 @@ import chaiHttp from 'chai-http';
 
 import app from '../app';
 
+import models from '../models/index';
+
+const { User } = models;
+
 const { expect } = chai;
 
 chai.use(chaiHttp);
@@ -83,6 +87,92 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
           expect(res.body.errors.type[0]).to.be.equal('The selected type is invalid.');
           done();
         });
+    });
+  });
+  describe('POST api/v1/auth/signin', () => {
+    before((done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          email: 'fergusoniyara@gmail.com',
+          password: 'starboy1',
+          firstName: 'Ferguson',
+          lastName: 'Iyara',
+          type: 'customer',
+        })
+        .end((err, res) => {
+          done();
+        });
+    });
+    it('should successfully signin an already created user', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: 'fergusoniyara@gmail.com',
+          password: 'starboy1',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.equal('success');
+          expect(res.body.data).to.have.key('id', 'email', 'firstName', 'lastName', 'type', 'isAdmin', 'updatedAt', 'createdAt', 'token');
+          expect(res.body.data.token).to.be.a('string');
+          done();
+        });
+    });
+    it('Should return an error if the required parameters are empty', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: '',
+          password: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal('error');
+          expect(res.body.errors.email[0]).to.be.equal('The email field is required.');
+          expect(res.body.errors.password[0]).to.be.equal('The password field is required.');
+          done();
+        });
+    });
+    it('Should return an error if the email does not exist', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: 'someemail@gmail.com',
+          password: 'somethingnice',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal('error');
+          expect(res.body.errors).to.be.equal('User not found');
+          done();
+        });
+    });
+    it('Should return an error if the password is incorrect', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: 'fergusoniyara@gmail.com',
+          password: 'somethingnice',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body.status).to.be.equal('error');
+          expect(res.body.errors).to.be.equal('Authentication Failed, Email or Password Incorrect');
+          done();
+        });
+    });
+    after(async () => {
+      await User.destroy({
+        where: {
+          email: 'fergusoniyara@gmail.com',
+        },
+      });
     });
   });
 });

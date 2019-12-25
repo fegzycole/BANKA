@@ -1,7 +1,18 @@
 import express from 'express';
-import { validateSignup } from '../Middleware/Validations';
-import { checkExistingUser } from '../Middleware/Auth';
-import { signUpUser, oAuth } from '../Controller/user';
+import { 
+  validateSignup,
+  validateSignIn
+} from '../Middleware/Validations';
+import { 
+  checkExistingUser, 
+  checkUserEmail, 
+  compareUserPassword 
+} from '../Middleware/Auth';
+import { 
+  signUpUser, 
+  oAuth,
+  signIn
+} from '../Controller/user';
 import { 
   facebookAuth,
   facebookAuthRedirect,
@@ -26,5 +37,11 @@ router.get('/twitter/redirect', twitterAuthRedirect(), oAuth);
 router.get('/google', googleAuth());
 
 router.get('/google/redirect', googleAuthRedirect(), oAuth);
+
+router.post('/signin', 
+validateSignIn, 
+checkUserEmail, 
+compareUserPassword, 
+signIn)
 
 export default router;

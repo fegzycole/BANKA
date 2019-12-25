@@ -23,7 +23,7 @@ export const checkExistingUser = async (req, res, next) => {
 export const checkUserEmail = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const user = userExists(email);
+    const user = await userExists(email);
 
     if (!user) {
       return errResponse(res, 404, 'User not found');
@@ -36,10 +36,10 @@ export const checkUserEmail = async (req, res, next) => {
   }
 };
 
-export const compareUserPassword = async (req, res, next) => {
+export const compareUserPassword = (req, res, next) => {
   const passwordInDb = req.user.password;
   const passwordInRequest = req.body.password;
-  const passwordMatches = await comparePassword(passwordInDb, passwordInRequest);
+  const passwordMatches = comparePassword(passwordInDb, passwordInRequest);
 
   if (!passwordMatches) {
     return errResponse(res, 401, 'Authentication Failed, Email or Password Incorrect');
