@@ -39,3 +39,13 @@ export const editAccountStatus = async (req, res, next) => {
   };
 }
 
+export const deleteAccount = async (req, res, next) => {
+  try {
+    const { accountNumber } = req.params;
+    const account = req.account;
+    await account.destroy({ accountNumber });
+    return successResponse(res, 200, 'Bank account successfully deleted');
+  } catch (error) {
+    return errResponse(res, 500, error.message);
+  };
+}
