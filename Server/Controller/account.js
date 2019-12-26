@@ -8,7 +8,7 @@ import models from '../models';
 
 const { Account } = models;
 
-const createAccount = async (req, res) => {
+export const createAccount = async (req, res) => {
   try {
     const { id } = req.decoded;
     const { type } = req.body;
@@ -27,4 +27,15 @@ const createAccount = async (req, res) => {
   }
 };
 
-export default createAccount;
+export const editAccountStatus = async (req, res, next) => {
+  try {
+    const { status } = req.body;
+    const account = req.account;
+    await account.update({ status });
+    const { dataValues } = account;
+    return successResponse(res, 200, dataValues);
+  } catch (error) {
+    return errResponse(res, 500, error.message);
+  };
+}
+

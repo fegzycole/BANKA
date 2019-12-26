@@ -50,3 +50,5 @@ export const generateAccountNumber = async () => {
 };
 
 export const userExists = async (email) => await User.findOne({ where: { email } });
+
+export const accountExists = async (accountNumber) => await Account.findOne({ where: { accountNumber } });
