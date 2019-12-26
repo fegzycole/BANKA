@@ -66,23 +66,23 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
           expect(body.status).to.be.equal('success');
           expect(body.data).to.have.key(
             'id',
-            "owner",
-            "status",
-            "balance",
-            "type",
-            "accountNumber",
-            "updatedAt",
-            "createdAt"
+            'owner',
+            'status',
+            'balance',
+            'type',
+            'accountNumber',
+            'updatedAt',
+            'createdAt'
           );
           done();
         });
     });
-    it("it should throw an error if the type field is left empty", done => {
+    it('it should throw an error if the type field is left empty', done => {
       chai
         .request(app)
-        .post("/api/v1/accounts")
+        .post('/api/v1/accounts')
         .send({
-          type: "",
+          type: '',
           token: userToken
         })
         .end((err, res) => {
@@ -96,7 +96,7 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
     it('it should throw an error if the type field is neither savings or current', done => {
       chai
         .request(app)
-        .post("/api/v1/accounts")
+        .post('/api/v1/accounts')
         .send({
           type: 'residual',
           token: userToken
@@ -109,12 +109,12 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
           done();
         });
     });
-    it("it should throw an error if no token is specified", done => {
+    it('it should throw an error if no token is specified', done => {
       chai
         .request(app)
-        .post("/api/v1/accounts")
+        .post('/api/v1/accounts')
         .send({
-          type: "savings"
+          type: 'savings'
         })
         .end((err, res) => {
           const { body } = res;
@@ -124,10 +124,10 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
           done();
         });
     });
-    it("it should throw an error if an admin or cashier tries to create an account", done => {
+    it('it should throw an error if an admin or cashier tries to create an account', done => {
       chai
         .request(app)
-        .post("/api/v1/accounts")
+        .post('/api/v1/accounts')
         .send({
           type: 'savings',
           token: adminToken
@@ -135,7 +135,7 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
         .end((err, res) => {
           const { body } = res;
           expect(res).to.have.status(403);
-          expect(body.status).to.be.equal("error");
+          expect(body.status).to.be.equal('error');
           expect(body.errors).to.eql('only a customer can create an account');
           done();
         });
@@ -230,6 +230,30 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
             expect(res.body.status).to.be.equal('error');
             expect(res.body.errors.accountNumber[0]).to.be.equal('The accountNumber must be an integer.');
             expect(res.body.errors.status[0]).to.be.equal('The status field is required.');
+            done();
+          });
+      });
+    });
+    describe('GET /accounts/:accountNumber', () => {
+      it('it should retrieve details of a user\'s bank account if everything checks fine', (done) => {
+        chai
+          .request(app)
+          .get(`/api/v1/accounts/${accountNumber}`)
+          .set('x-access-token', adminToken)
+          .end((err, res) => {
+            const { body } = res;
+            expect(res).to.have.status(200);
+            expect(body.status).to.be.equal("success");
+            expect(body.data).to.have.key(
+              "id",
+              "owner",
+              "status",
+              "balance",
+              "type",
+              "accountNumber",
+              "updatedAt",
+              "createdAt"
+            );
             done();
           });
       });

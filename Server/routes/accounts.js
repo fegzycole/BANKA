@@ -1,5 +1,10 @@
 import express from 'express';
-import { createAccount, editAccountStatus, deleteAccount } from '../Controller/account';
+import { 
+  createAccount,
+  editAccountStatus,
+  deleteAccount,
+  getAnAccount
+} from '../Controller/account';
 import { validateAccountType, validatestatusChange } from '../Middleware/Validations';
 import { 
   authorizeUser,
@@ -34,6 +39,13 @@ router.delete(
   checkAccountNumber,
   deleteAccount
 );
+
+router.get(
+  '/:accountNumber',
+  authorizeUser,
+  checkAccountNumber,
+  getAnAccount
+)
 
 // router.delete('/:accountNo', verifyTokenAll, staffToken, deleteAnAccount);
 

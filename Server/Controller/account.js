@@ -49,3 +49,12 @@ export const deleteAccount = async (req, res, next) => {
     return errResponse(res, 500, error.message);
   };
 }
+
+export const getAnAccount = async (req, res, next) => {
+  try {
+    const account = req.account;
+    return successResponse(res, 200, account.dataValues);
+  } catch (error) {
+    return errResponse(res, 500, error.message);
+  }
+}
