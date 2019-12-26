@@ -14,3 +14,8 @@ export const signIn = {
 export const accountType = {
   type: ['required', { in: ['current', 'savings'] }],
 };
+
+export const changeStatus = {
+  accountNumber: 'required|integer',
+  status: ['required', { in: ['active', 'dormant'] }],
+};

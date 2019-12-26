@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
-import { errResponse, comparePassword, userExists } from '../helper/helper';
+import { errResponse, comparePassword, userExists, accountExists } from '../helper/helper';
 
 config();
 
@@ -73,9 +73,33 @@ export const authorizeUser = (req, res, next) => {
 export const checkUserAccountType = (req, res, next) => {
   const { type } = req.decoded;
 
-  if (!type || type !== 'customer') {
+  if (type !== 'customer') {
     return errResponse(res, 403, 'only a customer can create an account');
   }
 
+  return next();
+}
+
+
+export const confirmAdmin = (req, res, next) => {
+  const { type } = req.decoded;
+
+  if (type !== 'admin') {
+    return errResponse(res, 403, 'only an admin can change the status of an account');
+  }
+
+  return next();
+}
+
+export const checkAccountNumber = async (req, res, next) => {
+  const { accountNumber } = req.params;
+
+  const account = await accountExists(Number(accountNumber));
+
+  if (!account) {
+    return errResponse(res, 404, 'Account not found');
+  }
+
+  req.account = account;
   return next();
 }

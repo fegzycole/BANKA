@@ -1,4 +1,9 @@
-import { signup, signIn, accountType } from '../helper/validationRules';
+import { 
+  signup,
+  signIn,
+  accountType,
+  changeStatus,
+ } from '../helper/validationRules';
 import { validate } from '../helper/helper';
 
 export const validateSignup = (req, res, next) => {
@@ -35,4 +40,14 @@ export const validateAccountType = (req, res, next) => {
   const data = { type };
 
   validate(data, accountType, res, next);
+};
+
+export const validatestatusChange = (req, res, next) => {
+  const { status } = req.body;
+
+  const { accountNumber } = req.params;
+
+  const data = { status, accountNumber };
+
+  validate(data, changeStatus, res, next);
 };

@@ -44,9 +44,11 @@ export const generateAccountNumber = async () => {
 
   let { maxId } = queryResult[0].dataValues;
 
-  maxId = (maxId === null) ? (1000000000) : (1000000000 + maxId);
+  maxId = (maxId === null) ? (1000000000) : (1000000100 + maxId);
 
   return maxId;
 };
 
 export const userExists = async (email) => await User.findOne({ where: { email } });
+
+export const accountExists = async (accountNumber) => await Account.findOne({ where: { accountNumber } });
