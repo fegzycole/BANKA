@@ -3,7 +3,8 @@ import {
   createAccount,
   editAccountStatus,
   deleteAccount,
-  getAnAccount
+  getAnAccount,
+  getAllAccounts
 } from '../Controller/account';
 import { validateAccountType, validatestatusChange } from '../Middleware/Validations';
 import { 
@@ -11,6 +12,7 @@ import {
   checkUserAccountType,
   confirmAdmin,
   checkAccountNumber,
+  confirmStaff,
 } from '../Middleware/Auth';
 
 const router = express.Router();
@@ -46,6 +48,12 @@ router.get(
   checkAccountNumber,
   getAnAccount
 )
+
+router.get(
+  '/',
+  authorizeUser,
+  confirmStaff,
+  getAllAccounts)
 
 // router.delete('/:accountNo', verifyTokenAll, staffToken, deleteAnAccount);
 

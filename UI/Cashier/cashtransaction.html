@@ -1,246 +1,250 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Banka Cashier</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/body.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/header.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/table.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/modal.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Banka Cashier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/body.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/header.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/table.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/modal.css">
 </head>
+
 <body>
-    <div id="container">
-        <div id="main">
-            <!-- HEADER MARKUP STARTS HERE -->
-            <header>
-                    <h1 class = 'logo'>BA<span>N</span>KA</h1>
-                <input type = 'checkbox' id="nav-toggle" class="nav-toggle">
-                <nav>
-                    <ul>
-                        <li><a href="./cashtransaction.html"class = 'dashPage'>TRANSACTIONS</a></li>
-                        <li><a href="./view_accounts.html">ACCOUNTS</a></li>
-                        <li><a href="./viewusers.html">USERS</a></li>
-                        <li><a href="../signin.html">LOGOUT</a></li>
-                    </ul>
-                </nav>
-                <label for="nav-toggle" class="nav-toggle-label">
-                    <span></span>
-                </label>
-            </header>
-            <!-- HEADER STYLES END HERE -->
-            <div id="cash-transactions1">
+  <div id="container">`
+    <div id="main">
+      <!-- HEADER MARKUP STARTS HERE -->
+      <header>
+        <h1 class='logo'>BA<span>N</span>KA</h1>
+        <input type='checkbox' id="nav-toggle" class="nav-toggle">
+        <nav>
+          <ul>
+            <li><a href="./cashtransaction.html" class='dashPage'>TRANSACTIONS</a></li>
+            <li><a href="./view_accounts.html">ACCOUNTS</a></li>
+            <li><a href="./viewusers.html">USERS</a></li>
+            <li><a href="../signin.html">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <label for="nav-toggle" class="nav-toggle-label">
+          <span></span>
+        </label>
+      </header>
+      <!-- HEADER STYLES END HERE -->
+      <div id="cash-transactions1">
+        <form>
+          <input type="text" class="topform" name="search" id="" placeholder="Enter Account Number">
+          <input type="submit" name="submit" value="Search">
+        </form>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Account Number</th>
+              <th>Current Balance</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Ferguson</td>
+              <td><span class='tableHeader'>Email</span>fergusoniyara@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>2059725105</td>
+              <td><span class='tableHeader'>Account Balance</span>100000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
+              <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
+              <td><span class='tableHeader'>Account Number</span>3044399129</td>
+              <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
+              <td>
+                <span class='tableHeader'>Actions</span>
+                <button class='btn-orange deposit'>Deposit</button>
+                <button class='btn-orange withdraw'>Withdraw</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="creditModal" class='modal'>
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="closeBtn" id='closeBtn'>&times;</span>
+              <h2>Credit Account</h2>
+            </div>
+            <div class="modal-body">
+              <div class="credit">
                 <form>
-                    <input type="text" class="topform" name="search" id="" placeholder="Enter Account Number">
-                    <input type="submit" name="submit" value="Search">
+                  <input type="text" name="search" id="" placeholder="Enter Amount">
+                  <input type="submit" name="submit" value="Credit">
                 </form>
-                <table class="table">
-                    <thead>
-                        <tr>
-                           <th>Full Name</th>
-                           <th>Email</th>
-                           <th>Account Number</th>
-                           <th>Current Balance</th>
-                           <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Ferguson</td>
-                            <td><span class='tableHeader'>Email</span>fergusoniyara@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>2059725105</td>
-                            <td><span class='tableHeader'>Account Balance</span>100000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td><span class='tableHeader'>Full Name</span>Iyara Charity</td>
-                            <td><span class='tableHeader'>Email</span>iyaracharity@gmail.com</td>
-                            <td><span class='tableHeader'>Account Number</span>3044399129</td>
-                            <td><span class='tableHeader'>Account Balance</span>1000000000000</td>
-                            <td>
-                                <span class='tableHeader'>Actions</span>
-                                <button class='btn-orange deposit'>Deposit</button>
-                                <button class='btn-orange withdraw'>Withdraw</button>
-                           </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div id="creditModal" class='modal'>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                               <span class="closeBtn" id = 'closeBtn'>&times;</span>
-                               <h2>Credit Account</h2>
-                        </div>
-                        <div class="modal-body">
-                          <div class="credit">
-                            <form>
-                                <input type="text" name="search" id="" placeholder="Enter Amount">
-                                <input type="submit" name="submit" value="Credit">
-                            </form>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                            <div id="debitModal" class='modal'>
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                           <span class="closeBtn"id = 'closeBtn2'>&times;</span>
-                                           <h2>Debit Account</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                            <div class="credit">
-                                                    <form>
-                                                        <input type="text" name="search" id="" placeholder="Enter Amount">
-                                                        <input type="submit" name="submit" value="Debit">
-                                                    </form>
-                                             </div>
-                                    </div>
-                                </div>
-                    </div>
+              </div>
+            </div>
+          </div>
         </div>
+        <div id="debitModal" class='modal'>
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="closeBtn" id='closeBtn2'>&times;</span>
+              <h2>Debit Account</h2>
+            </div>
+            <div class="modal-body">
+              <div class="credit">
+                <form>
+                  <input type="text" name="search" id="" placeholder="Enter Amount">
+                  <input type="submit" name="submit" value="Debit">
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <footer id = "footer">
-         <p>&copy; Iyara Oghenefegor For Andela Bootcamp</p>
-    </footer>
-    <script src="../js/cashtransaction.js"></script>
-</body> 
+  </div>
+  <footer id="footer">
+    <p>&copy; Iyara Oghenefegor For Andela Bootcamp</p>
+  </footer>
+  <!-- <script src="../js/cashtransaction.js"></script> -->
+</body>
+
 </html>

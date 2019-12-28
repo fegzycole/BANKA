@@ -39,5 +39,12 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  Account.associate = (models) => {
+    Account.hasMany(models.Transaction, {
+      foreignKey: 'accountNumber',
+      as: 'transactions',
+    });
+  };
+
   return Account;
 };

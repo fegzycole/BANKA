@@ -53,7 +53,23 @@ export const deleteAccount = async (req, res, next) => {
 export const getAnAccount = async (req, res, next) => {
   try {
     const account = req.account;
-    return successResponse(res, 200, account.dataValues);
+    const { dataValues } = account;
+    dataValues.balance = Number(parseFloat(dataValues.balance));
+    return successResponse(res, 200, dataValues);
+  } catch (error) {
+    return errResponse(res, 500, error.message);
+  }
+}
+
+export const getAllAccounts = async (req, res, next) => {
+  try {
+    const accounts = await Account.findAll();
+    accounts.forEach((account) => {
+      const { dataValues } = account;
+      dataValues.balance = Number(parseFloat(dataValues.balance));
+    })
+    
+    return successResponse(res, 200, accounts);
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
