@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import Validator from 'validatorjs';
 import models from '../models/index';
 
-const { User, Account } = models;
+const { User, Account, Transaction } = models;
 
 dotenv.config();
 
@@ -52,3 +52,6 @@ export const generateAccountNumber = async () => {
 export const userExists = async (email) => await User.findOne({ where: { email } });
 
 export const accountExists = async (accountNumber) => await Account.findOne({ where: { accountNumber } });
+
+export const transactionIdExists = async (id) => await Transaction.findOne({ where: { id } });
+

@@ -9,10 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    owner: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     balance: {
       type: DataTypes.FLOAT,
       allowNull: false,
@@ -36,6 +32,14 @@ module.exports = (sequelize, DataTypes) => {
     Account.belongsTo(models.User, {
       foreignKey: 'owner',
       onDelete: 'CASCADE',
+    });
+  };
+
+  Account.associate = (models) => {
+    Account.hasMany(models.Transaction, {
+      foreignKey: 'accountNumber',
+      sourceKey:'accountNumber',
+      as: 'transactions',
     });
   };
 

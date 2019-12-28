@@ -50,6 +50,23 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
         done();
       });
   });
+  before(done => {
+    // sign up as an admin
+    const user = {
+      email: 'fergusoncashier@gmail.com',
+      password: 'starboy1',
+      firstName: 'Ferguson',
+      lastName: 'Iyara',
+      type: 'cashier'
+    };
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(user)
+      .end((err, res) => {
+        done();
+      });
+  });
   describe('POST api/v1/accounts', () => {
     it('it should create a new account if all checks are fine', done => {
       chai

@@ -19,3 +19,13 @@ export const changeStatus = {
   accountNumber: 'required|integer',
   status: ['required', { in: ['active', 'dormant'] }],
 };
+
+export const cashTransaction = {
+  accountNumber: 'required|integer',
+  type: ['required', { in: ['credit', 'debit'] }],
+  amount: 'required|numeric|min:0',
+}
+
+export const checkId = {
+  id: 'required|integer'
+}

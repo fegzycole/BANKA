@@ -9,6 +9,7 @@ import trimmer from 'express-body-trimmer';
 import session from 'express-session';
 import Auth from './routes/auth';
 import Account from './routes/accounts';
+import Transaction from './routes/transactions';
 import setPassportMiddleware from './Middleware/passport/strategies';
 
 const app = express();
@@ -26,6 +27,7 @@ setPassportMiddleware(passport, app);
 
 app.use('/api/v1/auth', Auth);
 app.use('/api/v1/accounts', Account);
+app.use('/api/v1/transactions', Transaction);
 
 // Home route
 app.get('/', (req, res) => res.status(200).send({

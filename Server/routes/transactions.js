@@ -1,25 +1,45 @@
 // /* eslint-disable linebreak-style */
-// import express from 'express';
+import express from 'express';
+import {
+  cashTransaction,
+  getATransaction,
+  getAnAccountsTransactions
+} from '../Controller/transaction';
+import { validateCashTransaction } from '../Middleware/Validations';
+import { 
+  authorizeUser,
+  confirmCashier,
+  confirmCashAvailability,
+  checkAccountNumber,
+  checkTransactionId,
+  confirmOwner,
+  confirmStaff
+} from '../Middleware/Auth';
 
-// import TransactionController from '../Controller/transactionController';
+const router = express.Router();
 
-// import helper from '../helper/helper';
-
-// import Service from '../services/service';
-
-
-// const { creditAccount, debitAccount } = TransactionController;
-
-// const { verifyTokenAll } = helper;
-
-// const { cashierToken } = Service;
+router.post(
+  '/:accountNumber/transaction',
+  authorizeUser,
+  confirmCashier,
+  validateCashTransaction,
+  checkAccountNumber,
+  confirmCashAvailability,
+  cashTransaction);
 
 
-// const router = express.Router();
+router.get(
+  '/:id',
+  authorizeUser,
+  confirmStaff,
+  checkTransactionId,
+  getATransaction);
 
-// router.post('/:accountNo/credit', verifyTokenAll, cashierToken, creditAccount);
 
-// router.post('/:accountNo/debit', verifyTokenAll, cashierToken, debitAccount);
-
-
-// export default router;
+router.get(
+  '/:accountNumber/all',
+  authorizeUser,
+  checkAccountNumber,
+  confirmOwner,
+  getAnAccountsTransactions)
+export default router;

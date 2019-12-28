@@ -9,10 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       accountNumber: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true,
       },
       owner: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'owner',
+        },
       },
       type: {
         type: Sequelize.ENUM('savings', 'current')
