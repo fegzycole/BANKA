@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    accountNumber: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     cashier: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -39,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   Transaction.associate = (models) => {
     Transaction.belongsTo(models.Account, {
       foreignKey: 'accountNumber',
+      targetKey:'accountNumber',
       onDelete: 'CASCADE',
     });
   };

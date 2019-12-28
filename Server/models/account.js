@@ -9,10 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    owner: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     balance: {
       type: DataTypes.FLOAT,
       allowNull: false,
@@ -42,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
   Account.associate = (models) => {
     Account.hasMany(models.Transaction, {
       foreignKey: 'accountNumber',
+      sourceKey:'accountNumber',
       as: 'transactions',
     });
   };

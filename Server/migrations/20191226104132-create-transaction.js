@@ -11,9 +11,6 @@ module.exports = {
       cashier: {
         type: Sequelize.INTEGER
       },
-      accountNumber: {
-        type: Sequelize.INTEGER
-      },
       type: {
         type: Sequelize.ENUM('credit', 'debit')
       },
@@ -25,6 +22,16 @@ module.exports = {
       },
       amount: {
         type: Sequelize.FLOAT
+      },
+      accountNumber: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Accounts',
+          key: 'accountNumber',
+          as: 'accountNumber',
+        },
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

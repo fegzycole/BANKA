@@ -4,7 +4,8 @@ import {
   editAccountStatus,
   deleteAccount,
   getAnAccount,
-  getAllAccounts
+  getAllAccounts,
+  getUserAccounts
 } from '../Controller/account';
 import { validateAccountType, validatestatusChange } from '../Middleware/Validations';
 import { 
@@ -54,6 +55,11 @@ router.get(
   authorizeUser,
   confirmStaff,
   getAllAccounts)
+
+router.get(
+  '/:id/all',
+  getUserAccounts
+)
 
 // router.delete('/:accountNo', verifyTokenAll, staffToken, deleteAnAccount);
 
