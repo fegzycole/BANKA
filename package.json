@@ -4,7 +4,7 @@
   "description": "Banking Application",
   "main": "app.js",
   "scripts": {
-    "test": "npm run migration && mocha Server/tests/*.js --require @babel/register --timeout 50000 --exit || true",
+    "test": "npm run seeder && mocha Server/tests/*.js --require @babel/register --timeout 50000 --exit || true",
     "test-watch": "nodemon --exec \"npm test\"",
     "start": "node dist/app.js",
     "start-dev": "nodemon --exec babel-node Server/app.js",
@@ -12,7 +12,7 @@
     "clean": "rm -rf dist && mkdir dist",
     "coverage": "nyc npm run test && nyc report --reporter=text-lcov| coveralls",
     "coveralls": "nyc --reporter-lcov --reporter=text-lcov npm test",
-    "build": "npm run clean && npm run babel-build",
+    "build": "npm run seeder && npm run clean && npm run babel-build",
     "heroku-postbuild": "npm run build",
     "migration": "npx sequelize-cli db:migrate",
     "undo-migration": "npx sequelize-cli db:migrate:undo:all",

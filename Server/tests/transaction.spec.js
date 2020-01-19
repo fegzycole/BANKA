@@ -25,14 +25,14 @@ describe(' Transactions test for  POST endpoints', () => {
     accountNumber = dataValues.accountNumber;
   });
   before((done) => { // sign in as cashier
-    const user = {
-      email: 'fergusoncashier@gmail.com',
-      password: 'starboy1',
+    const cashier = {
+      email: 'cashier@banka.com',
+      password: 'cashier'
     };
     chai
       .request(app)
       .post('/api/v1/auth/signin')
-      .send(user)
+      .send(cashier)
       .end((err, res) => {
         const { body } = res;
         if (!err) {
@@ -43,8 +43,8 @@ describe(' Transactions test for  POST endpoints', () => {
   });
   before((done) => { // sign in as admin
     const user = {
-      email: 'fergusonadmin@gmail.com',
-      password: 'starboy1',
+      email: 'admin@banka.com',
+      password: 'fegzycole',
     };
     chai
       .request(app)
