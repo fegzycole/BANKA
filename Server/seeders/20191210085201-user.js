@@ -1,5 +1,7 @@
 const { name, internet, lorem } = require('faker');
 
+const { hashSync, genSaltSync } = require('bcryptjs');
+
 const { firstName, lastName } = name;
 
 const { email } = internet;
@@ -12,55 +14,41 @@ module.exports = {
       firstName: firstName(),
       lastName: lastName(),
       email: email(),
-      password: word(),
+      password: hashSync('customer', genSaltSync(10)),
       createdAt: new Date(),
       updatedAt: new Date(),
+      type: 'customer',
       isAdmin: false,
     },
     {
       firstName: firstName(),
       lastName: lastName(),
-      email: email(),
-      password: word(),
+      email: 'cashier@banka.com',
+      password: hashSync('cashier', genSaltSync(10)),
       createdAt: new Date(),
       updatedAt: new Date(),
+      type: 'cashier',
       isAdmin: true,
     },
     {
       firstName: firstName(),
       lastName: lastName(),
       email: email(),
-      password: word(),
+      password: hashSync('customer', genSaltSync(10)),
       createdAt: new Date(),
       updatedAt: new Date(),
+      type: 'customer',
       isAdmin: false,
     },
     {
-      firstName: firstName(),
-      lastName: lastName(),
-      email: email(),
-      password: word(),
+      firstName: 'Fegor',
+      lastName: 'Iyara',
+      email: 'admin@banka.com',
       createdAt: new Date(),
       updatedAt: new Date(),
-      isAdmin: false,
-    },
-    {
-      firstName: firstName(),
-      lastName: lastName(),
-      email: email(),
-      password: word(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      isAdmin: false,
-    },
-    {
-      firstName: firstName(),
-      lastName: lastName(),
-      email: email(),
-      password: word(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      isAdmin: false,
+      password: hashSync('fegzycole', genSaltSync(10)),
+      type: 'admin',
+      isAdmin: true,
     },
   ], {}),
 

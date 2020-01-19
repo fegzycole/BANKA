@@ -33,36 +33,31 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
   });
   before(done => {
     // sign up as an admin
-    const user = {
-      email: 'fergusonadmin@gmail.com',
-      password: 'starboy1',
-      firstName: 'Ferguson',
-      lastName: 'Iyara',
-      type: 'admin'
+    const admin = {
+      email: "admin@banka.com",
+      password: "fegzycole"
     };
+
     chai
       .request(app)
-      .post('/api/v1/auth/signup')
-      .send(user)
+      .post('/api/v1/auth/signin')
+      .send(admin)
       .end((err, res) => {
         const { body } = res;
         adminToken = body.data.token;
         done();
-      });
+      })
   });
   before(done => {
     // sign up as an admin
-    const user = {
-      email: 'fergusoncashier@gmail.com',
-      password: 'starboy1',
-      firstName: 'Ferguson',
-      lastName: 'Iyara',
-      type: 'cashier'
+    const cashier = {
+      email: 'cashier@banka.com',
+      password: 'cashier'
     };
     chai
       .request(app)
-      .post('/api/v1/auth/signup')
-      .send(user)
+      .post('/api/v1/auth/signin')
+      .send(cashier)
       .end((err, res) => {
         done();
       });

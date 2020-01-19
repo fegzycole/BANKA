@@ -4,7 +4,7 @@
   "description": "Banking Application",
   "main": "app.js",
   "scripts": {
-    "test": "npm run migration && mocha Server/tests/*.js --require @babel/register --timeout 50000 --exit || true",
+    "test": "mocha Server/tests/*.js --require @babel/register --timeout 50000 --exit || true",
     "test-watch": "nodemon --exec \"npm test\"",
     "start": "node dist/app.js",
     "start-dev": "nodemon --exec babel-node Server/app.js",
@@ -50,6 +50,7 @@
     "pg": "^7.14.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1",
     "swagger-ui-express": "^4.1.2",
     "validatorjs": "^3.18.1",
     "yamljs": "^0.3.0"

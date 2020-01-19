@@ -40,3 +40,15 @@ export const signIn = async (req, res) => {
     return errResponse(res, 500, error.message);
   }
 };
+
+export const createStaff = async (req, res) => {
+  try {
+    req.user.type === 'admin' ? req.user.isAdmin = true : req.user.isAdmin = false;
+    const user = await User.create(req.user);
+    const payload = user.getSafeDataValues();
+    payload.token = generateToken(payload);
+    return successResponse(res, 201, payload);
+  } catch (error) {
+    return errResponse(res, 500, error.message);
+  }
+}
