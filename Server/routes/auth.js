@@ -11,7 +11,7 @@ import {
   compareUserPassword
 } from '../Middleware/Auth';
 
-import { signUpUser, oAuth, signIn, createStaff } from '../Controller/user';
+import { signUpUser, oAuth, signIn, createStaff, allStaff} from '../Controller/user';
 
 import {
   facebookAuth,
@@ -56,5 +56,7 @@ router.post(
   compareUserPassword,
   signIn
 );
+
+router.get('/allstaff', authorizeUser, confirmAdmin, allStaff)
 
 export default router;

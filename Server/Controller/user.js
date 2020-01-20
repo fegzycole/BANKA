@@ -1,5 +1,6 @@
-import models from '../models';
-import { errResponse, successResponse, generateToken } from '../helper/helper';
+import models from "../models";
+import { Op } from "sequelize";
+import { errResponse, successResponse, generateToken } from "../helper/helper";
 
 const { User } = models;
 
@@ -20,7 +21,7 @@ export const oAuth = async (req, res) => {
     const { oauthId } = req.user;
     const [user] = await User.findOrCreate({
       where: { oauthId },
-      defaults: req.user,
+      defaults: req.user
     });
 
     const payload = user.getSafeDataValues();
@@ -43,7 +44,9 @@ export const signIn = async (req, res) => {
 
 export const createStaff = async (req, res) => {
   try {
-    req.user.type === 'admin' ? req.user.isAdmin = true : req.user.isAdmin = false;
+    req.user.type === "admin"
+      ? (req.user.isAdmin = true)
+      : (req.user.isAdmin = false);
     const user = await User.create(req.user);
     const payload = user.getSafeDataValues();
     payload.token = generateToken(payload);
@@ -51,4 +54,26 @@ export const createStaff = async (req, res) => {
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
-}
+};
+
+export const allStaff = async (req, res) => {
+  try {
+    const users = await User.findAll({
+      where: {
+        type: {
+          [Op.or]: ["admin", "cashier"]
+        }
+      }
+    });
+
+    const data = []
+
+    users.forEach(user => {
+      data.push(user.getSafeDataValues());
+    });
+
+    return successResponse(res, 200, data);
+  } catch (error) {
+    return errResponse(res, 500, error.message);
+  }
+};
