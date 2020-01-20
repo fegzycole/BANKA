@@ -66,7 +66,13 @@ export const allStaff = async (req, res) => {
       }
     });
 
-    return successResponse(res, 200, users)
+    const data = []
+
+    users.forEach(user => {
+      data.push(user.getSafeDataValues());
+    });
+
+    return successResponse(res, 200, data);
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
