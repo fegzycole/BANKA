@@ -61,6 +61,6 @@ router.post(
 
 router.get('/allstaff', authorizeUser, confirmAdmin, allStaff);
 
-router.delete('/', authorizeUser, confirmAdmin, checkUserEmail, deleteStaff);
+router.delete('/:email/user', authorizeUser, confirmAdmin, checkUserEmail, deleteStaff);
 
 export default router;

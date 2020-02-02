@@ -82,8 +82,7 @@ export const allStaff = async (req, res) => {
 };
 
 export const deleteStaff = async (req, res) => {
-  const { email } = req.body;
-
+  const { email } = req.params;
   try {
     await User.destroy({ where: { email } });
     return successResponse(res, 200, 'Staff deleted successfully');

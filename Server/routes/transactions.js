@@ -3,17 +3,17 @@ import express from 'express';
 import {
   cashTransaction,
   getATransaction,
-  getAnAccountsTransactions
+  getAnAccountsTransactions,
 } from '../Controller/transaction';
 import { validateCashTransaction } from '../Middleware/Validations';
-import { 
+import {
   authorizeUser,
   confirmCashier,
   confirmCashAvailability,
   checkAccountNumber,
   checkTransactionId,
   confirmOwner,
-  confirmStaff
+  confirmStaff,
 } from '../Middleware/Auth';
 
 const router = express.Router();
@@ -25,7 +25,8 @@ router.post(
   validateCashTransaction,
   checkAccountNumber,
   confirmCashAvailability,
-  cashTransaction);
+  cashTransaction,
+);
 
 
 router.get(
@@ -33,7 +34,8 @@ router.get(
   authorizeUser,
   confirmStaff,
   checkTransactionId,
-  getATransaction);
+  getATransaction,
+);
 
 
 router.get(
@@ -41,5 +43,6 @@ router.get(
   authorizeUser,
   checkAccountNumber,
   confirmOwner,
-  getAnAccountsTransactions)
+  getAnAccountsTransactions,
+);
 export default router;
