@@ -522,6 +522,7 @@ describe('Accounts test for - POST, PATCH, DELETE', () => {
   //     });
   //   });
   //   describe('GET api/v2/accounts', () => {
+  // eslint-disable-next-line max-len
   //     it('Should throw an error if a client wants to view a list of all the accounts', (done) => {
   //       chai
   //         .request(app)
