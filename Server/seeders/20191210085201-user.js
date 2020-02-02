@@ -1,4 +1,4 @@
-const { name, internet, lorem } = require('faker');
+const { name, internet } = require('faker');
 
 const { hashSync, genSaltSync } = require('bcryptjs');
 
@@ -6,10 +6,8 @@ const { firstName, lastName } = name;
 
 const { email } = internet;
 
-const { word } = lorem;
-
 module.exports = {
-  up: queryInterface => queryInterface.bulkInsert('Users', [
+  up: (queryInterface) => queryInterface.bulkInsert('Users', [
     {
       firstName: firstName(),
       lastName: lastName(),
@@ -52,5 +50,5 @@ module.exports = {
     },
   ], {}),
 
-  down: queryInterface => queryInterface.bulkDelete('Users', null, {}),
+  down: (queryInterface) => queryInterface.bulkDelete('Users', null, {}),
 };

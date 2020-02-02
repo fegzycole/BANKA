@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 import jwt from 'jsonwebtoken';
 import sequelize from 'sequelize';
 import bcrypt from 'bcryptjs';
@@ -38,7 +39,7 @@ export const validate = (data, rules, res, next) => {
 export const comparePassword = (hashPwd, password) => bcrypt.compareSync(password, hashPwd);
 
 export const generateAccountNumber = async () => {
-  let queryResult = await Account.findAll({
+  const queryResult = await Account.findAll({
     attributes: [[sequelize.fn('max', sequelize.col('id')), 'maxId']],
   });
 
@@ -51,7 +52,7 @@ export const generateAccountNumber = async () => {
 
 export const userExists = async (email) => await User.findOne({ where: { email } });
 
+// eslint-disable-next-line max-len
 export const accountExists = async (accountNumber) => await Account.findOne({ where: { accountNumber } });
 
 export const transactionIdExists = async (id) => await Transaction.findOne({ where: { id } });
-

@@ -1,6 +1,6 @@
-import models from "../models";
-import { Op } from "sequelize";
-import { errResponse, successResponse, generateToken } from "../helper/helper";
+import { Op } from 'sequelize';
+import models from '../models';
+import { errResponse, successResponse, generateToken } from '../helper/helper';
 
 const { User } = models;
 
@@ -21,7 +21,7 @@ export const oAuth = async (req, res) => {
     const { oauthId } = req.user;
     const [user] = await User.findOrCreate({
       where: { oauthId },
-      defaults: req.user
+      defaults: req.user,
     });
 
     const payload = user.getSafeDataValues();
@@ -44,9 +44,12 @@ export const signIn = async (req, res) => {
 
 export const createStaff = async (req, res) => {
   try {
-    req.user.type === "admin"
-      ? (req.user.isAdmin = true)
-      : (req.user.isAdmin = false);
+    if (req.user.type === 'admin') {
+      req.user.isAdmin = true;
+    } else {
+      req.user.isAdmin = false;
+    }
+
     const user = await User.create(req.user);
     const payload = user.getSafeDataValues();
     payload.token = generateToken(payload);
@@ -61,19 +64,30 @@ export const allStaff = async (req, res) => {
     const users = await User.findAll({
       where: {
         type: {
-          [Op.or]: ["admin", "cashier"]
-        }
-      }
+          [Op.or]: ['admin', 'cashier'],
+        },
+      },
     });
 
-    const data = []
+    const data = [];
 
-    users.forEach(user => {
+    users.forEach((user) => {
       data.push(user.getSafeDataValues());
     });
 
     return successResponse(res, 200, data);
   } catch (error) {
     return errResponse(res, 500, error.message);
+  }
+};
+
+export const deleteStaff = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    await User.destroy({ where: { email } });
+    return successResponse(res, 200, 'Staff deleted successfully');
+  } catch (error) {
+    return errResponse(res, 500, error);
   }
 };

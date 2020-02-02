@@ -164,6 +164,47 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
       });
     });
   });
+  describe('DELETE api/v1/auth/', () => {
+    before(async () => {
+      await User.create({
+        firstName: 'John',
+        lastName: 'Freggs',
+        email: 'jjcash3@gmail.com',
+        type: 'cashier',
+        isAdmin: false,
+        password: 'somepassword',
+      });
+    });
+
+    before((done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: 'admin@banka.com',
+          password: 'fegzycole',
+        })
+        .end((err, res) => {
+          adminToken = res.body.data.token;
+          done();
+        });
+    });
+
+    it('Should successfully delete a staff account', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/auth')
+        .set('x-access-token', adminToken)
+        .send({
+          email: 'jjcash3@gmail.com',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.equal('Staff deleted successfully');
+          done();
+        });
+    });
+  });
 });
 
 
