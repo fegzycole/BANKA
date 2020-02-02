@@ -21,6 +21,7 @@ const { email } = internet;
 let UserToken;
 let adminToken;
 let cashierToken;
+let userEmail;
 
 describe('Tests for all Auth(signup and signin) Endpoints', () => {
   describe('POST api/v1/auth/signup', () => {
@@ -166,14 +167,16 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
   });
   describe('DELETE api/v1/auth/', () => {
     before(async () => {
-      await User.create({
+      const response = await User.create({
         firstName: 'John',
         lastName: 'Freggs',
-        email: 'jjcash3@gmail.com',
+        email: 'jjcash12569@gmail.com',
         type: 'cashier',
         isAdmin: false,
         password: 'somepassword',
       });
+
+      userEmail = response.dataValues.email;
     });
 
     before((done) => {
@@ -193,11 +196,8 @@ describe('Tests for all Auth(signup and signin) Endpoints', () => {
     it('Should successfully delete a staff account', (done) => {
       chai
         .request(app)
-        .delete('/api/v1/auth')
+        .delete(`/api/v1/auth/${userEmail}/user`)
         .set('x-access-token', adminToken)
-        .send({
-          email: 'jjcash3@gmail.com',
-        })
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.equal('Staff deleted successfully');

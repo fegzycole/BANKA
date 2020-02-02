@@ -26,8 +26,14 @@ export const checkExistingUser = async (req, res, next) => {
 
 export const checkUserEmail = async (req, res, next) => {
   try {
-    const { email } = req.body;
-    const user = await userExists(email);
+    let user;
+
+    if (req.body.email) {
+      user = await userExists(req.body.email);
+    } else {
+      user = await userExists(req.params.email);
+    }
+
     if (!user) {
       return errResponse(res, 404, 'User not found');
     }
