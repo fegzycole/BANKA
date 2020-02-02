@@ -5,7 +5,7 @@ import {
   comparePassword,
   userExists,
   accountExists,
-  transactionIdExists
+  transactionIdExists,
 } from '../helper/helper';
 
 config();
@@ -74,7 +74,7 @@ export const checkUserAccountType = (req, res, next) => {
     return errResponse(res, 403, 'only a customer can create an account');
   }
   return next();
-}
+};
 
 
 export const confirmAdmin = (req, res, next) => {
@@ -83,7 +83,7 @@ export const confirmAdmin = (req, res, next) => {
     return errResponse(res, 403, 'only an admin can change the status of an account');
   }
   return next();
-}
+};
 
 export const confirmCashier = (req, res, next) => {
   const { type } = req.decoded;
@@ -96,11 +96,11 @@ export const confirmCashier = (req, res, next) => {
 export const confirmCashAvailability = (req, res, next) => {
   const { balance } = req.account;
   const { type, amount } = req.body;
-  if (type === 'debit' && balance - amount < 0 ) {
+  if (type === 'debit' && balance - amount < 0) {
     return errResponse(res, 400, 'Insufficient funds!');
   }
   return next();
-}
+};
 
 export const checkAccountNumber = async (req, res, next) => {
   const { accountNumber } = req.params;
@@ -121,7 +121,7 @@ export const confirmOwner = async (req, res, next) => {
     return errResponse(res, 403, 'You do not have the rights to this resource');
   }
   return next();
-}
+};
 
 export const confirmStaff = async (req, res, next) => {
   const { type } = req.decoded;
@@ -130,7 +130,7 @@ export const confirmStaff = async (req, res, next) => {
     return errResponse(res, 403, 'You do not have the rights to this resource');
   }
   return next();
-}
+};
 
 
 export const checkTransactionId = async (req, res, next) => {
@@ -141,4 +141,4 @@ export const checkTransactionId = async (req, res, next) => {
   }
   req.transaction = transaction;
   return next();
-}
+};

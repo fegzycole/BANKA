@@ -1,12 +1,12 @@
-import { 
+import {
   signup,
   signIn,
   accountType,
   changeStatus,
   cashTransaction,
   checkId,
-  createStaff
- } from '../helper/validationRules';
+  createStaff,
+} from '../helper/validationRules';
 import { validate } from '../helper/helper';
 
 export const validateSignup = (req, res, next) => {

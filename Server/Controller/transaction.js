@@ -7,15 +7,20 @@ import models from '../models';
 
 const { Transaction } = models;
 
-export const cashTransaction = async (req, res, next) => {
+export const cashTransaction = async (req, res) => {
   const { amount, type } = req.body;
   const { id } = req.decoded;
-  const account = req.account;
-  let { balance, accountNumber } = account;
+  const { account } = req;
+  const { balance, accountNumber } = account;
   let newBalance;
+
   try {
-    type === 'credit' ? (newBalance = Number(parseFloat(balance + amount))) :
-    (newBalance = Number(parseFloat(balance - amount)));
+    if (type === 'credit') {
+      newBalance = Number(parseFloat(balance + amount));
+    } else {
+      newBalance = Number(parseFloat(balance - amount));
+    }
+
     await account.update({ balance: newBalance });
     const transactionData = {
       amount,
@@ -23,18 +28,18 @@ export const cashTransaction = async (req, res, next) => {
       accountNumber,
       oldBalance: balance,
       newBalance,
-      cashier: id
+      cashier: id,
     };
     const { dataValues } = await Transaction.create(transactionData);
     return successResponse(res, 201, dataValues);
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
-}
+};
 
-export const getATransaction = async (req, res, next) => {
+export const getATransaction = async (req, res) => {
   try {
-    const transaction = req.transaction;
+    const { transaction } = req;
     const { dataValues } = transaction;
     dataValues.oldBalance = Number(parseFloat(dataValues.oldBalance));
     dataValues.newBalance = Number(parseFloat(dataValues.newBalance));
@@ -43,7 +48,7 @@ export const getATransaction = async (req, res, next) => {
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
-}
+};
 
 export const getAnAccountsTransactions = async (req, res, next) => {
   try {
@@ -58,9 +63,9 @@ export const getAnAccountsTransactions = async (req, res, next) => {
       dataValues.oldBalance = Number(parseFloat(dataValues.oldBalance));
       dataValues.newBalance = Number(parseFloat(dataValues.newBalance));
       dataValues.amount = Number(parseFloat(dataValues.amount));
-    })
+    });
     return successResponse(res, 200, transactions);
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
-}
+};

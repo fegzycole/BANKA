@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-undef */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
@@ -8,8 +10,6 @@ const { Account } = models;
 const { expect } = chai;
 chai.use(chaiHttp);
 
-
-let UserToken = '';
 let adminToken = '';
 let cashierToken = '';
 let accountNumber;
@@ -27,7 +27,7 @@ describe(' Transactions test for  POST endpoints', () => {
   before((done) => { // sign in as cashier
     const cashier = {
       email: 'cashier@banka.com',
-      password: 'cashier'
+      password: 'cashier',
     };
     chai
       .request(app)
@@ -69,7 +69,7 @@ describe(' Transactions test for  POST endpoints', () => {
         })
         .end((err, res) => {
           const { body } = res;
-          expect(res.status).to.eql(403)
+          expect(res.status).to.eql(403);
           expect(body.status).to.be.equals('error');
           expect(body).to.be.an('object');
           expect(body.errors).to.be.equals('only a cashier can perform cash transactions');

@@ -1,14 +1,14 @@
 import express from 'express';
-import { 
+import {
   createAccount,
   editAccountStatus,
   deleteAccount,
   getAnAccount,
   getAllAccounts,
-  getUserAccounts
+  getUserAccounts,
 } from '../Controller/account';
 import { validateAccountType, validatestatusChange } from '../Middleware/Validations';
-import { 
+import {
   authorizeUser,
   checkUserAccountType,
   confirmAdmin,
@@ -23,7 +23,7 @@ router.post(
   authorizeUser,
   checkUserAccountType,
   validateAccountType,
-  createAccount
+  createAccount,
 );
 
 router.patch(
@@ -32,7 +32,7 @@ router.patch(
   confirmAdmin,
   validatestatusChange,
   checkAccountNumber,
-  editAccountStatus
+  editAccountStatus,
 );
 
 router.delete(
@@ -40,26 +40,27 @@ router.delete(
   authorizeUser,
   confirmAdmin,
   checkAccountNumber,
-  deleteAccount
+  deleteAccount,
 );
 
 router.get(
   '/:accountNumber',
   authorizeUser,
   checkAccountNumber,
-  getAnAccount
-)
+  getAnAccount,
+);
 
 router.get(
   '/',
   authorizeUser,
   confirmStaff,
-  getAllAccounts)
+  getAllAccounts,
+);
 
 router.get(
   '/:id/all',
-  getUserAccounts
-)
+  getUserAccounts,
+);
 
 // router.delete('/:accountNo', verifyTokenAll, staffToken, deleteAnAccount);
 

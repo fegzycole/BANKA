@@ -27,58 +27,58 @@ export const createAccount = async (req, res) => {
   }
 };
 
-export const editAccountStatus = async (req, res, next) => {
+export const editAccountStatus = async (req, res) => {
   try {
     const { status } = req.body;
-    const account = req.account;
+    const { account } = req;
     await account.update({ status });
     const { dataValues } = account;
     return successResponse(res, 200, dataValues);
   } catch (error) {
     return errResponse(res, 500, error.message);
-  };
-}
+  }
+};
 
-export const deleteAccount = async (req, res, next) => {
+export const deleteAccount = async (req, res) => {
   try {
     const { accountNumber } = req.params;
-    const account = req.account;
+    const { account } = req;
     await account.destroy({ accountNumber });
     return successResponse(res, 200, 'Bank account successfully deleted');
   } catch (error) {
     return errResponse(res, 500, error.message);
-  };
-}
+  }
+};
 
-export const getAnAccount = async (req, res, next) => {
+export const getAnAccount = async (req, res) => {
   try {
-    const account = req.account;
+    const { account } = req;
     const { dataValues } = account;
     dataValues.balance = Number(parseFloat(dataValues.balance));
     return successResponse(res, 200, dataValues);
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
-}
+};
 
-export const getAllAccounts = async (req, res, next) => {
+export const getAllAccounts = async (req, res) => {
   try {
     const accounts = await Account.findAll();
     accounts.forEach((account) => {
       const { dataValues } = account;
       dataValues.balance = Number(parseFloat(dataValues.balance));
-    })
-    
+    });
+
     return successResponse(res, 200, accounts);
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
-}
+};
 
-export const getUserAccounts = async (req, res, next) => {
+export const getUserAccounts = async (req, res) => {
   try {
     const { id } = req.params;
-    const accounts = await Account.findAll({ 
+    const accounts = await Account.findAll({
       where: { owner: id },
       include: [{
         model: Transaction,
@@ -88,11 +88,10 @@ export const getUserAccounts = async (req, res, next) => {
     accounts.forEach((account) => {
       const { dataValues } = account;
       dataValues.balance = Number(parseFloat(dataValues.balance));
-    })
-    
+    });
+
     return successResponse(res, 200, accounts);
   } catch (error) {
     return errResponse(res, 500, error.message);
   }
-}
-
+};

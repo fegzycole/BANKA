@@ -2,16 +2,19 @@ import express from 'express';
 import {
   validateSignup,
   validateSignIn,
-  validateCreateStaff
+  validateCreateStaff,
 } from '../Middleware/Validations';
 
 import {
   checkExistingUser,
   checkUserEmail,
-  compareUserPassword
+  compareUserPassword,
+  confirmAdmin, authorizeUser,
 } from '../Middleware/Auth';
 
-import { signUpUser, oAuth, signIn, createStaff, allStaff} from '../Controller/user';
+import {
+  signUpUser, oAuth, signIn, createStaff, allStaff, deleteStaff,
+} from '../Controller/user';
 
 import {
   facebookAuth,
@@ -19,10 +22,9 @@ import {
   twitterAuth,
   twitterAuthRedirect,
   googleAuth,
-  googleAuthRedirect
+  googleAuthRedirect,
 } from '../Middleware/passport/authentication';
 
-import { confirmAdmin, authorizeUser } from '../Middleware/Auth';
 
 const router = express.Router();
 
@@ -34,7 +36,7 @@ router.post(
   confirmAdmin,
   validateCreateStaff,
   checkExistingUser,
-  createStaff
+  createStaff,
 );
 
 router.get('/facebook', facebookAuth());
@@ -54,9 +56,11 @@ router.post(
   validateSignIn,
   checkUserEmail,
   compareUserPassword,
-  signIn
+  signIn,
 );
 
-router.get('/allstaff', authorizeUser, confirmAdmin, allStaff)
+router.get('/allstaff', authorizeUser, confirmAdmin, allStaff);
+
+router.delete('/', authorizeUser, confirmAdmin, checkUserEmail, deleteStaff);
 
 export default router;
