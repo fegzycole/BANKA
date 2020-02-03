@@ -83,9 +83,9 @@ npm run test
 [https://www.pivotaltracker.com/n/projects/2319896]
 
 
-## Template UI
+## Frontend
 
-You can see a hosted version of the template at [https://fegzycole.github.io/Banka-Project/](https://fegzycole.github.io/Banka-Project/)
+You can see the repo to the frontend built with Vue.js [here](https://github.com/fegzycole/Banka-vue)
 
 
 ## API
