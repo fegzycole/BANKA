@@ -1,4 +1,5 @@
 import express from 'express';
+
 import {
   createAccount,
   editAccountStatus,
@@ -7,7 +8,12 @@ import {
   getAllAccounts,
   getUserAccounts,
 } from '../Controller/account';
-import { validateAccountType, validatestatusChange } from '../Middleware/Validations';
+
+import {
+  validateAccountType,
+  validatestatusChange,
+} from '../Middleware/Validations';
+
 import {
   authorizeUser,
   checkUserAccountType,
@@ -38,7 +44,7 @@ router.patch(
 router.delete(
   '/:accountNumber',
   authorizeUser,
-  confirmAdmin,
+  confirmStaff,
   checkAccountNumber,
   deleteAccount,
 );
